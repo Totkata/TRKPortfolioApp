@@ -23,6 +23,42 @@
         {
         }
 
+        public DbSet<Attachment> Attachments { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<CommentLike> CommentLikes { get; set; }
+
+        public DbSet<Paragraph> Paragraphs { get; set; }
+
+        public DbSet<ParagraphAttachment> ParagraphAttachments { get; set; }
+
+        public DbSet<Post> Posts { get; set; }
+
+        public DbSet<PostCategory> PostCategories { get; set; }
+
+        public DbSet<PostLike> PostLikes { get; set; }
+
+        public DbSet<PostSave> PostSaves { get; set; }
+
+        public DbSet<Project> Projects { get; set; }
+
+        public DbSet<ProjectAttachment> ProjectAttachments { get; set; }
+
+        public DbSet<ProjectCategory> ProjectCategories { get; set; }
+
+        public DbSet<ProjectLike> ProjectLikes { get; set; }
+
+        public DbSet<ProjectSave> ProjectSaves { get; set; }
+
+        public DbSet<Skill> Skills { get; set; }
+
+        public DbSet<Testimonial> Testimonials { get; set; }
+
+        public DbSet<TestimonialAttachment> TestimonialAttachments { get; set; }
+
         public DbSet<Setting> Settings { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
@@ -71,6 +107,22 @@
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
+
+            // Set composite keys
+            builder.Entity<ParagraphAttachment>()
+                .HasKey(k => new { k.ParagraphId, k.AttachmentId });
+
+            builder.Entity<ProjectAttachment>()
+               .HasKey(k => new { k.ProjectId, k.AttachmentId });
+
+            builder.Entity<TestimonialAttachment>()
+               .HasKey(k => new { k.TestimonialId, k.AttachmentId });
+
+            builder.Entity<PostCategory>()
+               .HasKey(k => new { k.PostId, k.CategoryId });
+
+            builder.Entity<ProjectCategory>()
+               .HasKey(k => new { k.ProjectId, k.CategoryId });
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)
