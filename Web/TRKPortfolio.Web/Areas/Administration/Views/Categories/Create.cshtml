@@ -1,0 +1,21 @@
+﻿@using System.Globalization
+@using TRKPortfolio.Web.ViewModels.Administration.Categories.InputModel
+@model CreateCategoryInputModel
+
+@{
+    this.ViewData["Title"] = "Create Category";
+}
+<vc:header></vc:header>
+
+<div class="container mt-4">
+    <form enctype="multipart/form-data" asp-area="Administration" asp-controller="Categories" asp-action="Create" method="post">
+        <div class="form-group">
+            <label asp-for="@Model.Name"></label>
+            <input asp-for="@Model.Name" class="form-control" >
+            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Create</button>
+    </form>
+</div>
+

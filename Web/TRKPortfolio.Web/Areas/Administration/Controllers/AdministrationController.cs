@@ -5,7 +5,7 @@
     using TRKPortfolio.Common;
     using TRKPortfolio.Web.Controllers;
 
-    [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+    [Authorize(Roles = "Admin")]
     [Area("Administration")]
     public class AdministrationController : BaseController
     {

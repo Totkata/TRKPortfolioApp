@@ -17,6 +17,7 @@
     using TRKPortfolio.Data.Repositories;
     using TRKPortfolio.Data.Seeding;
     using TRKPortfolio.Services.Data;
+    using TRKPortfolio.Services.Data.Contracts;
     using TRKPortfolio.Services.Mapping;
     using TRKPortfolio.Services.Messaging;
     using TRKPortfolio.Web.ViewModels;
@@ -64,6 +65,7 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<ICategoriesService, CategoriesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\TRKPortfolio.Data.Common\TRKPortfolio.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\TRKPortfolio.Data.Models\TRKPortfolio.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\TRKPortfolio.Web.ViewModels\TRKPortfolio.Web.ViewModels.csproj" />
     <ProjectReference Include="..\TRKPortfolio.Services.Mapping\TRKPortfolio.Services.Mapping.csproj" />
   </ItemGroup>
 
