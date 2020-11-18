@@ -6,7 +6,6 @@
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
-    using TRKPortfolio.Common;
     using TRKPortfolio.Data.Models;
 
     internal class RolesSeeder : ISeeder
@@ -15,7 +14,8 @@
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 
-            await SeedRoleAsync(roleManager, GlobalConstants.AdministratorRoleName);
+            await SeedRoleAsync(roleManager, "Admin");
+            await SeedRoleAsync(roleManager, "Customer");
         }
 
         private static async Task SeedRoleAsync(RoleManager<ApplicationRole> roleManager, string roleName)
