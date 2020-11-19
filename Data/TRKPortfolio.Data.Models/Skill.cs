@@ -6,7 +6,7 @@
 
     using TRKPortfolio.Data.Common.Models;
 
-    public class Skill : BaseModel<int>
+    public class Skill : BaseDeletableModel<int>
     {
         public string SkillTitle { get; set; }
     }

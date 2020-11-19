@@ -1,0 +1,40 @@
+﻿namespace TRKPortfolio.Services.Data
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
+    using TRKPortfolio.Data.Common.Repositories;
+    using TRKPortfolio.Data.Models;
+    using TRKPortfolio.Services.Data.Contracts;
+    using TRKPortfolio.Web.ViewModels.Administration.Skills.InputModel;
+
+    public class SkillsService : ISkillsService
+    {
+        private readonly IDeletableEntityRepository<Skill> skillRepository;
+
+        public SkillsService(IDeletableEntityRepository<Skill> skillRepository)
+        {
+            this.skillRepository = skillRepository;
+        }
+
+        public async Task CreateAsync(CreateSkillInputModel input)
+        {
+            var skillExists = this.skillRepository.AllAsNoTracking()
+                .Any(x => x.SkillTitle == input.Name);
+
+            if (!skillExists)
+            {
+                var skill = new Skill
+                {
+                    SkillTitle = input.Name,
+                };
+
+                await this.skillRepository.AddAsync(skill);
+                await this.skillRepository.SaveChangesAsync();
+            }
+        }
+    }
+}
