@@ -9,7 +9,10 @@
     using TRKPortfolio.Data.Common.Repositories;
     using TRKPortfolio.Data.Models;
     using TRKPortfolio.Services.Data.Contracts;
+    using TRKPortfolio.Services.Mapping;
+    using TRKPortfolio.Web.ViewModels.Administration.Categories.ViewModel;
     using TRKPortfolio.Web.ViewModels.Administration.Skills.InputModel;
+    using TRKPortfolio.Web.ViewModels.Administration.Skills.ViewModel;
 
     public class SkillsService : ISkillsService
     {
@@ -35,6 +38,12 @@
                 await this.skillRepository.AddAsync(skill);
                 await this.skillRepository.SaveChangesAsync();
             }
+        }
+
+        public IEnumerable<SkillViewModel> GetAll()
+        {
+            var skills = this.skillRepository.AllAsNoTracking().To<SkillViewModel>().ToList();
+            return skills;
         }
     }
 }

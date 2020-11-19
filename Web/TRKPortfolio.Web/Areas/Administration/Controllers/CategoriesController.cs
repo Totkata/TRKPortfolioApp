@@ -9,7 +9,9 @@
     using Microsoft.AspNetCore.Mvc;
     using TRKPortfolio.Services.Data.Contracts;
     using TRKPortfolio.Web.Areas.Administration.Controllers;
+    using TRKPortfolio.Web.ViewModels.Administration.Categories;
     using TRKPortfolio.Web.ViewModels.Administration.Categories.InputModel;
+    using TRKPortfolio.Web.ViewModels.Administration.Categories.ViewModel;
 
     public class CategoriesController : AdministrationController
     {
@@ -18,6 +20,15 @@
         public CategoriesController(ICategoriesService categoriesService)
         {
             this.categoriesService = categoriesService;
+        }
+
+        public IActionResult Categories()
+        {
+            var vm = new AllCategoriesViewModel
+            {
+                Categories = this.categoriesService.GetAll().ToList(),
+            };
+            return this.View(vm);
         }
 
         public IActionResult Create()
@@ -35,7 +46,7 @@
 
             await this.categoriesService.CreateAsync(inputModel);
 
-            return this.Redirect("/");
+            return this.Redirect("/Administration/Categories/Categories");
         }
     }
 }

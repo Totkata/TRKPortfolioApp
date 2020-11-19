@@ -7,6 +7,7 @@
 
     using Microsoft.AspNetCore.Mvc;
     using TRKPortfolio.Services.Data.Contracts;
+    using TRKPortfolio.Web.ViewModels.Administration.Skills.ViewModel;
     using TRKPortfolio.Web.ViewModels.Administration.Skills.InputModel;
 
     public class SkillsController : AdministrationController
@@ -16,6 +17,20 @@
         public SkillsController(ISkillsService skillsService)
         {
             this.skillsService = skillsService;
+        }
+
+        public IActionResult Skills()
+        {
+            var vm = new AllSkillsViewModel
+            {
+                Skills = this.skillsService.GetAll().ToList(),
+            };
+            return this.View(vm);
+        }
+
+        public IActionResult Create()
+        {
+            return this.View();
         }
 
         [HttpPost]

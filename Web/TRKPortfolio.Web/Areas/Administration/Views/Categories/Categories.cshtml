@@ -1,0 +1,25 @@
+﻿@using System.Globalization
+@using TRKPortfolio.Web.ViewModels.Administration.Categories.ViewModel
+@model AllCategoriesViewModel
+
+<div class="row d-flex vh-100">
+    <div class="col-md-4 offset-4 mt-5 align-self-center">
+        <div class="col-md-4 offset-4 mt-5 align-self-center">
+            <h1>Categories</h1>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Category Name</th>
+                </tr>
+                @foreach (var category in Model.Categories)
+                {
+                    <tr>
+                        <td>@category.Id</td>
+                        <td>@category.Name</td>
+                    </tr>
+                }
+            </table>
+            <a class="btn" asp-area="Administration" asp-controller="Categories" asp-action="Create">Create new Category</a>
+        </div>
+    </div>
+</div>

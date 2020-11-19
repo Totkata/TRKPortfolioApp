@@ -1,0 +1,24 @@
+﻿@using TRKPortfolio.Web.ViewModels.Administration.Skills.ViewModel
+@model AllSkillsViewModel
+
+<div class="row d-flex vh-100">
+    <div class="col-md-4 offset-4 mt-5 align-self-center">
+        <div class="col-md-4 offset-4 mt-5 align-self-center">
+            <h1>Skills</h1>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Skill Title</th>
+                </tr>
+                @foreach (var category in Model.Skills)
+                {
+                    <tr>
+                        <td>@category.Id</td>
+                        <td>@category.SkillTitle</td>
+                    </tr>
+                }
+            </table>
+            <a class="btn" asp-area="Administration" asp-controller="Skills" asp-action="Create">Create new Skill</a>
+        </div>
+    </div>
+</div>

@@ -9,7 +9,9 @@
     using TRKPortfolio.Data.Common.Repositories;
     using TRKPortfolio.Data.Models;
     using TRKPortfolio.Services.Data.Contracts;
+    using TRKPortfolio.Services.Mapping;
     using TRKPortfolio.Web.ViewModels.Administration.Categories.InputModel;
+    using TRKPortfolio.Web.ViewModels.Administration.Categories.ViewModel;
 
     public class CategoriesService : ICategoriesService
     {
@@ -36,6 +38,12 @@
                 await this.categoryRepository.AddAsync(category);
                 await this.categoryRepository.SaveChangesAsync();
             }
+        }
+
+        public IEnumerable<CategoryViewModel> GetAll()
+        {
+            var categories = this.categoryRepository.AllAsNoTracking().To<CategoryViewModel>().ToList();
+            return categories;
         }
     }
 }
