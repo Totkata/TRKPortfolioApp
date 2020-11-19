@@ -1,9 +1,200 @@
-﻿@using TRKPortfolio.Common
-@{
-    this.ViewData["Title"] = "Home Page";
+﻿@{
+    ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row d-flex vh-100">
+    <div class="col-lg-7 col-md-12 align-self-center">
+        <div class="tagline">
+            <h2>Hi,</h2>
+            <h2>I am <span class="name">Toti</span></h2>
+        </div>
+        <h1>Full-stack developer and web designer</h1>
+        <p class="col-lg-8 col-md-7 p-0">
+            Front-end, back-end developer / UI and Ux designer, based in Bulgaria,
+            providing web-based solutions for grown businesses and startup companies.
+        </p>
+        <div class="">
+            <a class="btn col-lg-4 col-md-5" href="#">Contact me</a>
+            <a class="" href="https://www.buymeacoffee.com/Toti" target="https://www.buymeacoffee.com/Toti">
+                <img src="https://img.buymeacoffee.com/button-api/?text=Buy
+                 me a coffee&emoji=&slug=Toti&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff">
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-5 align-self-center">
+        <img class="w-100" src="~/images/Hi.png" alt="Hi">
+    </div>
 </div>
+
+<div class="looking-for row">
+    <div class="col-lg-6 row">
+        <h3 class="text-center col-lg-12 col-sm-10">Looking for a developer ?</h3>
+        <p class="text-center col-lg-10 offset-lg-1 col-sm-8">
+            Quick-learning, hard-working, soon to be graduated web developer, with
+            many certificates and more to be added, with a great passion for tech in general.
+        </p>
+        <div class="col-lg-12 col-md-8">
+            <a id="secondary" class="btn col-lg-6 m-auto d-block" href="#">Let's code</a>
+        </div>
+        <div> <img class="d-md-none d-lg-block" src="~/images/developer.png" alt=""></div>
+    </div>
+    <div class="col-lg-6 align-self-center border-left">
+        <ul class="row justify-content-around">
+            <li><img img class="w-50" src="~/images/html-5.svg" alt=""></li>
+            <li><img img class="w-50" src="~/images/css3.svg" alt=""></li>
+            <li id=""><img img class="w-75" src="~/images/angular-icon.svg" alt=""></li>
+        </ul>
+        <ul class="row justify-content-around">
+            <li id=""><img class="w-75" src="~/images/dot-net-core-7.svg" alt=""></li>
+            <li id=""><img class="w-75" src="~/images/bootstrap-5-1.svg" alt=""></li>
+            <li id=""><img class="w-75" src="~/images/mysql-5.svg" alt=""></li>
+        </ul>
+    </div>
+</div>
+
+<div class="looking-for row">
+    <div class="col-lg-6 align-self-center border-right">
+        <ul class="row justify-content-around">
+            <li><img class="w-50" src="~/images/figma-1.svg" alt=""></li>
+            <li><img class="w-75" src="~/images/photoshop-cc-6.svg" alt=""></li>
+            <li><img class="w-75" src="~/images/adobe-illustrator-cc.svg" alt=""></li>
+        </ul>
+    </div>
+    <div class="col-6 row">
+        <h3 class="text-center col-lg-12 col-sm-10 m-auto pb-2">Looking for a designer ?</h3>
+        <p class="text-center col-lg-8 col-sm-7 m-auto">
+            Certificated graphic designer, who brings a lot of passion for designs, with
+            over three years of experience, specializes in web design.
+        </p>
+        <div class="col-lg-12 col-md-8 m-auto d-block mt-4 pt-lg-3">
+            <a id="secondary" class="btn col-6 m-auto d-block" href="#">Let's design</a>
+        </div>
+        <div class="photo col-lg-12 col-md-8"> <img class="photo col-lg-8 offset-4 col-md-8" src="~/images/shy.png" alt=""></div>
+    </div>
+</div>
+
+<div class="row projects">
+    <h3 class="text-center col-lg-12 col-sm-10 align-self-center">Projects</h3>
+    <div class="col-1"></div>
+    <div class="col-lg-10 row">
+        <div class="col-lg-6">
+            <img class="w-100" src="~/images/Instinctae.png" alt="">
+        </div>
+        <div class="col-lg-6">
+            <h4 class="col-12">Instinctae logo design</h4>
+            <p class="col-12">
+                Change the color to match your brand or vision, add your logo,
+                choose the perfect thumbnail, remove the playbar, add speed controls,
+                and more. Increase engagement with CTAs and custom end screens,
+                or keep your video private and password-protected.
+            </p>
+            <div class="col-12 row">
+                <a class="btn col-5 m-auto d-block" href="#">View case study</a>
+                <a class="btn col-5 m-auto d-block" href="#">See all projects</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-1"></div>
+</div>
+
+<div class="row testemonials">
+    <div class="col-1"></div>
+    <div class="col-lg-10 row">
+        <h3 class="text-center col-12">Testemonials</h3>
+        <div class="col-12">
+            <img class="align-self-center" src="#" alt="Photo" />
+        </div>
+        <p class="text-center col-8 offset-2">
+            “The angle of perspective he adds to his work are very compelling
+            and noteworthy. Teofil is a very Cooperative person, and it was very
+            easy to communicate the requirement to him as he was very swift to
+            understand the nuances of the requirement and render it nicely.”
+        </p>
+    </div>
+    <div class="col-1"></div>
+</div>
+
+@if (this.User.Identity.IsAuthenticated)
+{
+
+}
+else
+{
+    <div class="row inputForm">
+        <div class="col-lg-6 align-self-center">
+            <form method="post" action="/Identity/Account/Register" novalidate="novalidate">
+                <h4 class="text-center col-12">Create a new account.</h4>
+                <div class="text-danger validation-summary-valid" data-valmsg-summary="true">
+                    <ul>
+                        <li style="display:none"></li>
+                    </ul>
+                </div>
+                <div class="form-group row col-lg-8 offset-lg-2">
+                    <label for="Input_Username">Username</label>
+                    <input id="customeInput" class="form-control" type="text" data-val="true" data-val-length-min="The username is too short" data-val-required="The Username field is required." id="Input_Username" name="Input.Username" value="" placeholder="Username">
+                    <span class="text-danger field-validation-valid" data-valmsg-for="Input.Username" data-valmsg-replace="true"></span>
+                </div>
+
+                <div class="form-group row col-lg-8 offset-lg-2">
+                    <label for="Input_Email">Email</label>
+                    <input id="customeInput" class="form-control" type="email" data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required." id="Input_Email" name="Input.Email" value="" placeholder="Email">
+                    <span class="text-danger field-validation-valid" data-valmsg-for="Input.Email" data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group row col-lg-8 offset-lg-2">
+                    <label for="Input_Password">Password</label>
+                    <input id="customeInput" class="form-control" type="password" data-val="true" data-val-length="The Password must be at least 6 and at max 100 characters long." data-val-length-max="100" data-val-length-min="6" data-val-required="The Password field is required." id="Input_Password" maxlength="100" name="Input.Password" placeholder="Password">
+                    <span class="text-danger field-validation-valid" data-valmsg-for="Input.Password" data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group row col-lg-8 offset-lg-2">
+                    <label for="Input_ConfirmPassword">Confirm password</label>
+                    <input id="customeInput" class="form-control" type="password" data-val="true" data-val-equalto="The password and confirmation password do not match." data-val-equalto-other="*.Password" id="Input_ConfirmPassword" name="Input.ConfirmPassword" placeholder="Confirm password">
+                    <span class="text-danger field-validation-valid" data-valmsg-for="Input.ConfirmPassword" data-valmsg-replace="true"></span>
+                </div>
+                <button id="secondary" type="submit" class="btn btn-primary row col-lg-8 offset-lg-2">Register</button>
+                <button id="secondary" type="submit" class="btn btn-primary mt-3 col-lg-8 offset-lg-2" name="provider" value="Google" title="Log in using your Google account">Sign up using your Google account</button>
+                <input name="__RequestVerificationToken" type="hidden" value="CfDJ8NVMXcB6z2dCpX97KgN1v76ZHMZEYIp-AkSGUTZzcv0dwi-U7R4NkQvcnoPiVbnDK6bvmrCFhHDgCKh9InmAUIMDvvUkOHIgE804DxNNv-vKWE_3jHeVFrvfZYmUJBDyZZR_O5U76ogRpQQlwMeJSMM">
+            </form>
+        </div>
+        <div class="col-lg-6 align-self-center">
+            <h4 class="text-center col-12">Already having an account</h4>
+            <form id="account" method="post" novalidate="novalidate">
+                <div class="text-danger validation-summary-valid" data-valmsg-summary="true">
+                    <ul>
+                        <li style="display:none"></li>
+                    </ul>
+                </div>
+                <div class="form-group row col-lg-8 offset-lg-2">
+                    <label for="Input_Email">Email</label>
+                    <input id="customeInput" class="form-control" type="email" data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required." id="Input_Email" name="Input.Email" value="">
+                    <span class="text-danger field-validation-valid" data-valmsg-for="Input.Email" data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group row col-lg-8 offset-lg-2">
+                    <label for="Input_Password">Password</label>
+                    <input id="customeInput" class="form-control" type="password" data-val="true" data-val-required="The Password field is required." id="Input_Password" name="Input.Password">
+                    <span class="text-danger field-validation-valid" data-valmsg-for="Input.Password" data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group row col-lg-8 offset-lg-2">
+                    <div class="checkbox">
+                        <label for="Input_RememberMe">
+                            <input type="checkbox" data-val="true" data-val-required="The Remember me? field is required." id="Input_RememberMe" name="Input.RememberMe" value="true">
+                            Remember me?
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button id="secondary" type="submit" class="btn btn-primary col-lg-8 offset-lg-2">Log in</button>
+                    <button id="secondary" type="submit" class="btn btn-primary mt-3 col-lg-8 offset-lg-2" name="provider" value="Google" title="Log in using your Google account">Log in using your Google account</button>
+                </div>
+                <div class="form-group col-lg-8 offset-lg-2">
+                    <p>
+                        <a id="forgot-password" href="/Identity/Account/ForgotPassword">Forgot your password?</a>
+                    </p>
+                    <p>
+                        <a href="/Identity/Account/Register?returnUrl=%2F">Register as a new user</a>
+                    </p>
+                </div>
+                <input name="__RequestVerificationToken" type="hidden" value="CfDJ8NVMXcB6z2dCpX97KgN1v75KsGphNIDsadd7oBDbwV2dwGYtDSBMpC1dylqGOEAl0VZubfP6NPuJDLSTRyOFgcRUCYlIcjHNlc0ruwdDzH6QJYpDwFMHzNR8QozKXHuCnw7B_lvc_czJ9lEWtbmNoTY"><input name="Input.RememberMe" type="hidden" value="false">
+            </form>
+        </div>
+    </div>
+}

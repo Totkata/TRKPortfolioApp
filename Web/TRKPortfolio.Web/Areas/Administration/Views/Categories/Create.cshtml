@@ -7,15 +7,16 @@
 }
 <vc:header></vc:header>
 
-<div class="container mt-4">
-    <form enctype="multipart/form-data" asp-area="Administration" asp-controller="Categories" asp-action="Create" method="post">
-        <div class="form-group">
-            <label asp-for="@Model.Name"></label>
-            <input asp-for="@Model.Name" class="form-control" >
-            <span asp-validation-for="@Model.Name" class="text-danger"></span>
-        </div>
-        <br />
-        <button type="submit" class="btn btn-primary btn-lg btn-block">Create</button>
-    </form>
+<div class="row d-flex vh-100">
+    <div class="col-md-4 offset-4 mt-5 align-self-center">
+        <form enctype="multipart/form-data" asp-area="Administration" asp-controller="Categories" asp-action="Create" method="post">
+            <div class="form-group">
+                <h3 class="mb-3 text-center">Input your new Category</h3>
+                <input id="customeInput" asp-for="@Model.Name" class="form-control" placeholder="Category Name">
+                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+            </div>
+            <a class="btn col-12" onclick="this.closest('form').submit();return false;">Create new category</a>
+        </form>
+    </div>
 </div>
 
