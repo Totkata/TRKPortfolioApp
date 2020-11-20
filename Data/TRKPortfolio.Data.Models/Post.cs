@@ -13,7 +13,6 @@
             this.PostCategories = new HashSet<PostCategory>();
             this.Comments = new HashSet<Comment>();
             this.PostLikes = new HashSet<PostLike>();
-            this.Paragraphs = new HashSet<Paragraph>();
             this.PostSaves = new HashSet<PostSave>();
         }
 
@@ -29,7 +28,7 @@
 
         public int Views { get; set; }
 
-        public virtual ICollection<Paragraph> Paragraphs { get; set; }
+        public string Text { get; set; }
 
         public virtual ICollection<PostCategory> PostCategories { get; set; }
 

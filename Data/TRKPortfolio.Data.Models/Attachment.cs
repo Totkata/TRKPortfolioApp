@@ -11,14 +11,11 @@
         public Attachment()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.ParagraphAttachments = new HashSet<ParagraphAttachment>();
             this.ProjectAttachments = new HashSet<ProjectAttachment>();
             this.TestimonialAttachments = new HashSet<TestimonialAttachment>();
         }
 
         public string Extention { get; set; }
-
-        public virtual ICollection<ParagraphAttachment> ParagraphAttachments { get; set; }
 
         public virtual ICollection<ProjectAttachment> ProjectAttachments { get; set; }
 

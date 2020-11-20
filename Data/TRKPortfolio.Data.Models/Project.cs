@@ -10,7 +10,6 @@
     {
         public Project()
         {
-            this.Paragraphs = new HashSet<Paragraph>();
             this.ProjectAttachments = new HashSet<ProjectAttachment>();
             this.ProjectCategories = new HashSet<ProjectCategory>();
             this.Skills = new HashSet<Skill>();
@@ -23,8 +22,6 @@
         public string ApplicationUserId { get; set; }
 
         public virtual ApplicationUser Customer { get; set; }
-
-        public virtual ICollection<Paragraph> Paragraphs { get; set; }
 
         public virtual ICollection<ProjectAttachment> ProjectAttachments { get; set; }
 

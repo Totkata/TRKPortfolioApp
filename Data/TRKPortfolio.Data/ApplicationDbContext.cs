@@ -31,10 +31,6 @@
 
         public DbSet<CommentLike> CommentLikes { get; set; }
 
-        public DbSet<Paragraph> Paragraphs { get; set; }
-
-        public DbSet<ParagraphAttachment> ParagraphAttachments { get; set; }
-
         public DbSet<Post> Posts { get; set; }
 
         public DbSet<PostCategory> PostCategories { get; set; }
@@ -109,9 +105,6 @@
             }
 
             // Set composite keys
-            builder.Entity<ParagraphAttachment>()
-                .HasKey(k => new { k.ParagraphId, k.AttachmentId });
-
             builder.Entity<ProjectAttachment>()
                .HasKey(k => new { k.ProjectId, k.AttachmentId });
 
