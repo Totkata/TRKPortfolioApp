@@ -26,21 +26,23 @@
 
         public async Task CreateAsync(CreatePostInputModel inputModel)
         {
+            StringBuilder sb = new StringBuilder();
+
+            int maxLenght = inputModel.Description.Length > 75 ? 75 : inputModel.Description.Length;
+            sb.Append(inputModel.Description.Substring(0, maxLenght));
+            sb.Append("...");
+
             var post = new Post
             {
                 Title = inputModel.Title,
                 Description = inputModel.Description,
+                ShortDescription = sb.ToString(),
                 Text = inputModel.Text,
             };
 
-            foreach (var inputCategory in inputModel.Categories)
+            foreach (var inputCategory in inputModel.CategoryId)
             {
-                var category = this.categoryRepo.All().FirstOrDefault(x => x.Name == inputCategory.Name);
-
-                if (category == null)
-                {
-                    category = new Category { Name = inputCategory.Name };
-                }
+                var category = this.categoryRepo.All().FirstOrDefault(x => x.Id == inputCategory);
 
                 post.PostCategories.Add(new PostCategory
                 {

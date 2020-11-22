@@ -13,5 +13,7 @@
         Task CreateAsync(CreateCategoryInputModel input);
 
         IEnumerable<CategoryViewModel> GetAll();
+
+        IEnumerable<KeyValuePair<string, string>> GetAllAsKeyValuePairs();
     }
 }

@@ -4,40 +4,39 @@
 
 @{
     this.ViewData["Title"] = "Create Category";
+    var categoryItems = this.Model.CategoriesItems.Select(x => new SelectListItem(x.Value, x.Key));
 }
 
 <div class="row d-flex vh-100">
-    <div class="col-md-4 offset-4 mt-5 align-self-center">
+    <div class="col-md-6 offset-3 mt-5 align-self-center">
         <form enctype="multipart/form-data" asp-area="Administration" asp-controller="Posts" asp-action="Create" method="post">
+            <h3 class="mb-3 text-center">Input your new Post</h3>
             <div class="form-group">
-                <h3 class="mb-3 text-center">Input your new Post</h3>
+                <label>Post Title</label>
                 <input id="customeInput" asp-for="@Model.Title" class="form-control" placeholder="Post Title">
                 <span asp-validation-for="@Model.Title" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label>Describtion</label>
                 <input id="customeInput" asp-for="@Model.Description" class="form-control" placeholder="Description">
                 <span asp-validation-for="@Model.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input id="customeInput" asp-for="@Model.Text" class="form-control" placeholder="Write content here">
+                <label>Post Content</label>
+                <textarea cols="40" rows="5"  id="customeInput" asp-for="@Model.Text" class="form-control h-100" placeholder="Write content here"></textarea>
+                @*<input id="customeInput" asp-for="@Model.Text" class="form-control" placeholder="Write content here">*@
                 <span asp-validation-for="@Model.Text" class="text-danger"></span>
             </div>
-            <div id="CategoriesContainer">
-                <label asp-for="Categories"></label>
-                <a class="btn btn-success" onclick="AddMoreCategories()">+</a>
+            @*<div id="CategoriesContainer">
+            <a id="secondary" class="btn mb-3 col-12" onclick="AddMoreCategories()">
+                <label asp-for="Categories" class="m-0">Add Categories</label>
+            </a>
+        </div>*@
+            <div class="form-group">
+                <h5>Hold Ctrl to select multiple categories</h5>
+                <select asp-for="CategoryId" class="form-control" asp-items="categoryItems" multiple></select>
             </div>
             <a class="btn col-12" onclick="this.closest('form').submit();return false;">Create Post</a>
         </form>
     </div>
 </div>
-
-@section Scripts {
-    <script>
-        var categoryIndex = 0;
-        function AddMoreCategories() {
-            $("#CategoriesContainer").
-                append("<div class='form-control'>Name: <input type='text' name='Categories[" + categoryIndex + "].Name' /></div>");
-            categoryIndex++;
-        }
-    </script>
-}

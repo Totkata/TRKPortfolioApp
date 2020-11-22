@@ -2,20 +2,34 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Text;
-
-    using TRKPortfolio.Web.ViewModels.Administration.Categories.InputModel;
 
     public class CreatePostInputModel
     {
+        private const string TitleErrorMessage = "Title must be between 10 and 30 (including) symbols!";
+        private const string DescriptionErrorMessage = "Description must be between 50 and 250 symbols!";
+        private const string ContentInputErrorMessage = "Content text must be at least 100 symbols!";
+
+        [Required]
+        [DataType(DataType.Text)]
+        [StringLength(30, MinimumLength = 10, ErrorMessage = TitleErrorMessage)]
         public string Title { get; set; }
 
+        [Required]
+        [DataType(DataType.MultilineText)]
+        [StringLength(250, MinimumLength = 50, ErrorMessage = DescriptionErrorMessage)]
         public string Description { get; set; }
 
+        [Required]
+        [DataType(DataType.MultilineText)]
+        [StringLength(int.MaxValue, MinimumLength = 100, ErrorMessage = ContentInputErrorMessage)]
         public string Text { get; set; }
 
-        public virtual ICollection<CreateCategoryInputModel> Categories { get; set; }
+        [Required]
+        public int[] CategoryId { get; set; } // ToDo: Make to select many from dropDown menu!!!
 
-        // public int CategoryId { get; set; }   //ToDo: Make to select many from dropDown menu!!!
+        // View part
+        public IEnumerable<KeyValuePair<string, string>> CategoriesItems { get; set; }
     }
 }
