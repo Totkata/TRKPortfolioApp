@@ -7,13 +7,13 @@
 
     public class CreatePostInputModel
     {
-        private const string TitleErrorMessage = "Title must be between 10 and 30 (including) symbols!";
+        private const string TitleErrorMessage = "Title must be between 5 and 30 (including) symbols!";
         private const string DescriptionErrorMessage = "Description must be between 50 and 250 symbols!";
         private const string ContentInputErrorMessage = "Content text must be at least 100 symbols!";
 
         [Required]
         [DataType(DataType.Text)]
-        [StringLength(30, MinimumLength = 10, ErrorMessage = TitleErrorMessage)]
+        [StringLength(30, MinimumLength = 5, ErrorMessage = TitleErrorMessage)]
         public string Title { get; set; }
 
         [Required]

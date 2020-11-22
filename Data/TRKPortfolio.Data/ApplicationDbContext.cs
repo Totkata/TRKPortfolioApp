@@ -23,6 +23,8 @@
         {
         }
 
+        public DbSet<Paragraph> Paragraphs { get; set; }
+
         public DbSet<Attachment> Attachments { get; set; }
 
         public DbSet<Category> Categories { get; set; }
@@ -103,6 +105,10 @@
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
+
+            builder.Entity<Paragraph>()
+            .HasOne(p => p.Post)
+            .WithMany(b => b.Paragraphs);
 
             // Set composite keys
             builder.Entity<ProjectAttachment>()

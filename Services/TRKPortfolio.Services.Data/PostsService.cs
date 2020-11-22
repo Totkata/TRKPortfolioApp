@@ -15,13 +15,16 @@
     {
         private readonly IDeletableEntityRepository<Post> postRepo;
         private readonly IDeletableEntityRepository<Category> categoryRepo;
+        private readonly IDeletableEntityRepository<Paragraph> paragraphRepo;
 
         public PostsService(
             IDeletableEntityRepository<Post> postRepo,
-            IDeletableEntityRepository<Category> categoryRepo)
+            IDeletableEntityRepository<Category> categoryRepo,
+            IDeletableEntityRepository<Paragraph> paragraphRepo)
         {
             this.postRepo = postRepo;
             this.categoryRepo = categoryRepo;
+            this.paragraphRepo = paragraphRepo;
         }
 
         public async Task CreateAsync(CreatePostInputModel inputModel)
@@ -37,7 +40,6 @@
                 Title = inputModel.Title,
                 Description = inputModel.Description,
                 ShortDescription = sb.ToString(),
-                Text = inputModel.Text,
             };
 
             foreach (var inputCategory in inputModel.CategoryId)
@@ -47,6 +49,18 @@
                 post.PostCategories.Add(new PostCategory
                 {
                     Category = category,
+                });
+            }
+
+            // ToDo Make better paragraph splitting
+            var splitedInput = inputModel.Text.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+
+            for (int i = 0; i < splitedInput.Length; i += 2)
+            {
+                post.Paragraphs.Add(new Paragraph
+                {
+                    Title = splitedInput[i],
+                    Content = splitedInput[i + 1],
                 });
             }
 
