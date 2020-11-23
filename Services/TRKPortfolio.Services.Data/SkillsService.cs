@@ -45,5 +45,15 @@
             var skills = this.skillRepository.AllAsNoTracking().To<SkillViewModel>().ToList();
             return skills;
         }
+
+        public IEnumerable<KeyValuePair<string, string>> GetAllAsKeyValuePairs()
+        {
+            return this.skillRepository.AllAsNoTracking()
+                .Select(x => new
+                {
+                    x.Id,
+                    x.SkillTitle,
+                }).ToList().Select(x => new KeyValuePair<string, string>(x.Id.ToString(), x.SkillTitle));
+        }
     }
 }

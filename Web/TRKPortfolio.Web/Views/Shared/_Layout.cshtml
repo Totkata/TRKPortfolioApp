@@ -23,25 +23,31 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="...." asp-action="Services">Services</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="...." asp-action="Projects">Projects</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="...." asp-action="About">About</a>
-                        </li>
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="Administration" asp-controller="Posts" asp-action="Create">Blog</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" asp-area="Administration" asp-controller="Projects" asp-action="Create">Blog</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" asp-area="Administration" asp-controller="Skills" asp-action="Create">Skill</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="Administration" asp-controller="Categories" asp-action="Create">Category</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="...." asp-action="Services">Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="...." asp-action="Projects">Projects</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="...." asp-action="About">About</a>
                             </li>
                         }
                     </ul>

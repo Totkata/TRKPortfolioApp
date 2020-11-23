@@ -41,6 +41,8 @@
 
         public DbSet<PostSave> PostSaves { get; set; }
 
+        public DbSet<PostParagraph> PostParagraphs { get; set; }
+
         public DbSet<Project> Projects { get; set; }
 
         public DbSet<ProjectAttachment> ProjectAttachments { get; set; }
@@ -50,6 +52,10 @@
         public DbSet<ProjectLike> ProjectLikes { get; set; }
 
         public DbSet<ProjectSave> ProjectSaves { get; set; }
+
+        public DbSet<ProjectSkill> ProjectSkills { get; set; }
+
+        public DbSet<ProjectParagraph> ProjectParagraphs { get; set; }
 
         public DbSet<Skill> Skills { get; set; }
 
@@ -106,10 +112,6 @@
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
 
-            builder.Entity<Paragraph>()
-            .HasOne(p => p.Post)
-            .WithMany(b => b.Paragraphs);
-
             // Set composite keys
             builder.Entity<ProjectAttachment>()
                .HasKey(k => new { k.ProjectId, k.AttachmentId });
@@ -122,6 +124,15 @@
 
             builder.Entity<ProjectCategory>()
                .HasKey(k => new { k.ProjectId, k.CategoryId });
+
+            builder.Entity<ProjectSkill>()
+               .HasKey(k => new { k.ProjectId, k.SkillId });
+
+            builder.Entity<PostParagraph>()
+              .HasKey(k => new { k.PostId, k.ParagraphId });
+
+            builder.Entity<ProjectParagraph>()
+              .HasKey(k => new { k.ProjectId, k.ParagraphId });
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)

@@ -13,5 +13,7 @@
         Task CreateAsync(CreateSkillInputModel input);
 
         IEnumerable<SkillViewModel> GetAll();
+
+        IEnumerable<KeyValuePair<string, string>> GetAllAsKeyValuePairs();
     }
 }

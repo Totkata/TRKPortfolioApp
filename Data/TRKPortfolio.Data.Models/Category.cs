@@ -16,7 +16,7 @@
 
         public string Name { get; set; }
 
-        public ICollection<PostCategory> PostCategories { get; set; }
+        public virtual ICollection<PostCategory> PostCategories { get; set; }
 
         public virtual ICollection<ProjectCategory> ProjectCategories { get; set; }
     }

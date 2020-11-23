@@ -396,17 +396,12 @@ namespace TRKPortfolio.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
-
-                    b.HasIndex("PostId");
 
                     b.ToTable("Paragraphs");
                 });
@@ -500,6 +495,21 @@ namespace TRKPortfolio.Data.Migrations
                     b.ToTable("PostLikes");
                 });
 
+            modelBuilder.Entity("TRKPortfolio.Data.Models.PostParagraph", b =>
+                {
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ParagraphId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PostId", "ParagraphId");
+
+                    b.HasIndex("ParagraphId");
+
+                    b.ToTable("PostParagraphs");
+                });
+
             modelBuilder.Entity("TRKPortfolio.Data.Models.PostSave", b =>
                 {
                     b.Property<int>("Id")
@@ -547,6 +557,9 @@ namespace TRKPortfolio.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -556,11 +569,17 @@ namespace TRKPortfolio.Data.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int>("TestimonialId")
+                    b.Property<string>("ShortDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TestimonialId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Views")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -634,6 +653,21 @@ namespace TRKPortfolio.Data.Migrations
                     b.ToTable("ProjectLikes");
                 });
 
+            modelBuilder.Entity("TRKPortfolio.Data.Models.ProjectParagraph", b =>
+                {
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ParagraphId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProjectId", "ParagraphId");
+
+                    b.HasIndex("ParagraphId");
+
+                    b.ToTable("ProjectParagraphs");
+                });
+
             modelBuilder.Entity("TRKPortfolio.Data.Models.ProjectSave", b =>
                 {
                     b.Property<int>("Id")
@@ -668,6 +702,21 @@ namespace TRKPortfolio.Data.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("ProjectSaves");
+                });
+
+            modelBuilder.Entity("TRKPortfolio.Data.Models.ProjectSkill", b =>
+                {
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SkillId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProjectId", "SkillId");
+
+                    b.HasIndex("SkillId");
+
+                    b.ToTable("ProjectSkills");
                 });
 
             modelBuilder.Entity("TRKPortfolio.Data.Models.Setting", b =>
@@ -721,17 +770,12 @@ namespace TRKPortfolio.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ProjectId")
-                        .HasColumnType("int");
-
                     b.Property<string>("SkillTitle")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
-
-                    b.HasIndex("ProjectId");
 
                     b.ToTable("Skills");
                 });
@@ -869,15 +913,6 @@ namespace TRKPortfolio.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TRKPortfolio.Data.Models.Paragraph", b =>
-                {
-                    b.HasOne("TRKPortfolio.Data.Models.Post", "Post")
-                        .WithMany("Paragraphs")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("TRKPortfolio.Data.Models.Post", b =>
                 {
                     b.HasOne("TRKPortfolio.Data.Models.ApplicationUser", "ApplicationUser")
@@ -913,6 +948,21 @@ namespace TRKPortfolio.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TRKPortfolio.Data.Models.PostParagraph", b =>
+                {
+                    b.HasOne("TRKPortfolio.Data.Models.Paragraph", "Paragraph")
+                        .WithMany("PostParagraphs")
+                        .HasForeignKey("ParagraphId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TRKPortfolio.Data.Models.Post", "Post")
+                        .WithMany("PostParagraphs")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("TRKPortfolio.Data.Models.PostSave", b =>
                 {
                     b.HasOne("TRKPortfolio.Data.Models.ApplicationUser", "ApplicationUser")
@@ -934,9 +984,7 @@ namespace TRKPortfolio.Data.Migrations
 
                     b.HasOne("TRKPortfolio.Data.Models.Testimonial", "Testimonial")
                         .WithMany()
-                        .HasForeignKey("TestimonialId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("TestimonialId");
                 });
 
             modelBuilder.Entity("TRKPortfolio.Data.Models.ProjectAttachment", b =>
@@ -982,6 +1030,21 @@ namespace TRKPortfolio.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TRKPortfolio.Data.Models.ProjectParagraph", b =>
+                {
+                    b.HasOne("TRKPortfolio.Data.Models.Paragraph", "Paragraph")
+                        .WithMany("ProjectParagraphs")
+                        .HasForeignKey("ParagraphId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TRKPortfolio.Data.Models.Project", "Project")
+                        .WithMany("ProjectParagraphs")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("TRKPortfolio.Data.Models.ProjectSave", b =>
                 {
                     b.HasOne("TRKPortfolio.Data.Models.ApplicationUser", "ApplicationUser")
@@ -999,11 +1062,19 @@ namespace TRKPortfolio.Data.Migrations
                         .HasForeignKey("ProjectId");
                 });
 
-            modelBuilder.Entity("TRKPortfolio.Data.Models.Skill", b =>
+            modelBuilder.Entity("TRKPortfolio.Data.Models.ProjectSkill", b =>
                 {
-                    b.HasOne("TRKPortfolio.Data.Models.Project", null)
-                        .WithMany("Skills")
-                        .HasForeignKey("ProjectId");
+                    b.HasOne("TRKPortfolio.Data.Models.Project", "Project")
+                        .WithMany("ProjectSkills")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TRKPortfolio.Data.Models.Skill", "Skill")
+                        .WithMany()
+                        .HasForeignKey("SkillId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TRKPortfolio.Data.Models.Testimonial", b =>
