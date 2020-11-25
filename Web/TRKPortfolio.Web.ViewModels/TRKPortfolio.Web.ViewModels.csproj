@@ -23,4 +23,8 @@
     <ProjectReference Include="..\..\Services\TRKPortfolio.Services.Mapping\TRKPortfolio.Services.Mapping.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Testimonials\ViewModel\" />
+  </ItemGroup>
+
 </Project>

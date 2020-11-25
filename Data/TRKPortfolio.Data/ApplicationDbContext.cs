@@ -61,7 +61,7 @@
 
         public DbSet<Testimonial> Testimonials { get; set; }
 
-        public DbSet<TestimonialAttachment> TestimonialAttachments { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
 
         public DbSet<Setting> Settings { get; set; }
 
@@ -113,11 +113,13 @@
             }
 
             // Set composite keys
+            builder.Entity<Testimonial>()
+            .HasOne(b => b.Rating)
+            .WithOne(i => i.Testimonial)
+            .HasForeignKey<Rating>(b => b.TestimonialId);
+
             builder.Entity<ProjectAttachment>()
                .HasKey(k => new { k.ProjectId, k.AttachmentId });
-
-            builder.Entity<TestimonialAttachment>()
-               .HasKey(k => new { k.TestimonialId, k.AttachmentId });
 
             builder.Entity<PostCategory>()
                .HasKey(k => new { k.PostId, k.CategoryId });

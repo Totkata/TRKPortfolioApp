@@ -9,7 +9,7 @@
     var customers = this.Model.Customers.Select(x => new SelectListItem(x.Value, x.Key));
 }
 
-<div class="row d-flex vh-100">
+<div class="row d-flex">
     <div class="col-md-6 offset-3 mt-5 align-self-center">
         <form enctype="multipart/form-data" asp-area="Administration" asp-controller="Projects" asp-action="Create" method="post">
             <h3 class="mb-3 text-center">Input your new Project</h3>
@@ -28,17 +28,19 @@
                 <textarea cols="40" rows="5" id="customeInput" asp-for="@Model.Text" class="form-control h-100" placeholder="Write content here"></textarea>
                 <span asp-validation-for="@Model.Text" class="text-danger"></span>
             </div>
-
-            <div class="form-group">
-                <h5>Hold Ctrl to select multiple categories</h5>
-                <select asp-for="CategoryId" class="form-control" asp-items="categoryItems" multiple></select>
+            <div id="select_many">
+                <label>Select categories</label>
+                <div class="form-group">
+                    <select asp-for="CategoryId" class="form-control" asp-items="categoryItems" multiple></select>
+                </div>
+                <label>Select skills</label>
+                <div class="form-group">
+                    <select asp-for="SkillId" class="form-control" asp-items="skills" multiple></select>
+                </div>
             </div>
+            <p>Hold Ctrl to select more than one</p>
             <div class="form-group">
-                <h5>Hold Ctrl to select multiple categories</h5>
-                <select asp-for="SkillId" class="form-control" asp-items="skills" multiple></select>
-            </div>
-            <div class="form-group">
-                <h5>Hold Ctrl to select multiple categories</h5>
+                <h5>Select customer here</h5>
                 <select asp-for="CustomerId" class="form-control" asp-items="customers"></select>
             </div>
             <a class="btn col-12" onclick="this.closest('form').submit();return false;">Create Project</a>
