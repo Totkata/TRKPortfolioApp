@@ -136,6 +136,15 @@ ul {
     margin-top:5rem !important;
 }
 
+body > div > main > div.row.d-flex.project {
+    height: 50vh;
+}
+
+body > div > main > div.row.justify-content-center > h1 {
+    height: 13vh;
+    margin-top: 5rem;
+}
+
 @media only screen and (max-width: 991px) {
     nav {
         position: static !important;

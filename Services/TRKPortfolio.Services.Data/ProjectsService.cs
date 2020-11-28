@@ -1,5 +1,6 @@
 ﻿namespace TRKPortfolio.Services.Data
 {
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -9,26 +10,25 @@
     using TRKPortfolio.Data.Common.Repositories;
     using TRKPortfolio.Data.Models;
     using TRKPortfolio.Services.Data.Contracts;
+    using TRKPortfolio.Services.Mapping;
     using TRKPortfolio.Web.ViewModels.Administration.Projects.InputModel;
+    using TRKPortfolio.Web.ViewModels.Projects.ViewModel;
 
     public class ProjectsService : IProjectsService
     {
         private readonly IDeletableEntityRepository<Project> projectRepo;
         private readonly IDeletableEntityRepository<Category> categoryRepo;
-        private readonly IDeletableEntityRepository<Paragraph> paragraphRepo;
         private readonly IDeletableEntityRepository<Skill> skillRepo;
         private readonly IDeletableEntityRepository<ApplicationUser> userRepo;
 
         public ProjectsService(
             IDeletableEntityRepository<Project> projectRepo,
             IDeletableEntityRepository<Category> categoryRepo,
-            IDeletableEntityRepository<Paragraph> paragraphRepo,
             IDeletableEntityRepository<Skill> skillRepo,
             IDeletableEntityRepository<ApplicationUser> userRepo)
         {
             this.projectRepo = projectRepo;
             this.categoryRepo = categoryRepo;
-            this.paragraphRepo = paragraphRepo;
             this.skillRepo = skillRepo;
             this.userRepo = userRepo;
         }
@@ -86,6 +86,22 @@
 
             await this.projectRepo.AddAsync(project);
             await this.projectRepo.SaveChangesAsync();
+        }
+
+        public IEnumerable<T> GetAll<T>()
+        {
+            var projects = this.projectRepo.AllAsNoTracking()
+               .To<T>().ToList();
+            return projects;
+        }
+
+        public T GetById<T>(int id)
+        {
+            var project = this.projectRepo.AllAsNoTracking()
+                .Where(x => x.Id == id)
+                .To<T>().FirstOrDefault();
+
+            return project;
         }
     }
 }

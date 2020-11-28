@@ -1,0 +1,59 @@
+﻿@using TRKPortfolio.Web.ViewModels.Projects.ViewModel
+@model ProjectListViewModel
+
+
+@if (Model.Projects.Count() == 1)
+{
+    var project = Model.Projects.FirstOrDefault();
+
+    <div class="row d-flex vh-100">
+        <div class="col-lg-6 col-md-12 align-self-center">
+            <h2><a asp-action="Detail" asp-route-id="@project.Id">@project.Title</a></h2>
+            <p>@project.Description</p>
+        </div>
+        <div class="col-lg-6 align-self-center">
+            <img class="w-100" src="~/images/Hi.png" alt="Hi">
+        </div>
+    </div>
+}
+else
+{
+    <div class="row justify-content-center">
+        <h1>Projects</h1>
+    </div>
+    for (int i = 0; i < Model.Projects.Count(); i++)
+    {
+        var project = Model.Projects.ElementAt(i);
+
+        if (i % 2 == 0)
+        {
+            <div class="row d-flex project">
+                <a class="col-lg-6 col-md-12 align-self-center" asp-action="Detail" asp-route-id="@project.Id">
+                    <h2>
+                        @project.Title
+                    </h2>
+                    <p>@project.Description</p>
+                    <p>@project.CustomerUsername</p>
+                </a>
+                <div class="col-lg-6 align-self-center">
+                    <img class="w-100" src="~/images/Hi.png" alt="Hi">
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row d-flex project">
+                <div class="col-lg-6 align-self-center">
+                    <img class="w-100" src="~/images/Hi.png" alt="Hi">
+                </div>
+                <a class="col-lg-6 col-md-12 align-self-center" asp-action="Detail" asp-route-id="@project.Id">
+                    <h2>
+                        @project.Title
+                    </h2>
+                    <p>@project.Description</p>
+                    <p>@project.CustomerUsername</p>
+                </a>
+            </div>
+        }
+    }
+}

@@ -1,0 +1,51 @@
+﻿@using System.Globalization
+@using TRKPortfolio.Web.ViewModels.Testimonials.InputModel
+@model CreateTestimonialInputModel
+
+@{
+    this.ViewData["Title"] = "Create Category";
+}
+<vc:header></vc:header>
+
+<div class="row d-flex vh-100">
+    <div class="col-md-4 offset-4 mt-5 align-self-center">
+        <form enctype="multipart/form-data" asp-area="" asp-controller="Projects" asp-action="Create" method="post">
+            <div class="form-group">
+                <h3 class="mb-3 text-center">Testimonial</h3>
+                <input id="customeInput" asp-for="@Model.Text" class="form-control" placeholder="Testimonial">
+                <span asp-validation-for="@Model.Text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <h3 class="mb-3 text-center">WK</h3>
+                <input id="customeInput" asp-for="@Model.WorkQualityRating" class="form-control" placeholder="">
+                <span asp-validation-for="@Model.WorkQualityRating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <h3 class="mb-3 text-center">SR</h3>
+                <input id="customeInput" asp-for="@Model.SkillRating" class="form-control" placeholder="">
+                <span asp-validation-for="@Model.SkillRating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <h3 class="mb-3 text-center">DR</h3>
+                <input id="customeInput" asp-for="@Model.DeadlineRating" class="form-control" placeholder="">
+                <span asp-validation-for="@Model.DeadlineRating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <h3 class="mb-3 text-center">CR</h3>
+                <input id="customeInput" asp-for="@Model.CooperatingRating" class="form-control" placeholder="">
+                <span asp-validation-for="@Model.CooperatingRating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <h3 class="mb-3 text-center">AR</h3>
+                <input id="customeInput" asp-for="@Model.AvaliabilityRating" class="form-control" placeholder="">
+                <span asp-validation-for="@Model.AvaliabilityRating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <h3 class="mb-3 text-center">ComR</h3>
+                <input id="customeInput" asp-for="@Model.ComunicationRating" class="form-control" placeholder="">
+                <span asp-validation-for="@Model.ComunicationRating" class="text-danger"></span>
+            </div>
+            <a class="btn col-12" onclick="this.closest('form').submit();return false;">Create Testimonial</a>
+        </form>
+    </div>
+</div>
