@@ -64,7 +64,6 @@
         {
             var project = this.projectsService.GetById<Project>(id);
 
-            // TODO: Make ProjectTestimonialViewModel
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);

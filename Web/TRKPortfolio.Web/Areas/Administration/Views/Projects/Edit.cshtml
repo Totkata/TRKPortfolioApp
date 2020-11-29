@@ -1,9 +1,9 @@
 ﻿@using System.Globalization
 @using TRKPortfolio.Web.ViewModels.Administration.Projects.InputModel
-@model CreateProjectInputModel
+@model EditProjectInputModel
 
 @{
-    this.ViewData["Title"] = "Create Project";
+    this.ViewData["Title"] = "Edit Project";
     var categoryItems = this.Model.CategoriesItems.Select(x => new SelectListItem(x.Value, x.Key));
     var skills = this.Model.Skills.Select(x => new SelectListItem(x.Value, x.Key));
     var customers = this.Model.Customers.Select(x => new SelectListItem(x.Value, x.Key));
@@ -11,7 +11,7 @@
 
 <div class="row d-flex">
     <div class="col-md-6 offset-3 mt-5 align-self-center">
-        <form enctype="multipart/form-data" asp-area="Administration" asp-controller="Projects" asp-action="Create" method="post">
+        <form enctype="multipart/form-data" asp-area="Administration" asp-controller="Projects" asp-action="Edit" method="post">
             <h3 class="mb-3 text-center">Input your new Project</h3>
             <div class="form-group">
                 <label>Projetc Title</label>
@@ -43,7 +43,7 @@
                 <h5>Select customer here</h5>
                 <select asp-for="CustomerId" class="form-control" asp-items="customers"></select>
             </div>
-            <a class="btn col-12" onclick="this.closest('form').submit();return false;">Create Project</a>
+            <a class="btn col-12" onclick="this.closest('form').submit();return false;">Edit Project</a>
         </form>
     </div>
 </div>

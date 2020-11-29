@@ -1,12 +1,12 @@
 ﻿namespace TRKPortfolio.Services.Data
 {
-    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
     using TRKPortfolio.Data.Common.Repositories;
     using TRKPortfolio.Data.Models;
     using TRKPortfolio.Services.Data.Contracts;
@@ -35,56 +35,61 @@
 
         public async Task CreateAsync(CreateProjectInputModel inputModel)
         {
-            StringBuilder sb = new StringBuilder();
-
-            int maxLenght = inputModel.Description.Length > 75 ? 75 : inputModel.Description.Length;
-            sb.Append(inputModel.Description.Substring(0, maxLenght));
-            sb.Append("...");
-
             var project = new Project
             {
                 Title = inputModel.Title,
                 Description = inputModel.Description,
-                ShortDescription = sb.ToString(),
+                ShortDescription = ShortDescriptionParser(inputModel.Description),
             };
 
             project.Customer = this.userRepo.All().FirstOrDefault(x => x.Id == inputModel.CustomerId.ToString());
 
-            foreach (var inputCategory in inputModel.SkillId)
-            {
-                var skill = this.skillRepo.All().FirstOrDefault(x => x.Id == inputCategory);
+            SkillsHandeller(inputModel.CategoryId, project, this.skillRepo);
 
-                project.ProjectSkills.Add(new ProjectSkill
-                {
-                    Skill = skill,
-                });
-            }
+            CategoriesHandeller(inputModel.CategoryId, project, this.categoryRepo);
 
-            foreach (var inputCategory in inputModel.CategoryId)
-            {
-                var category = this.categoryRepo.All().FirstOrDefault(x => x.Id == inputCategory);
-
-                project.ProjectCategories.Add(new ProjectCategory
-                {
-                    Category = category,
-                });
-            }
-
-            var splitedInput = inputModel.Text.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
-
-            for (int i = 0; i < splitedInput.Length; i += 2)
-            {
-                project.ProjectParagraphs.Add(new ProjectParagraph
-                {
-                    Paragraph = new Paragraph
-                    {
-                        Title = splitedInput[i],
-                        Content = splitedInput[i + 1],
-                    },
-                });
-            }
+            ParagraphParser(inputModel.Text, project);
 
             await this.projectRepo.AddAsync(project);
+            await this.projectRepo.SaveChangesAsync();
+        }
+
+        public async Task EditAsync(EditProjectInputModel inputModel)
+        {
+            var project = this.projectRepo
+                .All()
+                .Include(p => p.ProjectParagraphs)
+                .ThenInclude(p => p.Paragraph)
+                .Include(p => p.ProjectSkills)
+                .ThenInclude(p => p.Skill)
+                .Include(p => p.ProjectCategories)
+                .ThenInclude(p => p.Category)
+                .FirstOrDefault(x => x.Id == inputModel.Id);
+
+            project.Title = inputModel.Title;
+            project.Description = inputModel.Description;
+
+            project.ProjectParagraphs.Clear();
+            ParagraphParser(inputModel.Text, project);
+
+            project.Description = inputModel.Description;
+            project.ShortDescription = ShortDescriptionParser(inputModel.Description);
+
+            project.ProjectCategories.Clear();
+            CategoriesHandeller(inputModel.CategoryId, project, this.categoryRepo);
+
+            project.ProjectSkills.Clear();
+            SkillsHandeller(inputModel.CategoryId, project, this.skillRepo);
+
+            await this.projectRepo.SaveChangesAsync();
+        }
+
+        public async Task RemoveAsync(int id)
+        {
+            var post = await this.projectRepo.GetByIdWithDeletedAsync(id);
+
+            this.projectRepo.Delete(post);
+
             await this.projectRepo.SaveChangesAsync();
         }
 
@@ -102,6 +107,60 @@
                 .To<T>().FirstOrDefault();
 
             return project;
+        }
+
+        private static void ParagraphParser(string input, Project project)
+        {
+            var splitedInput = input.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+
+            for (int i = 0; i < splitedInput.Length; i += 2)
+            {
+                project.ProjectParagraphs.Add(new ProjectParagraph
+                {
+                    Paragraph = new Paragraph
+                    {
+                        Title = splitedInput[i],
+                        Content = splitedInput[i + 1],
+                    },
+                });
+            }
+        }
+
+        private static string ShortDescriptionParser(string input)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            int maxLenght = input.Length > 75 ? 75 : input.Length;
+            sb.Append(input.Substring(0, maxLenght));
+            sb.Append("...");
+
+            return sb.ToString();
+        }
+
+        private static void CategoriesHandeller(int[] input, Project project, IDeletableEntityRepository<Category> categoryRepo)
+        {
+            foreach (var inputCategory in input)
+            {
+                var category = categoryRepo.All().FirstOrDefault(x => x.Id == inputCategory);
+
+                project.ProjectCategories.Add(new ProjectCategory
+                {
+                    Category = category,
+                });
+            }
+        }
+
+        private static void SkillsHandeller(int[] input, Project project, IDeletableEntityRepository<Skill> skillRepo)
+        {
+            foreach (var inputCategory in input)
+            {
+                var skill = skillRepo.All().FirstOrDefault(x => x.Id == inputCategory);
+
+                project.ProjectSkills.Add(new ProjectSkill
+                {
+                    Skill = skill,
+                });
+            }
         }
     }
 }

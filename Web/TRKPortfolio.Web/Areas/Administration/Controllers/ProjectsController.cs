@@ -51,5 +51,27 @@
 
             return this.Redirect("/");
         }
+
+        public IActionResult Edit()
+        {
+            var viewModel = new EditProjectInputModel();
+            viewModel.CategoriesItems = this.categoriesService.GetAllAsKeyValuePairs();
+            viewModel.Skills = this.skillsService.GetAllAsKeyValuePairs();
+            viewModel.Customers = this.usersService.GetAllAsKeyValuePairs();
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditProjectInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+            await this.projectsService.EditAsync(input);
+
+            return this.Redirect("/");
+        }
     }
 }

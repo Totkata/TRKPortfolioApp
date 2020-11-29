@@ -12,6 +12,10 @@
     {
         Task CreateAsync(CreateProjectInputModel inputModel);
 
+        Task EditAsync(EditProjectInputModel inputModel);
+
+        Task RemoveAsync(int id);
+
         T GetById<T>(int id);
 
         IEnumerable<T> GetAll<T>();
