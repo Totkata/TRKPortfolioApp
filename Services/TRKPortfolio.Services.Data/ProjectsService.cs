@@ -13,23 +13,27 @@
     using TRKPortfolio.Services.Mapping;
     using TRKPortfolio.Web.ViewModels.Administration.Projects.InputModel;
     using TRKPortfolio.Web.ViewModels.Projects.ViewModel;
+    using TRKPortfolio.Web.ViewModels.Testimonials.InputModel;
 
     public class ProjectsService : IProjectsService
     {
         private readonly IDeletableEntityRepository<Project> projectRepo;
         private readonly IDeletableEntityRepository<Category> categoryRepo;
         private readonly IDeletableEntityRepository<Skill> skillRepo;
+        private readonly IDeletableEntityRepository<Testimonial> testimonialRepo;
         private readonly IDeletableEntityRepository<ApplicationUser> userRepo;
 
         public ProjectsService(
             IDeletableEntityRepository<Project> projectRepo,
             IDeletableEntityRepository<Category> categoryRepo,
             IDeletableEntityRepository<Skill> skillRepo,
+            IDeletableEntityRepository<Testimonial> testimonialRepo,
             IDeletableEntityRepository<ApplicationUser> userRepo)
         {
             this.projectRepo = projectRepo;
             this.categoryRepo = categoryRepo;
             this.skillRepo = skillRepo;
+            this.testimonialRepo = testimonialRepo;
             this.userRepo = userRepo;
         }
 
@@ -91,6 +95,29 @@
             this.projectRepo.Delete(post);
 
             await this.projectRepo.SaveChangesAsync();
+        }
+
+        public async Task AddTestimonialAsyncAsync(CreateTestimonialInputModel input)
+        {
+            var project = this.projectRepo.AllAsNoTracking().Where(x => x.Id == input.Id).FirstOrDefault();
+
+            var testimonial = new Testimonial
+            {
+                Text = input.Text,
+                Rating = new Rating
+                {
+                    WorkRating = input.WorkQualityRating,
+                    SkillRating = input.SkillRating,
+                    DeadlineRating = input.DeadlineRating,
+                    CooperatingRating = input.CooperatingRating,
+                    AvaliabilityRating = input.AvaliabilityRating,
+                    ComunicationRating = input.ComunicationRating,
+                },
+                ProjectId = project.Id,
+            };
+
+            await this.testimonialRepo.AddAsync(testimonial);
+            await this.testimonialRepo.SaveChangesAsync();
         }
 
         public IEnumerable<T> GetAll<T>()

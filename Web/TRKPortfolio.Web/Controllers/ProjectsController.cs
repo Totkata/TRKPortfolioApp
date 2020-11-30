@@ -15,16 +15,13 @@
     public class ProjectsController : BaseController
     {
         private readonly IProjectsService projectsService;
-        private readonly ITestimonialsService testimonialsService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public ProjectsController(
             IProjectsService projectsService,
-            ITestimonialsService testimonialsService,
             UserManager<ApplicationUser> userManager)
         {
             this.projectsService = projectsService;
-            this.testimonialsService = testimonialsService;
             this.userManager = userManager;
         }
 
@@ -46,30 +43,24 @@
                 return this.RedirectToAction("Index");
             }
 
-            if (project.ApplicationUserId == this.userManager.GetUserId(this.User).ToString())
-            {
-                return this.RedirectToAction("Create");
-            }
-
             return this.View(project);
         }
 
         public IActionResult Create()
         {
-            return this.View();
+            var viewModel = new CreateTestimonialInputModel();
+            return this.View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateTestimonialInputModel input, int id)
+        public async Task<IActionResult> Create(CreateTestimonialInputModel input)
         {
-            var project = this.projectsService.GetById<Project>(id);
-
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
             }
 
-            await this.testimonialsService.CreateAsync(input, project);
+            await this.projectsService.AddTestimonialAsyncAsync(input);
 
             return this.Redirect("/");
         }

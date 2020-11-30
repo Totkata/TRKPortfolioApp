@@ -7,12 +7,15 @@
 
     using TRKPortfolio.Web.ViewModels.Administration.Projects.InputModel;
     using TRKPortfolio.Web.ViewModels.Projects.ViewModel;
+    using TRKPortfolio.Web.ViewModels.Testimonials.InputModel;
 
     public interface IProjectsService
     {
         Task CreateAsync(CreateProjectInputModel inputModel);
 
         Task EditAsync(EditProjectInputModel inputModel);
+
+        Task AddTestimonialAsyncAsync(CreateTestimonialInputModel inputModel);
 
         Task RemoveAsync(int id);
 

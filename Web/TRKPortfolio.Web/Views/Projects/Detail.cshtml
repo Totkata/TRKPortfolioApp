@@ -5,5 +5,10 @@
 <div class="row d-flex vh-100">
     <div class="col-md-4 offset-4 mt-5 align-self-center">
         <h1>@Model.Title</h1>
+        @if (Model.CustomerUsername == User.Identity.Name)
+        {
+            <h1>Hello @Model.CustomerUsername</h1>
+            <a class="nav-link" asp-area="" asp-controller="Projects" asp-action="Create" asp-route-id="@Model.Id">AddTestimonial</a>
+        }
     </div>
 </div>

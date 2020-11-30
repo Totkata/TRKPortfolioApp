@@ -35,8 +35,6 @@
 
         public virtual ICollection<ProjectAttachment> ProjectAttachments { get; set; }
 
-        public int? TestimonialId { get; set; }
-
         public Testimonial Testimonial { get; set; }
 
         // If price is 0.00 display ProBono

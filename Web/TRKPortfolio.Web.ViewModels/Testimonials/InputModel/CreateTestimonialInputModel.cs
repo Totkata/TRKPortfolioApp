@@ -4,8 +4,13 @@
     using System.Collections.Generic;
     using System.Text;
 
+    using TRKPortfolio.Data.Models;
+    using TRKPortfolio.Services.Mapping;
+
     public class CreateTestimonialInputModel
     {
+        public int Id { get; set; }
+
         public string Text { get; set; }
 
         public byte WorkQualityRating { get; set; }

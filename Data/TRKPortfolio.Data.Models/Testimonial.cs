@@ -11,5 +11,9 @@
         public string Text { get; set; }
 
         public virtual Rating Rating { get; set; }
+
+        public int ProjectId { get; set; }
+
+        public Project Project { get; set; }
     }
 }

@@ -118,6 +118,11 @@
             .WithOne(i => i.Testimonial)
             .HasForeignKey<Rating>(b => b.TestimonialId);
 
+            builder.Entity<Project>()
+            .HasOne(b => b.Testimonial)
+            .WithOne(i => i.Project)
+            .HasForeignKey<Testimonial>(b => b.ProjectId);
+
             builder.Entity<ProjectAttachment>()
                .HasKey(k => new { k.ProjectId, k.AttachmentId });
 

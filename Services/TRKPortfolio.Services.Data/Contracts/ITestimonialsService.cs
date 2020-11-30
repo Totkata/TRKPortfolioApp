@@ -10,6 +10,6 @@
 
     public interface ITestimonialsService
     {
-        Task CreateAsync(CreateTestimonialInputModel input, Project project);
+        Task CreateAsync(CreateTestimonialInputModel input);
     }
 }
