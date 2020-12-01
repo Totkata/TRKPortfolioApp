@@ -13,12 +13,12 @@
 
         [Required]
         [DataType(DataType.Text)]
-        [StringLength(30, MinimumLength = 5, ErrorMessage = TitleErrorMessage)]
+        [StringLength(100, MinimumLength = 5, ErrorMessage = TitleErrorMessage)]
         public string Title { get; set; }
 
         [Required]
         [DataType(DataType.MultilineText)]
-        [StringLength(250, MinimumLength = 50, ErrorMessage = DescriptionErrorMessage)]
+        [StringLength(500, MinimumLength = 50, ErrorMessage = DescriptionErrorMessage)]
         public string Description { get; set; }
 
         [Required]

@@ -6,10 +6,8 @@ using TRKPortfolio.Services.Mapping;
 
 namespace TRKPortfolio.Web.ViewModels.Testimonials.ViewModel
 {
-    public class TestimonialViewModel : IMapFrom<Project>
+    public class TestimonialViewModel : IMapFrom<Testimonial>
     {
-        public string CustomerUsername { get; set; }
-
-        public string TestimonialText { get; set; }
+        public string Text { get; set; }
     }
 }

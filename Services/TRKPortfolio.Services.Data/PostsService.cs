@@ -1,5 +1,6 @@
 ﻿namespace TRKPortfolio.Services.Data
 {
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -9,6 +10,7 @@
     using TRKPortfolio.Data.Common.Repositories;
     using TRKPortfolio.Data.Models;
     using TRKPortfolio.Services.Data.Contracts;
+    using TRKPortfolio.Services.Mapping;
     using TRKPortfolio.Web.ViewModels.Administration.Posts.InputModel;
 
     public class PostsService : IPostsService
@@ -57,7 +59,7 @@
 
             for (int i = 0; i < splitedInput.Length; i += 2)
             {
-                post.PostParagraphs.Add(new PostParagraph
+                post.Paragraphs.Add(new PostParagraph
                 {
                     Paragraph = new Paragraph
                     {
@@ -69,6 +71,14 @@
 
             await this.postRepo.AddAsync(post);
             await this.postRepo.SaveChangesAsync();
+        }
+
+        // TODO DA MU EBA MAMATA OPRAVI GO TOVA
+        public IEnumerable<T> GetAllPosts<T>()
+        {
+            var posts = this.postRepo.AllAsNoTracking()
+               .To<T>().ToList();
+            return posts;
         }
     }
 }

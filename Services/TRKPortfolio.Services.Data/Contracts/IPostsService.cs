@@ -10,5 +10,7 @@
     public interface IPostsService
     {
         Task CreateAsync(CreatePostInputModel inputModel);
+
+        IEnumerable<T> GetAllPosts<T>();
     }
 }

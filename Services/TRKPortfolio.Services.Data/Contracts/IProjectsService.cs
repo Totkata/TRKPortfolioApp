@@ -22,5 +22,7 @@
         T GetById<T>(int id);
 
         IEnumerable<T> GetAll<T>();
+
+        IEnumerable<T> GetAllTestimonials<T>();
     }
 }

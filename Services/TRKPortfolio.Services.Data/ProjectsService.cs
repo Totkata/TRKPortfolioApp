@@ -127,6 +127,13 @@
             return projects;
         }
 
+        public IEnumerable<T> GetAllTestimonials<T>()
+        {
+            var testimonials = this.testimonialRepo.AllAsNoTracking()
+               .To<T>().ToList();
+            return testimonials;
+        }
+
         public T GetById<T>(int id)
         {
             var project = this.projectRepo.AllAsNoTracking()
