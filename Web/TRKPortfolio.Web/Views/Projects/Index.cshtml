@@ -4,7 +4,7 @@
 
 @if (Model.Projects.Count() == 1)
 {
-    var project = Model.Projects.FirstOrDefault();
+    var project = Model.Projects.LastOrDefault();
 
     <div class="row d-flex vh-100">
         <div class="col-lg-6 col-md-12 align-self-center">
@@ -21,13 +21,48 @@ else
     <div class="row justify-content-center">
         <h1>Projects</h1>
     </div>
-    for (int i = 0; i < Model.Projects.Count(); i++)
+    for (int i = Model.Projects.Count() - 1; i >= 0; i--)
     {
         var project = Model.Projects.ElementAt(i);
 
-        if (i % 2 == 0)
+        if (i != Model.Projects.Count() - 1 && i - 1 > 0)
+        {
+            var secondProject = Model.Projects.ElementAt(i - 1);
+            <div class="row d-flex project">
+                <div class="col-6">
+                    <a class="col-12" asp-action="Detail" asp-route-id="@project.Id">
+                        <h2 class="col-12">
+                            @project.Title
+                        </h2>
+                        <p class="col-12">@project.Description</p>
+                        <p class="col-12">@project.CustomerUsername</p>
+                    </a>
+                    <div class="col-12">
+                        <img class="w-100" src="~/images/Hi.png" alt="Hi">
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <a class="col-12" asp-action="Detail" asp-route-id="@secondProject.Id">
+                        <h2 class="col-12">
+                            @secondProject.Title
+                        </h2>
+                        <p class="col-12">@secondProject.Description</p>
+                        <p class="col-12">@secondProject.CustomerUsername</p>
+                    </a>
+                    <div class="col-12">
+                        <img class="w-100" src="~/images/Hi.png" alt="Hi">
+                    </div>
+                </div>
+            </div>
+            i--;
+        }
+        else if (i == Model.Projects.Count() - 1)
         {
             <div class="row d-flex project">
+                <div class="col-lg-6 align-self-center">
+                    <img class="w-100" src="~/images/Hi.png" alt="Hi">
+                </div>
                 <a class="col-lg-6 col-md-12 align-self-center" asp-action="Detail" asp-route-id="@project.Id">
                     <h2>
                         @project.Title
@@ -35,24 +70,21 @@ else
                     <p>@project.Description</p>
                     <p>@project.CustomerUsername</p>
                 </a>
-                <div class="col-lg-6 align-self-center">
-                    <img class="w-100" src="~/images/Hi.png" alt="Hi">
-                </div>
             </div>
         }
         else
         {
-            <div class="row d-flex project">
-                <div class="col-lg-6 align-self-center">
-                    <img class="w-100" src="~/images/Hi.png" alt="Hi">
-                </div>
-                <a class="col-lg-6 col-md-12 align-self-center" asp-action="Detail" asp-route-id="@project.Id">
-                    <h2>
+            <div class="col-6 row d-flex project">
+                <a class="col-12" asp-action="Detail" asp-route-id="@project.Id">
+                    <h2 class="col-12">
                         @project.Title
                     </h2>
-                    <p>@project.Description</p>
-                    <p>@project.CustomerUsername</p>
+                    <p class="col-12">@project.Description</p>
+                    <p class="col-12">@project.CustomerUsername</p>
                 </a>
+                <div class="col-12">
+                    <img class="w-100" src="~/images/Hi.png" alt="Hi">
+                </div>
             </div>
         }
     }
