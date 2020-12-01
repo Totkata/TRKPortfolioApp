@@ -5,6 +5,7 @@
     using System.Text;
 
     using TRKPortfolio.Web.ViewModels.Administration.Posts.ViewModel;
+    using TRKPortfolio.Web.ViewModels.Administration.Projects.ViewModel;
     using TRKPortfolio.Web.ViewModels.Testimonials.ViewModel;
 
     public class IndexViewModel
@@ -12,5 +13,7 @@
         public IEnumerable<TestimonialViewModel> Testimonials { get; set; }
 
         public IEnumerable<PostViewModel> Posts { get; set; }
+
+        public IEnumerable<ProjectViewModel> Projects { get; set; }
     }
 }

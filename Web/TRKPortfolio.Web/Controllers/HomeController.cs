@@ -6,6 +6,7 @@
     using TRKPortfolio.Services.Data.Contracts;
     using TRKPortfolio.Web.ViewModels;
     using TRKPortfolio.Web.ViewModels.Administration.Posts.ViewModel;
+    using TRKPortfolio.Web.ViewModels.Administration.Projects.ViewModel;
     using TRKPortfolio.Web.ViewModels.Index.ViewModel;
     using TRKPortfolio.Web.ViewModels.Testimonials.ViewModel;
 
@@ -28,6 +29,7 @@
             {
                 Testimonials = this.projectsService.GetAllTestimonials<TestimonialViewModel>(),
                 Posts = this.postsService.GetAllPosts<PostViewModel>(),
+                Projects = this.projectsService.GetAll<ProjectViewModel>(),
             };
             return this.View(vm);
         }

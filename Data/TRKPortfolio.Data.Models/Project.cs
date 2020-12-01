@@ -15,7 +15,7 @@
             this.ProjectSkills = new HashSet<ProjectSkill>();
             this.ProjectLikes = new HashSet<ProjectLike>();
             this.ProjectSaves = new HashSet<ProjectSave>();
-            this.ProjectParagraphs = new HashSet<ProjectParagraph>();
+            this.Paragraphs = new HashSet<ProjectParagraph>();
         }
 
         public string Title { get; set; }
@@ -31,7 +31,7 @@
         // Visiable only for admin
         public int Views { get; set; }
 
-        public virtual ICollection<ProjectParagraph> ProjectParagraphs { get; set; }
+        public virtual ICollection<ProjectParagraph> Paragraphs { get; set; }
 
         public virtual ICollection<ProjectAttachment> ProjectAttachments { get; set; }
 

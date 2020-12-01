@@ -62,7 +62,7 @@
         {
             var project = this.projectRepo
                 .All()
-                .Include(p => p.ProjectParagraphs)
+                .Include(p => p.Paragraphs)
                 .ThenInclude(p => p.Paragraph)
                 .Include(p => p.ProjectSkills)
                 .ThenInclude(p => p.Skill)
@@ -73,7 +73,7 @@
             project.Title = inputModel.Title;
             project.Description = inputModel.Description;
 
-            project.ProjectParagraphs.Clear();
+            project.Paragraphs.Clear();
             ParagraphParser(inputModel.Text, project);
 
             project.Description = inputModel.Description;
@@ -149,7 +149,7 @@
 
             for (int i = 0; i < splitedInput.Length; i += 2)
             {
-                project.ProjectParagraphs.Add(new ProjectParagraph
+                project.Paragraphs.Add(new ProjectParagraph
                 {
                     Paragraph = new Paragraph
                     {
