@@ -130,8 +130,8 @@
                         <h4 class="col-12">@project.Paragraphs.FirstOrDefault().ParagraphTitle</h4>
                         <p class="col-12">@project.Paragraphs.FirstOrDefault().ParagraphContent</p>
                         <div class="col-12 row">
-                            <a class="btn col-5 m-auto d-block" href="#">View case study</a>
-                            <a class="btn col-5 m-auto d-block" href="#">See all projects</a>
+                            <a class="btn col-5 m-auto d-block" asp-controller="Projects" asp-action="Detail" asp-route-id="@project.Id">View case study</a>
+                            <a class="btn col-5 m-auto d-block" asp-controller="Projects" asp-action="Index">See all projects</a>
                         </div>
                     </div>
                 </div>
@@ -173,8 +173,8 @@
                         <h4 class="col-12">@post.Paragraphs.FirstOrDefault().ParagraphTitle</h4>
                         <p class="col-12">@post.Paragraphs.FirstOrDefault().ParagraphContent</p>
                         <div class="col-12 row">
-                            <a class="btn col-5 m-auto d-block" href="#">View post</a>
-                            <a class="btn col-5 m-auto d-block" href="#">See all posts</a>
+                            <a class="btn col-5 m-auto d-block" @*asp-controller="Posts" asp-action="Detail" asp-route-id="@post.Id"*@>View post</a>
+                            <a class="btn col-5 m-auto d-block" asp-controller="Posts" asp-action="Index">See all posts</a>
                         </div>
                     </div>
                 </div>

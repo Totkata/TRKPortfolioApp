@@ -2,21 +2,8 @@
 @model ProjectListViewModel
 
 
-@if (Model.Projects.Count() == 1)
-{
-    var project = Model.Projects.LastOrDefault();
 
-    <div class="row d-flex vh-100">
-        <div class="col-lg-6 col-md-12 align-self-center">
-            <h2><a asp-action="Detail" asp-route-id="@project.Id">@project.Title</a></h2>
-            <p>@project.Description</p>
-        </div>
-        <div class="col-lg-6 align-self-center">
-            <img class="w-100" src="~/images/Hi.png" alt="Hi">
-        </div>
-    </div>
-}
-else
+@if (Model.Projects != null)
 {
     <div class="row justify-content-center">
         <h1>Projects</h1>
@@ -25,67 +12,39 @@ else
     {
         var project = Model.Projects.ElementAt(i);
 
-        if (i != Model.Projects.Count() - 1 && i - 1 > 0)
-        {
-            var secondProject = Model.Projects.ElementAt(i - 1);
-            <div class="row d-flex project">
-                <div class="col-6">
-                    <a class="col-12" asp-action="Detail" asp-route-id="@project.Id">
-                        <h2 class="col-12">
-                            @project.Title
-                        </h2>
-                        <p class="col-12">@project.Description</p>
-                        <p class="col-12">@project.CustomerUsername</p>
-                    </a>
-                    <div class="col-12">
-                        <img class="w-100" src="~/images/Hi.png" alt="Hi">
-                    </div>
-                </div>
-
-                <div class="col-6">
-                    <a class="col-12" asp-action="Detail" asp-route-id="@secondProject.Id">
-                        <h2 class="col-12">
-                            @secondProject.Title
-                        </h2>
-                        <p class="col-12">@secondProject.Description</p>
-                        <p class="col-12">@secondProject.CustomerUsername</p>
-                    </a>
-                    <div class="col-12">
-                        <img class="w-100" src="~/images/Hi.png" alt="Hi">
-                    </div>
-                </div>
-            </div>
-            i--;
-        }
-        else if (i == Model.Projects.Count() - 1)
+        if (i % 2 == 0)
         {
             <div class="row d-flex project">
-                <div class="col-lg-6 align-self-center">
-                    <img class="w-100" src="~/images/Hi.png" alt="Hi">
-                </div>
-                <a class="col-lg-6 col-md-12 align-self-center" asp-action="Detail" asp-route-id="@project.Id">
-                    <h2>
-                        @project.Title
-                    </h2>
-                    <p>@project.Description</p>
-                    <p>@project.CustomerUsername</p>
-                </a>
-            </div>
-        }
-        else
-        {
-            <div class="col-6 row d-flex project">
-                <a class="col-12" asp-action="Detail" asp-route-id="@project.Id">
+                <a class="col-6" asp-action="Detail" asp-route-id="@project.Id">
                     <h2 class="col-12">
                         @project.Title
                     </h2>
                     <p class="col-12">@project.Description</p>
                     <p class="col-12">@project.CustomerUsername</p>
                 </a>
-                <div class="col-12">
+                <div class="col-6">
                     <img class="w-100" src="~/images/Hi.png" alt="Hi">
                 </div>
             </div>
         }
+        else
+        {
+            <div class="row d-flex project">
+                <div class="col-6">
+                    <img class="w-100" src="~/images/Hi.png" alt="Hi">
+                </div>
+                <a class="col-6" asp-action="Detail" asp-route-id="@project.Id">
+                    <h2 class="col-12">
+                        @project.Title
+                    </h2>
+                    <p class="col-12">@project.Description</p>
+                    <p class="col-12">@project.CustomerUsername</p>
+                </a>
+            </div>
+        }
     }
+}
+else
+{
+    <h1>EnterSomeProjects</h1>
 }

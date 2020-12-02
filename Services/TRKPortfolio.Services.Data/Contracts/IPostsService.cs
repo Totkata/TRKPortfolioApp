@@ -12,5 +12,7 @@
         Task CreateAsync(CreatePostInputModel inputModel);
 
         IEnumerable<T> GetAllPosts<T>();
+
+        T GetById<T>(int id);
     }
 }

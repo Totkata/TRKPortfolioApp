@@ -1,0 +1,92 @@
+﻿@using TRKPortfolio.Web.ViewModels.Posts.ViewModel
+@model PostListViewModel
+
+@if (Model.Posts.Count() == 1)
+{
+    var post = Model.Posts.LastOrDefault();
+
+    <div class="row d-flex vh-100">
+        <div class="col-lg-6 col-md-12 align-self-center">
+            <h2><a asp-action="Detail" asp-route-id="@post.Id">@post.Title</a></h2>
+            <p>@post.Description</p>
+        </div>
+        <div class="col-lg-6 align-self-center">
+            <img class="w-100" src="~/images/Hi.png" alt="Hi">
+        </div>
+    </div>
+}
+else
+{
+    <div class="row justify-content-center">
+        <h1>Blog</h1>
+    </div>
+    for (int i = Model.Posts.Count() - 1; i >= 0; i--)
+    {
+        var post = Model.Posts.ElementAt(i);
+
+        if (i != Model.Posts.Count() - 1 && i - 1 > 0)
+        {
+            var secondPost = Model.Posts.ElementAt(i - 1);
+            <div class="row d-flex project">
+                <div class="col-6">
+                    <div class="col-12">
+                        <img class="w-100" src="~/images/Hi.png" alt="Hi">
+                    </div>
+                    <div class="col-12">
+                        <a class="col-12" asp-action="Detail" asp-route-id="@post.Id">
+                            <h2 class="col-12">
+                                @post.Title
+                            </h2>
+                            <p class="col-12">@post.Description</p>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="col-12">
+                        <img class="w-100" src="~/images/Hi.png" alt="Hi">
+                    </div>
+                    <div class="col-12">
+                        <a class="col-12" asp-action="Detail" asp-route-id="@secondPost.Id">
+                            <h2 class="col-12">
+                                @secondPost.Title
+                            </h2>
+                            <p class="col-12">@secondPost.Description</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            i--;
+        }
+        else if (i == Model.Posts.Count() - 1)
+        {
+            <div class="row d-flex project">
+                <div class="col-lg-6 align-self-center">
+                    <img class="w-100" src="~/images/Hi.png" alt="Hi">
+                </div>
+                <a class="col-lg-6 col-md-12 align-self-center" asp-action="Detail" asp-route-id="@post.Id">
+                    <h2>
+                        @post.Title
+                    </h2>
+                    <p>@post.Description</p>
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="col-6 row d-flex project">
+                <div class="col-12">
+                    <img class="w-100" src="~/images/Hi.png" alt="Hi">
+                </div>
+                <div class="col-12">
+                    <a class="col-12" asp-action="Detail" asp-route-id="@post.Id">
+                        <h2 class="col-12">
+                            @post.Title
+                        </h2>
+                        <p class="col-12">@post.Description</p>
+                    </a>
+                </div>
+            </div>
+        }
+    }
+}

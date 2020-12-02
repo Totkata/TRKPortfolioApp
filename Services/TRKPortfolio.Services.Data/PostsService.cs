@@ -80,5 +80,14 @@
                .To<T>().ToList();
             return posts;
         }
+
+        public T GetById<T>(int id)
+        {
+            var post = this.postRepo.AllAsNoTracking()
+                .Where(x => x.Id == id)
+                .To<T>().FirstOrDefault();
+
+            return post;
+        }
     }
 }

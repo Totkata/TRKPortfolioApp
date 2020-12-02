@@ -23,13 +23,19 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Projects" asp-action="Index">Projects</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Posts" asp-action="Index">Blog</a>
+                        </li>
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="Administration" asp-controller="Posts" asp-action="Create">Posts</a>
+                                <a class="nav-link" asp-area="Administration" asp-controller="Posts" asp-action="Create">Create Posts</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="Administration" asp-controller="Projects" asp-action="Create">Projects</a>
+                                <a class="nav-link" asp-area="Administration" asp-controller="Projects" asp-action="Create">Create Project</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="Administration" asp-controller="Skills" asp-action="Create">Skill</a>
@@ -38,7 +44,7 @@
                                 <a class="nav-link" asp-area="Administration" asp-controller="Categories" asp-action="Create">Category</a>
                             </li>
                         }
-                        else
+                        @*else
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="...." asp-action="Services">Services</a>
@@ -49,7 +55,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="...." asp-action="About">About</a>
                             </li>
-                        }
+                        }*@
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
