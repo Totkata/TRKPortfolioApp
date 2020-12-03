@@ -1,14 +1,28 @@
 ﻿@using System.Globalization
-@using TRKPortfolio.Web.ViewModels.Projects.ViewModel
+@using TRKPortfolio.Web.ViewModels.Administration.Projects.ViewModel
 @model ProjectViewModel
 
-<div class="row d-flex vh-100">
-    <div class="col-md-4 offset-4 mt-5 align-self-center">
-        <h1>@Model.Title</h1>
+
+<div class="row d-flex pt-5">
+    <div class="col-6 offset-3 mt-5 align-self-center">
+        <h3>@Model.Title</h3>
+        <p>@Model.Description</p>
+    </div>
+    @foreach (var paragraph in Model.Paragraphs)
+    {
+        <div class="col-6 offset-3 mt-5 align-self-center">
+            <h2>@paragraph.ParagraphTitle</h2>
+            <p>@paragraph.ParagraphContent</p>
+        </div>
+    }
+    <div class="col-6 offset-3 mt-5">
         @if (Model.CustomerUsername == User.Identity.Name)
         {
-            <h1>Hello @Model.CustomerUsername</h1>
-            <a class="nav-link" asp-area="" asp-controller="Projects" asp-action="Create" asp-route-id="@Model.Id">AddTestimonial</a>
+            <a class="btn col-6 offset-3" asp-area="" asp-controller="Projects" asp-action="Create" asp-route-id="@Model.Id">Add Testimonial</a>
+        }
+        @if (User.IsInRole("Admin"))
+        {
+            <a class="btn col-6 offset-3" asp-area="Administration" asp-controller="Projects" asp-action="Edit" asp-route-id="@Model.Id">Edit Project</a>
         }
     </div>
 </div>
