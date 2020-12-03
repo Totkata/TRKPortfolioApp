@@ -15,7 +15,7 @@
         if (i % 2 == 0)
         {
             <div class="row d-flex project">
-                <a class="col-6" asp-action="Detail" asp-route-id="@project.Id">
+                <a class="col-6 align-self-center" asp-action="Detail" asp-route-id="@project.Id">
                     <h2 class="col-12">
                         @project.Title
                     </h2>
@@ -23,7 +23,7 @@
                     <p class="col-12">@project.CustomerUsername</p>
                 </a>
                 <div class="col-6">
-                    <img class="w-100" src="~/images/Hi.png" alt="Hi">
+                    <img class="w-75" src="~/images/Hi.png" alt="Hi">
                 </div>
             </div>
         }
@@ -31,9 +31,9 @@
         {
             <div class="row d-flex project">
                 <div class="col-6">
-                    <img class="w-100" src="~/images/Hi.png" alt="Hi">
+                    <img class="w-75" src="~/images/Hi.png" alt="Hi">
                 </div>
-                <a class="col-6" asp-action="Detail" asp-route-id="@project.Id">
+                <a class="col-6 align-self-center" asp-action="Detail" asp-route-id="@project.Id">
                     <h2 class="col-12">
                         @project.Title
                     </h2>

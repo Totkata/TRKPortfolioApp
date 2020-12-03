@@ -30,14 +30,14 @@
 
         public IActionResult Detail(int id)
         {
-            var project = this.postsService.GetById<PostViewModel>(id);
+            var post = this.postsService.GetById<PostViewModel>(id);
 
-            if (project == null)
+            if (post == null)
             {
                 return this.RedirectToAction("Index");
             }
 
-            return this.View(project);
+            return this.View(post);
         }
     }
 }

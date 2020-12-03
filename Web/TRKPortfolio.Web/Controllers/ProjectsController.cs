@@ -15,14 +15,10 @@
     public class ProjectsController : BaseController
     {
         private readonly IProjectsService projectsService;
-        private readonly UserManager<ApplicationUser> userManager;
 
-        public ProjectsController(
-            IProjectsService projectsService,
-            UserManager<ApplicationUser> userManager)
+        public ProjectsController(IProjectsService projectsService)
         {
             this.projectsService = projectsService;
-            this.userManager = userManager;
         }
 
         public IActionResult Index()

@@ -2,10 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
-    using AutoMapper;
     using TRKPortfolio.Data.Models;
     using TRKPortfolio.Services.Mapping;
     using TRKPortfolio.Web.Views.Paragraphs.ViewModel;
