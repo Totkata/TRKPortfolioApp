@@ -31,11 +31,11 @@
             <div id="select_many">
                 <label>Select categories</label>
                 <div class="form-group">
-                    <select asp-for="CategoryId" class="form-control" asp-items="categoryItems" multiple></select>
+                    <select multiple asp-for="CategoryId" class="form-control" asp-items="categoryItems"></select>
                 </div>
                 <label>Select skills</label>
                 <div class="form-group">
-                    <select asp-for="SkillId" class="form-control" asp-items="skills" multiple></select>
+                    <select multiple asp-for="SkillId" class="form-control" asp-items="skills"></select>
                 </div>
             </div>
             <p>Hold Ctrl to select more than one</p>
