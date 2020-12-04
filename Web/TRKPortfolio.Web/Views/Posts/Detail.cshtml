@@ -1,16 +1,37 @@
-﻿@using TRKPortfolio.Web.ViewModels.Administration.Posts.ViewModel
-@model PostViewModel
+﻿@using TRKPortfolio.Web.ViewModels.Posts.InputModel
+@model PostCommentInputModel
 
 <div class="row d-flex pt-5">
     <div class="col-6 offset-3 mt-5 align-self-center">
-        <h3>@Model.Title</h3>
-        <p>@Model.Description</p>
+        <h3>@Model.Post.Id</h3>
+        <h3>@Model.Post.Title</h3>
+        <p>@Model.Post.Description</p>
     </div>
-    @foreach (var paragraph in Model.Paragraphs)
+    @foreach (var paragraph in Model.Post.Paragraphs)
     {
         <div class="col-6 offset-3 mt-5 align-self-center">
             <h2>@paragraph.ParagraphTitle</h2>
             <p>@paragraph.ParagraphContent</p>
         </div>
     }
+    <form enctype="multipart/form-data" asp-area="" asp-controller="Comments" asp-action="Create" method="post">
+        <h3 class="mb-3 text-center">Input your new Project</h3>
+        <div class="form-group">
+            <label>Projetc Title</label>
+            <input id="customeInput" asp-for="@Model.Comment.Text" class="form-control" placeholder="Project Title">
+            <input type="hidden" asp-for="@Model.Comment.PostId" value="@Model.Post.Id">
+            <span asp-validation-for="@Model.Comment" class="text-danger"></span>
+        </div>
+        <a class="btn col-12" onclick="this.closest('form').submit();return false;">Create Project</a>
+    </form>
+    <form enctype="multipart/form-data" asp-area="" asp-controller="Comments" asp-action="Reply" asp-route-commentId="1" method="post">
+        <h3 class="mb-3 text-center">Input your new Project</h3>
+        <div class="form-group">
+            <label>Projetc Title</label>
+            <input type="hidden" asp-for="@Model.Comment.PostId" value="@Model.Post.Id">
+            <input id="customeInput" asp-for="@Model.Comment.Text" class="form-control" placeholder="Project Title">
+            <span asp-validation-for="@Model.Comment" class="text-danger"></span>
+        </div>
+        <a class="btn col-12" onclick="this.closest('form').submit();return false;">Create Project</a>
+    </form>
 </div>

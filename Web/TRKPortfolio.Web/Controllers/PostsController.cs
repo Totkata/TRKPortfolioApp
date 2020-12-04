@@ -8,6 +8,7 @@
     using Microsoft.AspNetCore.Mvc;
     using TRKPortfolio.Services.Data.Contracts;
     using TRKPortfolio.Web.ViewModels.Administration.Posts.ViewModel;
+    using TRKPortfolio.Web.ViewModels.Posts.InputModel;
     using TRKPortfolio.Web.ViewModels.Posts.ViewModel;
 
     public class PostsController : BaseController
@@ -30,14 +31,17 @@
 
         public IActionResult Detail(int id)
         {
-            var post = this.postsService.GetById<PostViewModel>(id);
+            var vm = new PostCommentInputModel
+            {
+                Post = this.postsService.GetById<PostViewModel>(id),
+            };
 
-            if (post == null)
+            if (vm.Post == null)
             {
                 return this.RedirectToAction("Index");
             }
 
-            return this.View(post);
+            return this.View(vm);
         }
     }
 }
