@@ -15,13 +15,16 @@
     {
         private readonly IDeletableEntityRepository<Comment> commentRepo;
         private readonly IDeletableEntityRepository<Post> postRepo;
+        private readonly IDeletableEntityRepository<Reply> replyRepo;
 
         public CommentsService(
             IDeletableEntityRepository<Comment> commentRepo,
-            IDeletableEntityRepository<Post> postRepo)
+            IDeletableEntityRepository<Post> postRepo,
+            IDeletableEntityRepository<Reply> replyRepo)
         {
             this.commentRepo = commentRepo;
             this.postRepo = postRepo;
+            this.replyRepo = replyRepo;
         }
 
         public async Task CreateAsync(CreateCommentInputModel inputModel)
@@ -43,9 +46,25 @@
             await this.commentRepo.SaveChangesAsync();
         }
 
-        public Task ReplyAsync(CreateCommentInputModel inputModel, int commentId)
+        public async Task ReplyAsync(CreateCommentInputModel inputModel, int commentId)
         {
-            throw new NotImplementedException();
+            var comment = this.postRepo.AllAsNoTracking()
+                .Where(x => x.Id == inputModel.PostId)
+                .Select(x => x.Comments.Where(x => x.Id == inputModel.CommentId).FirstOrDefault())
+                .FirstOrDefault();
+
+            var reply = new Reply
+            {
+                Text = inputModel.Text,
+                PostId = inputModel.PostId,
+                CommentId = inputModel.CommentId,
+            };
+
+            comment.Replies.Add(reply);
+            await this.commentRepo.SaveChangesAsync();
+
+            await this.replyRepo.AddAsync(reply);
+            await this.replyRepo.SaveChangesAsync();
         }
     }
 }

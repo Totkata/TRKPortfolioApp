@@ -6,5 +6,8 @@
 
     public class Reply : CommentBaseModel
     {
+        public int CommentId { get; set; }
+
+        public Comment Comment { get; set; }
     }
 }
