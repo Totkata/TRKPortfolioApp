@@ -9,6 +9,7 @@
     using TRKPortfolio.Data.Common.Repositories;
     using TRKPortfolio.Data.Models;
     using TRKPortfolio.Services.Data.Contracts;
+    using TRKPortfolio.Services.Mapping;
     using TRKPortfolio.Web.ViewModels.Comments.InputModel;
 
     public class CommentsService : ICommentsService
@@ -44,6 +45,13 @@
 
             await this.commentRepo.AddAsync(comment);
             await this.commentRepo.SaveChangesAsync();
+        }
+
+        public IEnumerable<T> GetAllComments<T>()
+        {
+            var comments = this.commentRepo.AllAsNoTracking()
+              .To<T>().ToList();
+            return comments;
         }
 
         public async Task ReplyAsync(CreateCommentInputModel inputModel, int commentId)
