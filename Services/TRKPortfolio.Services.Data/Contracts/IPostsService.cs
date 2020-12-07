@@ -16,5 +16,7 @@
         T GetById<T>(int id);
 
         IEnumerable<T> GetAllAttachments<T>(int id);
+
+        T GetThumbnail<T>(int id);
     }
 }

@@ -30,6 +30,18 @@
             {
                 Posts = this.postsService.GetAllPosts<PostViewModel>(),
             };
+
+            foreach (var post in vm.Posts)
+            {
+                var thumbnail = this.postsService.GetThumbnail<AttachmentViewModel>(post.Id);
+
+                if (thumbnail != null)
+                {
+                    var path = $"PostAttachments/{thumbnail.Id}.{thumbnail.Extention}";
+                    post.Thumbnail = path;
+                }
+            }
+
             return this.View(vm);
         }
 

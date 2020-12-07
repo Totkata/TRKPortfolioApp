@@ -1,6 +1,9 @@
 ﻿@using TRKPortfolio.Web.ViewModels.Posts.ViewModel
 @model PostListViewModel
 
+<div class="row justify-content-center">
+    <h1>Blog</h1>
+</div>
 @if (Model.Posts.Count() == 1)
 {
     var post = Model.Posts.LastOrDefault();
@@ -11,26 +14,37 @@
             <p>@post.Description</p>
         </div>
         <div class="col-lg-6 align-self-center">
-            <img class="w-100" src="~/images/Hi.png" alt="Hi">
+            <img class="w-100" src="/Images/@Model.Posts.ElementAt(0).Thumbnail" alt="Hi">
         </div>
     </div>
 }
 else
 {
-    <div class="row justify-content-center">
-        <h1>Blog</h1>
-    </div>
     for (int i = Model.Posts.Count() - 1; i >= 0; i--)
     {
         var post = Model.Posts.ElementAt(i);
 
-        if (i != Model.Posts.Count() - 1 && i - 1 > 0)
+        if (i == Model.Posts.Count() - 1)
+        {
+            <div class="row d-flex project">
+                <div class="col-lg-6 align-self-center">
+                    <img class="w-75" src="/Images/@post.Thumbnail" alt="Hi">
+                </div>
+                <a class="col-lg-6 col-md-12 align-self-center" asp-action="Detail" asp-route-id="@post.Id">
+                    <h2>
+                        @post.Title
+                    </h2>
+                    <p>@post.Description</p>
+                </a>
+            </div>
+        }
+        else if (i - 1 >= 0)
         {
             var secondPost = Model.Posts.ElementAt(i - 1);
             <div class="row d-flex project">
                 <div class="col-6">
                     <div class="col-12">
-                        <img class="w-100" src="~/images/Hi.png" alt="Hi">
+                        <img class="w-50" src="/Images/@post.Thumbnail" alt="Hi">
                     </div>
                     <div class="col-12">
                         <a class="col-12" asp-action="Detail" asp-route-id="@post.Id">
@@ -44,7 +58,7 @@ else
 
                 <div class="col-6">
                     <div class="col-12">
-                        <img class="w-100" src="~/images/Hi.png" alt="Hi">
+                        <img class="w-50" src="/Images/@secondPost.Thumbnail" alt="Hi">
                     </div>
                     <div class="col-12">
                         <a class="col-12" asp-action="Detail" asp-route-id="@secondPost.Id">
@@ -58,25 +72,11 @@ else
             </div>
             i--;
         }
-        else if (i == Model.Posts.Count() - 1)
-        {
-            <div class="row d-flex project">
-                <div class="col-lg-6 align-self-center">
-                    <img class="w-75" src="~/images/Hi.png" alt="Hi">
-                </div>
-                <a class="col-lg-6 col-md-12 align-self-center" asp-action="Detail" asp-route-id="@post.Id">
-                    <h2>
-                        @post.Title
-                    </h2>
-                    <p>@post.Description</p>
-                </a>
-            </div>
-        }
         else
         {
             <div class="col-6 row d-flex">
                 <div class="col-12">
-                    <img class="w-50" src="~/images/Hi.png" alt="Hi">
+                    <img class="w-50" src="/Images/@post.Thumbnail" alt="Hi">
                 </div>
                 <div class="col-12">
                     <a class="col-12" asp-action="Detail" asp-route-id="@post.Id">

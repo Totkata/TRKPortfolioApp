@@ -17,5 +17,7 @@
         public string Description { get; set; }
 
         public IEnumerable<ParagraphsViewModel> Paragraphs { get; set; }
+
+        public string Thumbnail { get; set; }
     }
 }

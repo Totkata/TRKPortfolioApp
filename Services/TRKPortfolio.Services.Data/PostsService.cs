@@ -102,6 +102,14 @@
             return attachments;
         }
 
+        public T GetThumbnail<T>(int id)
+        {
+            var thumbnail = this.attachmentRepo.AllAsNoTracking()
+                .Where(x => x.PostId == id)
+               .To<T>().FirstOrDefault();
+            return thumbnail;
+        }
+
         // TODO DA MU EBA MAMATA OPRAVI GO TOVA
         public IEnumerable<T> GetAllPosts<T>()
         {
