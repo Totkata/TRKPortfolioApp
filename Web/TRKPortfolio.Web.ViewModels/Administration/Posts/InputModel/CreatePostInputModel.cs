@@ -5,6 +5,8 @@
     using System.ComponentModel.DataAnnotations;
     using System.Text;
 
+    using Microsoft.AspNetCore.Http;
+
     public class CreatePostInputModel
     {
         private const string TitleErrorMessage = "Title must be between 5 and 30 (including) symbols!";
@@ -29,7 +31,8 @@
         [Required]
         public int[] CategoryId { get; set; } // ToDo: Make to select many from dropDown menu!!!
 
-        // View part
         public IEnumerable<KeyValuePair<string, string>> CategoriesItems { get; set; }
+
+        public IEnumerable<IFormFile> Attatchments { get; set; }
     }
 }

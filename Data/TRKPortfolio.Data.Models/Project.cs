@@ -10,12 +10,12 @@
     {
         public Project()
         {
-            this.ProjectAttachments = new HashSet<ProjectAttachment>();
             this.ProjectCategories = new HashSet<ProjectCategory>();
             this.ProjectSkills = new HashSet<ProjectSkill>();
             this.ProjectLikes = new HashSet<ProjectLike>();
             this.ProjectSaves = new HashSet<ProjectSave>();
             this.Paragraphs = new HashSet<ProjectParagraph>();
+            this.Attachments = new HashSet<ProjectAttachment>();
         }
 
         public string Title { get; set; }
@@ -33,7 +33,7 @@
 
         public virtual ICollection<ProjectParagraph> Paragraphs { get; set; }
 
-        public virtual ICollection<ProjectAttachment> ProjectAttachments { get; set; }
+        public virtual ICollection<ProjectAttachment> Attachments { get; set; }
 
         public Testimonial Testimonial { get; set; }
 

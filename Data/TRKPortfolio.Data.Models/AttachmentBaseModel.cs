@@ -6,16 +6,13 @@
 
     using TRKPortfolio.Data.Common.Models;
 
-    public class Attachment : BaseDeletableModel<string>
+    public class AttachmentBaseModel : BaseDeletableModel<string>
     {
-        public Attachment()
+        public AttachmentBaseModel()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.ProjectAttachments = new HashSet<ProjectAttachment>();
         }
 
         public string Extention { get; set; }
-
-        public virtual ICollection<ProjectAttachment> ProjectAttachments { get; set; }
     }
 }

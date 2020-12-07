@@ -9,10 +9,12 @@
 
     public interface IPostsService
     {
-        Task CreateAsync(CreatePostInputModel inputModel);
+        Task CreateAsync(CreatePostInputModel inputModel, string filePatch);
 
         IEnumerable<T> GetAllPosts<T>();
 
         T GetById<T>(int id);
+
+        IEnumerable<T> GetAllAttachments<T>(int id);
     }
 }

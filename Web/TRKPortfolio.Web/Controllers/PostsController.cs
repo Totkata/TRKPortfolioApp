@@ -8,6 +8,7 @@
     using Microsoft.AspNetCore.Mvc;
     using TRKPortfolio.Services.Data.Contracts;
     using TRKPortfolio.Web.ViewModels.Administration.Posts.ViewModel;
+    using TRKPortfolio.Web.ViewModels.Attachments.ViewModel;
     using TRKPortfolio.Web.ViewModels.Comments.ViewModel;
     using TRKPortfolio.Web.ViewModels.Posts.InputModel;
     using TRKPortfolio.Web.ViewModels.Posts.ViewModel;
@@ -40,6 +41,7 @@
             {
                 Post = this.postsService.GetById<PostViewModel>(id),
                 Comments = this.commentsService.GetAllComments<CommentViewModel>(),
+                Attachments = this.postsService.GetAllAttachments<AttachmentViewModel>(id),
             };
 
             if (vm.Post == null)

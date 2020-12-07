@@ -1,6 +1,5 @@
 ﻿namespace TRKPortfolio.Web.ViewModels.Administration.Posts.ViewModel
 {
-    using System;
     using System.Collections.Generic;
 
     using TRKPortfolio.Data.Models;

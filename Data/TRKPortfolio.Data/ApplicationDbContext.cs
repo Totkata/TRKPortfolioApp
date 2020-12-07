@@ -25,7 +25,9 @@
 
         public DbSet<Paragraph> Paragraphs { get; set; }
 
-        public DbSet<Attachment> Attachments { get; set; }
+        public DbSet<PostAttachment> PostAttachments { get; set; }
+
+        public DbSet<ProjectAttachment> ProjectAttachments { get; set; }
 
         public DbSet<Category> Categories { get; set; }
 
@@ -46,8 +48,6 @@
         public DbSet<PostParagraph> PostParagraphs { get; set; }
 
         public DbSet<Project> Projects { get; set; }
-
-        public DbSet<ProjectAttachment> ProjectAttachments { get; set; }
 
         public DbSet<ProjectCategory> ProjectCategories { get; set; }
 
@@ -124,9 +124,6 @@
             .HasOne(b => b.Testimonial)
             .WithOne(i => i.Project)
             .HasForeignKey<Testimonial>(b => b.ProjectId);
-
-            builder.Entity<ProjectAttachment>()
-               .HasKey(k => new { k.ProjectId, k.AttachmentId });
 
             builder.Entity<PostCategory>()
                .HasKey(k => new { k.PostId, k.CategoryId });

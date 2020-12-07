@@ -15,6 +15,7 @@
             this.PostLikes = new HashSet<PostLike>();
             this.PostSaves = new HashSet<PostSave>();
             this.Paragraphs = new HashSet<PostParagraph>();
+            this.Attachments = new HashSet<PostAttachment>();
         }
 
         public string ApplicationUserId { get; set; }
@@ -28,6 +29,8 @@
         public string ShortDescription { get; set; }
 
         public int Views { get; set; }
+
+        public virtual ICollection<PostAttachment> Attachments { get; set; }
 
         public virtual ICollection<PostParagraph> Paragraphs { get; set; }
 

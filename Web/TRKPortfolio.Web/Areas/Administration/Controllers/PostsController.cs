@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
     using TRKPortfolio.Services.Data.Contracts;
     using TRKPortfolio.Web.ViewModels.Administration.Posts.InputModel;
@@ -13,13 +14,16 @@
     {
         private readonly IPostsService postsService;
         private readonly ICategoriesService categoriesService;
+        private readonly IWebHostEnvironment environment;
 
         public PostsController(
             IPostsService postsService,
-            ICategoriesService categoriesService)
+            ICategoriesService categoriesService,
+            IWebHostEnvironment environment)
         {
             this.postsService = postsService;
             this.categoriesService = categoriesService;
+            this.environment = environment;
         }
 
         public IActionResult Create()
@@ -37,7 +41,7 @@
                 return this.View(input);
             }
 
-            await this.postsService.CreateAsync(input);
+            await this.postsService.CreateAsync(input, $"{this.environment.WebRootPath}/images");
 
             return this.Redirect("/");
         }

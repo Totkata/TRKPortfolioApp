@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -17,19 +18,20 @@
     {
         private readonly IDeletableEntityRepository<Post> postRepo;
         private readonly IDeletableEntityRepository<Category> categoryRepo;
-        private readonly IDeletableEntityRepository<Paragraph> paragraphRepo;
+        private readonly IDeletableEntityRepository<PostAttachment> attachmentRepo;
+        private readonly string[] allowedExtensions = new[] { "jpg", "png", "pdf" };
 
         public PostsService(
             IDeletableEntityRepository<Post> postRepo,
             IDeletableEntityRepository<Category> categoryRepo,
-            IDeletableEntityRepository<Paragraph> paragraphRepo)
+            IDeletableEntityRepository<PostAttachment> attachmentRepo)
         {
             this.postRepo = postRepo;
             this.categoryRepo = categoryRepo;
-            this.paragraphRepo = paragraphRepo;
+            this.attachmentRepo = attachmentRepo;
         }
 
-        public async Task CreateAsync(CreatePostInputModel inputModel)
+        public async Task CreateAsync(CreatePostInputModel inputModel, string filePatch)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -69,8 +71,35 @@
                 });
             }
 
+            foreach (var attatchment in inputModel.Attatchments)
+            {
+                var extension = Path.GetExtension(attatchment.FileName).TrimStart('.').ToLower();
+                if (!this.allowedExtensions.Any(x => extension.EndsWith(x)))
+                {
+                    throw new Exception($"Invalid image extension {extension}");
+                }
+
+                var dbFile = new PostAttachment
+                {
+                    Extention = extension,
+                };
+                post.Attachments.Add(dbFile);
+
+                var physicalPath = $"{filePatch}/PostAttatchments/{dbFile.Id}.{extension}";
+                using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
+                await attatchment.CopyToAsync(fileStream);
+            }
+
             await this.postRepo.AddAsync(post);
             await this.postRepo.SaveChangesAsync();
+        }
+
+        public IEnumerable<T> GetAllAttachments<T>(int id)
+        {
+            var attachments = this.attachmentRepo.AllAsNoTracking()
+                .Where(x => x.PostId == id)
+               .To<T>().ToList();
+            return attachments;
         }
 
         // TODO DA MU EBA MAMATA OPRAVI GO TOVA

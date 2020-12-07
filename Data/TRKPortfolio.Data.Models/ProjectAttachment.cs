@@ -4,14 +4,10 @@
     using System.Collections.Generic;
     using System.Text;
 
-    public class ProjectAttachment
+    public class ProjectAttachment : AttachmentBaseModel
     {
         public int ProjectId { get; set; }
 
-        public virtual Project Project { get; set; }
-
-        public string AttachmentId { get; set; }
-
-        public Attachment Attachment { get; set; }
+        public Project Project { get; set; }
     }
 }

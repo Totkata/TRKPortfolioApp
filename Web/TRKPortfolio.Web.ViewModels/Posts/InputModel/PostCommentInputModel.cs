@@ -5,6 +5,7 @@
     using System.Text;
 
     using TRKPortfolio.Web.ViewModels.Administration.Posts.ViewModel;
+    using TRKPortfolio.Web.ViewModels.Attachments.ViewModel;
     using TRKPortfolio.Web.ViewModels.Comments.InputModel;
     using TRKPortfolio.Web.ViewModels.Comments.ViewModel;
 
@@ -15,5 +16,7 @@
         public PostViewModel Post { get; set; }
 
         public IEnumerable<CommentViewModel> Comments { get; set; }
+
+        public IEnumerable<AttachmentViewModel> Attachments { get; set; }
     }
 }

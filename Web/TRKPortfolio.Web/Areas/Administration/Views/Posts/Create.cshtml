@@ -23,18 +23,17 @@
             </div>
             <div class="form-group">
                 <label>Post Content</label>
-                <textarea cols="40" rows="5"  id="customeInput" asp-for="@Model.Text" class="form-control h-100" placeholder="Write content here"></textarea>
-                @*<input id="customeInput" asp-for="@Model.Text" class="form-control" placeholder="Write content here">*@
+                <textarea cols="40" rows="5" id="customeInput" asp-for="@Model.Text" class="form-control h-100" placeholder="Write content here"></textarea>
                 <span asp-validation-for="@Model.Text" class="text-danger"></span>
             </div>
-            @*<div id="CategoriesContainer">
-            <a id="secondary" class="btn mb-3 col-12" onclick="AddMoreCategories()">
-                <label asp-for="Categories" class="m-0">Add Categories</label>
-            </a>
-        </div>*@
             <div class="form-group">
                 <h5>Hold Ctrl to select multiple categories</h5>
                 <select asp-for="CategoryId" class="form-control" asp-items="categoryItems" multiple></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Attatchments"></label>
+                <input asp-for="Attatchments" class="form-control" />
+                <span asp-validation-for="Attatchments" class="text-danger"></span>
             </div>
             <a class="btn col-12" onclick="this.closest('form').submit();return false;">Create Post</a>
         </form>
