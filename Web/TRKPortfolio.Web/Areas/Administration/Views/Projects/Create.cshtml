@@ -40,6 +40,11 @@
             </div>
             <p>Hold Ctrl to select more than one</p>
             <div class="form-group">
+                <label asp-for="Attatchments"></label>
+                <input asp-for="Attatchments" class="form-control" multiple />
+                <span asp-validation-for="Attatchments" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <h5>Select customer here</h5>
                 <select asp-for="CustomerId" class="form-control" asp-items="customers"></select>
             </div>

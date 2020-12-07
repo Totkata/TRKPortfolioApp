@@ -11,7 +11,7 @@
 
     public interface IProjectsService
     {
-        Task CreateAsync(CreateProjectInputModel inputModel);
+        Task CreateAsync(CreateProjectInputModel inputModel, string filePatch);
 
         Task EditAsync(EditProjectInputModel inputModel);
 
@@ -24,5 +24,9 @@
         IEnumerable<T> GetAll<T>();
 
         IEnumerable<T> GetAllTestimonials<T>();
+
+        IEnumerable<T> GetAllAttachments<T>(int id);
+
+        T GetThumbnail<T>(int id);
     }
 }

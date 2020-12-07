@@ -1,5 +1,6 @@
 ﻿namespace TRKPortfolio.Web.ViewModels.Administration.Projects.InputModel
 {
+    using Microsoft.AspNetCore.Http;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -43,5 +44,7 @@
 
         // View part
         public IEnumerable<KeyValuePair<string, string>> Customers { get; set; }
+
+        public IEnumerable<IFormFile> Attatchments { get; set; }
     }
 }

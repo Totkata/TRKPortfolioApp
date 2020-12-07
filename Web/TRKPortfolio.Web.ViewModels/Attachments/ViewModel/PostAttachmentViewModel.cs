@@ -7,7 +7,7 @@
     using TRKPortfolio.Data.Models;
     using TRKPortfolio.Services.Mapping;
 
-    public class AttachmentViewModel : IMapFrom<PostAttachment>
+    public class PostAttachmentViewModel : IMapFrom<PostAttachment>
     {
         public string Id { get; set; }
 

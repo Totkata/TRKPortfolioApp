@@ -42,4 +42,8 @@
     <ProjectReference Include="..\TRKPortfolio.Web.Infrastructure\TRKPortfolio.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\TRKPortfolio.Web.ViewModels\TRKPortfolio.Web.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\ProjectAttachments\" />
+  </ItemGroup>
 </Project>

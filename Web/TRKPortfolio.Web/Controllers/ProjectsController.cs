@@ -10,6 +10,7 @@
     using TRKPortfolio.Data.Models;
     using TRKPortfolio.Services.Data.Contracts;
     using TRKPortfolio.Web.ViewModels.Administration.Projects.ViewModel;
+    using TRKPortfolio.Web.ViewModels.Attachments.ViewModel;
     using TRKPortfolio.Web.ViewModels.Projects.ViewModel;
     using TRKPortfolio.Web.ViewModels.Testimonials.InputModel;
 
@@ -28,19 +29,44 @@
             {
                 Projects = this.projectsService.GetAll<ProjectViewModel>(),
             };
+
+            foreach (var post in viewModel.Projects)
+            {
+                var thumbnail = this.projectsService.GetThumbnail<ProjectAttachmentViewModel>(post.Id);
+
+                if (thumbnail != null)
+                {
+                    var path = $"ProjectAttachments/{thumbnail.Id}.{thumbnail.Extention}";
+                    post.Thumbnail = path;
+                }
+            }
+
             return this.View(viewModel);
         }
 
         public IActionResult Detail(int id)
         {
-            var project = this.projectsService.GetById<ProjectViewModel>(id);
+            var vm = new ProjectAttatchmentListViewModel { };
 
-            if (project == null)
+            vm.Project = this.projectsService.GetById<ProjectViewModel>(id);
+
+            if (vm.Project == null)
             {
                 return this.RedirectToAction("Index");
             }
 
-            return this.View(project);
+            var attachments = this.projectsService.GetAllAttachments<ProjectAttachmentViewModel>(id);
+
+            var paths = new List<string>();
+
+            foreach (var attachment in attachments)
+            {
+                paths.Add($"ProjectAttachments/{attachment.Id}.{attachment.Extention}");
+            }
+
+            vm.Attachments = paths;
+
+            return this.View(vm);
         }
 
         public IActionResult Create()

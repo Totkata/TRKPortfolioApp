@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using TRKPortfolio.Data.Models;
@@ -19,17 +19,20 @@
         private readonly ICategoriesService categoriesService;
         private readonly ISkillsService skillsService;
         private readonly IUsersService usersService;
+        private readonly IWebHostEnvironment environment;
 
         public ProjectsController(
             IProjectsService projectsService,
             ICategoriesService categoriesService,
             ISkillsService skillsService,
-            IUsersService usersService)
+            IUsersService usersService,
+            IWebHostEnvironment environment)
         {
             this.projectsService = projectsService;
             this.categoriesService = categoriesService;
             this.skillsService = skillsService;
             this.usersService = usersService;
+            this.environment = environment;
         }
 
         public IActionResult Create()
@@ -49,7 +52,7 @@
                 return this.View(input);
             }
 
-            await this.projectsService.CreateAsync(input);
+            await this.projectsService.CreateAsync(input, $"{this.environment.WebRootPath}/images");
 
             return this.Redirect("/");
         }

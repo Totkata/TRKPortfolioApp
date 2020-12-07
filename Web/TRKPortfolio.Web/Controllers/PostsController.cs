@@ -33,7 +33,7 @@
 
             foreach (var post in vm.Posts)
             {
-                var thumbnail = this.postsService.GetThumbnail<AttachmentViewModel>(post.Id);
+                var thumbnail = this.postsService.GetThumbnail<PostAttachmentViewModel>(post.Id);
 
                 if (thumbnail != null)
                 {
@@ -53,7 +53,7 @@
                 Comments = this.commentsService.GetAllComments<CommentViewModel>(),
             };
 
-            var attachments = this.postsService.GetAllAttachments<AttachmentViewModel>(id);
+            var attachments = this.postsService.GetAllAttachments<PostAttachmentViewModel>(id);
 
             var paths = new List<string>();
 

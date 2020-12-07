@@ -5,6 +5,7 @@
 
     using TRKPortfolio.Data.Models;
     using TRKPortfolio.Services.Mapping;
+    using TRKPortfolio.Web.ViewModels.Attachments.ViewModel;
     using TRKPortfolio.Web.ViewModels.Paragraphs.ViewModel;
     using TRKPortfolio.Web.Views.Paragraphs.ViewModel;
 
@@ -21,5 +22,7 @@
         public string CustomerUsername { get; set; }
 
         public IEnumerable<ProjectParagraphViewModel> Paragraphs { get; set; }
+
+        public string Thumbnail { get; set; }
     }
 }

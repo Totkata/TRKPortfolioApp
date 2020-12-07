@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -22,22 +23,26 @@
         private readonly IDeletableEntityRepository<Skill> skillRepo;
         private readonly IDeletableEntityRepository<Testimonial> testimonialRepo;
         private readonly IDeletableEntityRepository<ApplicationUser> userRepo;
+        private readonly IDeletableEntityRepository<ProjectAttachment> attachmentRepo;
+        private readonly string[] allowedExtensions = new[] { "jpg", "png", "pdf" };
 
         public ProjectsService(
             IDeletableEntityRepository<Project> projectRepo,
             IDeletableEntityRepository<Category> categoryRepo,
             IDeletableEntityRepository<Skill> skillRepo,
             IDeletableEntityRepository<Testimonial> testimonialRepo,
-            IDeletableEntityRepository<ApplicationUser> userRepo)
+            IDeletableEntityRepository<ApplicationUser> userRepo,
+            IDeletableEntityRepository<ProjectAttachment> attachmentRepo)
         {
             this.projectRepo = projectRepo;
             this.categoryRepo = categoryRepo;
             this.skillRepo = skillRepo;
             this.testimonialRepo = testimonialRepo;
             this.userRepo = userRepo;
+            this.attachmentRepo = attachmentRepo;
         }
 
-        public async Task CreateAsync(CreateProjectInputModel inputModel)
+        public async Task CreateAsync(CreateProjectInputModel inputModel, string filePatch)
         {
             var project = new Project
             {
@@ -53,6 +58,25 @@
             CategoriesHandeller(inputModel.CategoryId, project, this.categoryRepo);
 
             ParagraphParser(inputModel.Text, project);
+
+            foreach (var attatchment in inputModel.Attatchments)
+            {
+                var extension = Path.GetExtension(attatchment.FileName).TrimStart('.').ToLower();
+                if (!this.allowedExtensions.Any(x => extension.EndsWith(x)))
+                {
+                    throw new Exception($"Invalid image extension {extension}");
+                }
+
+                var dbFile = new ProjectAttachment
+                {
+                    Extention = extension,
+                };
+                project.Attachments.Add(dbFile);
+
+                var physicalPath = $"{filePatch}/ProjectAttachments/{dbFile.Id}.{extension}";
+                using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
+                await attatchment.CopyToAsync(fileStream);
+            }
 
             await this.projectRepo.AddAsync(project);
             await this.projectRepo.SaveChangesAsync();
@@ -141,6 +165,22 @@
                 .To<T>().FirstOrDefault();
 
             return project;
+        }
+
+        public IEnumerable<T> GetAllAttachments<T>(int id)
+        {
+            var attachments = this.attachmentRepo.AllAsNoTracking()
+                .Where(x => x.ProjectId == id)
+               .To<T>().ToList();
+            return attachments;
+        }
+
+        public T GetThumbnail<T>(int id)
+        {
+            var thumbnail = this.attachmentRepo.AllAsNoTracking()
+                .Where(x => x.ProjectId == id)
+               .To<T>().FirstOrDefault();
+            return thumbnail;
         }
 
         private static void ParagraphParser(string input, Project project)
