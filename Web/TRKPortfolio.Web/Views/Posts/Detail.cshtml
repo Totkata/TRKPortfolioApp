@@ -14,38 +14,35 @@
             <p>@paragraph.ParagraphContent</p>
         </div>
     }
-    @foreach (var comment in Model.Comments)
-
+    <form class="col-6 offset-3" enctype="multipart/form-data" asp-area="" asp-controller="Comments" asp-action="Create" method="post">
+        <div class="form-group">
+            <label>Comment</label>
+            <textarea cols="40" rows="5" id="customeInput" asp-for="@Model.Comment.Text" class="form-control h-50" placeholder="Write your comment"></textarea>
+            <input type="hidden" asp-for="@Model.Comment.PostId" value="@Model.Post.Id">
+            <span asp-validation-for="@Model.Comment" class="text-danger"></span>
+        </div>
+        <a onclick="this.closest('form').submit();return false;"> <img class="btn col-1 offset-11" src="/Images/iconfinder-icon.svg" alt="Alternate Text" /> </a>
+    </form>
+    @foreach (var comment in Model.Comments.Reverse())
     {
         <div class="col-6 offset-3 mt-5 align-self-center">
             <p>@comment.Text</p>
+            <p>@comment.CreatedOn.ToString("dd MMMM yyyy HH:mm")</p>
         </div>
-        foreach (var reply in comment.Replies)
+        <form class="col-6 offset-3 p-5" enctype="multipart/form-data" asp-area="" asp-controller="Comments" asp-action="Reply" method="post">
+            <div class="form-group">
+                <textarea cols="40" rows="2" id="customeInput" asp-for="@Model.Comment.Text" class="form-control h-25" placeholder="Reply"></textarea>
+                <input type="hidden" asp-for="@Model.Comment.CommentId" value="@comment.Id">
+                <input type="hidden" asp-for="@Model.Comment.PostId" value="@Model.Post.Id">
+                <span asp-validation-for="@Model.Comment" class="text-danger"></span>
+            </div>
+            <a onclick="this.closest('form').submit();return false;"> <img class="btn col-1 offset-11" src="/Images/iconfinder-icon.svg" alt="Alternate Text" /> </a>
+        </form>
+        foreach (var reply in comment.Replies.Reverse())
         {
             <div class="col-6 offset-3 mt-5 align-self-center">
-                <p>@comment.Text</p>
+                <p>@reply.Text</p>
             </div>
         }
     }
-    <form enctype="multipart/form-data" asp-area="" asp-controller="Comments" asp-action="Create" method="post">
-        <h3 class="mb-3 text-center">Input your new Project</h3>
-        <div class="form-group">
-            <label>Projetc Title</label>
-            <input id="customeInput" asp-for="@Model.Comment.Text" class="form-control" placeholder="Project Title">
-            <input type="hidden" asp-for="@Model.Comment.PostId" value="@Model.Post.Id">
-            <span asp-validation-for="@Model.Comment" class="text-danger"></span>
-        </div>
-        <a class="btn col-12" onclick="this.closest('form').submit();return false;">Create Project</a>
-    </form>
-    <form enctype="multipart/form-data" asp-area="" asp-controller="Comments" asp-action="Reply" method="post">
-        <h3 class="mb-3 text-center">Input your new Project</h3>
-        <div class="form-group">
-            <label>Projetc Title</label>
-            <input id="customeInput" asp-for="@Model.Comment.Text" class="form-control" placeholder="Project Title">
-            <input type="hidden" asp-for="@Model.Comment.CommentId" value="1">
-            <input type="hidden" asp-for="@Model.Comment.PostId" value="@Model.Post.Id">
-            <span asp-validation-for="@Model.Comment" class="text-danger"></span>
-        </div>
-        <a class="btn col-12" onclick="this.closest('form').submit();return false;">Create Project</a>
-    </form>
 </div>
