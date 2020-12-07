@@ -2,8 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
     using TRKPortfolio.Services.Data.Contracts;
@@ -41,8 +39,18 @@
             {
                 Post = this.postsService.GetById<PostViewModel>(id),
                 Comments = this.commentsService.GetAllComments<CommentViewModel>(),
-                Attachments = this.postsService.GetAllAttachments<AttachmentViewModel>(id),
             };
+
+            var attachments = this.postsService.GetAllAttachments<AttachmentViewModel>(id);
+
+            var paths = new List<string>();
+
+            foreach (var attachment in attachments)
+            {
+                paths.Add($"PostAttachments/{attachment.Id}.{attachment.Extention}");
+            }
+
+            vm.Attachments = paths;
 
             if (vm.Post == null)
             {

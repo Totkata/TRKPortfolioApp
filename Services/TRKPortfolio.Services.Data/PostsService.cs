@@ -85,7 +85,7 @@
                 };
                 post.Attachments.Add(dbFile);
 
-                var physicalPath = $"{filePatch}/PostAttatchments/{dbFile.Id}.{extension}";
+                var physicalPath = $"{filePatch}/PostAttachments/{dbFile.Id}.{extension}";
                 using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
                 await attatchment.CopyToAsync(fileStream);
             }
