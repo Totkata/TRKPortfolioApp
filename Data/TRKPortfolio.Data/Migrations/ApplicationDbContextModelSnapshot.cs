@@ -263,9 +263,7 @@ namespace TRKPortfolio.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(250)")
-                        .HasMaxLength(250);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -300,8 +298,7 @@ namespace TRKPortfolio.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
-                        .HasColumnType("nvarchar(250)")
-                        .HasMaxLength(250);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -432,7 +429,6 @@ namespace TRKPortfolio.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Extention")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
@@ -603,7 +599,6 @@ namespace TRKPortfolio.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Extention")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
@@ -736,6 +731,48 @@ namespace TRKPortfolio.Data.Migrations
                     b.ToTable("ProjectSkills");
                 });
 
+            modelBuilder.Entity("TRKPortfolio.Data.Models.Rating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<byte>("AvaliabilityRating")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte>("ComunicationRating")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte>("CooperatingRating")
+                        .HasColumnType("tinyint");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte>("DeadlineRating")
+                        .HasColumnType("tinyint");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte>("SkillRating")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int>("TestimonialId")
+                        .HasColumnType("int");
+
+                    b.Property<byte>("WorkRating")
+                        .HasColumnType("tinyint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestimonialId")
+                        .IsUnique();
+
+                    b.ToTable("Ratings");
+                });
+
             modelBuilder.Entity("TRKPortfolio.Data.Models.Reply", b =>
                 {
                     b.Property<int>("Id")
@@ -765,8 +802,7 @@ namespace TRKPortfolio.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
-                        .HasColumnType("nvarchar(250)")
-                        .HasMaxLength(250);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -833,9 +869,7 @@ namespace TRKPortfolio.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SkillTitle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(250)")
-                        .HasMaxLength(250);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -867,9 +901,7 @@ namespace TRKPortfolio.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1117,6 +1149,15 @@ namespace TRKPortfolio.Data.Migrations
                     b.HasOne("TRKPortfolio.Data.Models.Skill", "Skill")
                         .WithMany()
                         .HasForeignKey("SkillId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TRKPortfolio.Data.Models.Rating", b =>
+                {
+                    b.HasOne("TRKPortfolio.Data.Models.Testimonial", "Testimonial")
+                        .WithOne("Rating")
+                        .HasForeignKey("TRKPortfolio.Data.Models.Rating", "TestimonialId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

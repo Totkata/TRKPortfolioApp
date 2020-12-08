@@ -1,7 +1,7 @@
-﻿namespace TRKPortfolio.Data.Migrations
-{
-    using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
+namespace TRKPortfolio.Data.Migrations
+{
     public partial class EditReplyModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

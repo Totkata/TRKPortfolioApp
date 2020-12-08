@@ -1,9 +1,8 @@
-﻿namespace TRKPortfolio.Data.Migrations
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+namespace TRKPortfolio.Data.Migrations
 {
-    using System;
-
-    using Microsoft.EntityFrameworkCore.Migrations;
-
     public partial class AddReplyModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,7 +32,7 @@
                     ApplicationUserId = table.Column<string>(nullable: true),
                     Text = table.Column<string>(nullable: true),
                     PostId = table.Column<int>(nullable: false),
-                    CommentId = table.Column<int>(nullable: true),
+                    CommentId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {

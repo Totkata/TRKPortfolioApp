@@ -1,7 +1,8 @@
 ﻿namespace TRKPortfolio.Data.Models
 {
+    using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    using System.Text;
 
     using TRKPortfolio.Data.Common.Models;
 
@@ -13,8 +14,6 @@
             this.ProjectCategories = new HashSet<ProjectCategory>();
         }
 
-        [Required]
-        [StringLength(maximumLength: 250, MinimumLength = 5)]
         public string Name { get; set; }
 
         public virtual ICollection<PostCategory> PostCategories { get; set; }

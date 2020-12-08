@@ -1,9 +1,8 @@
-﻿namespace TRKPortfolio.Data.Migrations
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+namespace TRKPortfolio.Data.Migrations
 {
-    using System;
-
-    using Microsoft.EntityFrameworkCore.Migrations;
-
     public partial class AddingRatingToTestemonials : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -41,7 +40,7 @@
                     DeadlineRating = table.Column<byte>(nullable: false),
                     CooperatingRating = table.Column<byte>(nullable: false),
                     AvaliabilityRating = table.Column<byte>(nullable: false),
-                    ComunicationRating = table.Column<byte>(nullable: false),
+                    ComunicationRating = table.Column<byte>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -84,7 +83,7 @@
                 columns: table => new
                 {
                     TestimonialId = table.Column<int>(type: "int", nullable: false),
-                    AttachmentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AttachmentId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -1,7 +1,8 @@
 ﻿namespace TRKPortfolio.Data.Models
 {
     using System;
-    using System.ComponentModel.DataAnnotations;
+    using System.Collections.Generic;
+    using System.Text;
 
     using TRKPortfolio.Data.Common.Models;
 
@@ -12,7 +13,6 @@
             this.Id = Guid.NewGuid().ToString();
         }
 
-        [Required]
         public string Extention { get; set; }
     }
 }

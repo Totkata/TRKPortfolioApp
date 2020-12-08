@@ -1,19 +1,18 @@
-﻿namespace TRKPortfolio.Web.ViewModels.Testimonials.InputModel
+﻿namespace TRKPortfolio.Data.Models
 {
     using System;
     using System.Collections.Generic;
     using System.Text;
 
-    using TRKPortfolio.Data.Models;
-    using TRKPortfolio.Services.Mapping;
+    using TRKPortfolio.Data.Common.Models;
 
-    public class CreateTestimonialInputModel
+    public class Rating : BaseModel<int>
     {
-        public int Id { get; set; }
+        public int TestimonialId { get; set; }
 
-        public string Text { get; set; }
+        public virtual Testimonial Testimonial { get; set; }
 
-        public byte WorkQualityRating { get; set; }
+        public byte WorkRating { get; set; }
 
         public byte SkillRating { get; set; }
 

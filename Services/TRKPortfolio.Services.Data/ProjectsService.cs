@@ -128,6 +128,15 @@
             var testimonial = new Testimonial
             {
                 Text = input.Text,
+                Rating = new Rating
+                {
+                    WorkRating = input.WorkQualityRating,
+                    SkillRating = input.SkillRating,
+                    DeadlineRating = input.DeadlineRating,
+                    CooperatingRating = input.CooperatingRating,
+                    AvaliabilityRating = input.AvaliabilityRating,
+                    ComunicationRating = input.ComunicationRating,
+                },
                 ProjectId = project.Id,
             };
 

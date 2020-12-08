@@ -1,10 +1,11 @@
 ﻿namespace TRKPortfolio.Data.Models
 {
-    using System.ComponentModel.DataAnnotations;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
 
     public class ProjectAttachment : AttachmentBaseModel
     {
-        [Required]
         public int ProjectId { get; set; }
 
         public Project Project { get; set; }
