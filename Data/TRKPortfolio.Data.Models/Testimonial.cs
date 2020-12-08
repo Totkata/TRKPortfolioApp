@@ -1,16 +1,14 @@
 ﻿namespace TRKPortfolio.Data.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    using System.ComponentModel.DataAnnotations;
 
     using TRKPortfolio.Data.Common.Models;
 
     public class Testimonial : BaseDeletableModel<int>
     {
+        [Required]
+        [StringLength(maximumLength: 1000, MinimumLength = 100)]
         public string Text { get; set; }
-
-        public virtual Rating Rating { get; set; }
 
         public int ProjectId { get; set; }
 

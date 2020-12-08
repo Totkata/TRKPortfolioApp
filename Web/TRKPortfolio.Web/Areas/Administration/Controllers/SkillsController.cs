@@ -7,8 +7,8 @@
 
     using Microsoft.AspNetCore.Mvc;
     using TRKPortfolio.Services.Data.Contracts;
-    using TRKPortfolio.Web.ViewModels.Administration.Skills.ViewModel;
     using TRKPortfolio.Web.ViewModels.Administration.Skills.InputModel;
+    using TRKPortfolio.Web.ViewModels.Administration.Skills.ViewModel;
 
     public class SkillsController : AdministrationController
     {

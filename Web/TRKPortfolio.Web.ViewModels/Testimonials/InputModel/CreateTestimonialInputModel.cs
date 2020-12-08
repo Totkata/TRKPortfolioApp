@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Text;
 
     using TRKPortfolio.Data.Models;
@@ -11,18 +12,8 @@
     {
         public int Id { get; set; }
 
+        [Required]
+        [StringLength(maximumLength: 1000, MinimumLength = 100, ErrorMessage = "Lenght of the testimonial text must be between 100 and 1000 (Including) symbols!")]
         public string Text { get; set; }
-
-        public byte WorkQualityRating { get; set; }
-
-        public byte SkillRating { get; set; }
-
-        public byte DeadlineRating { get; set; }
-
-        public byte CooperatingRating { get; set; }
-
-        public byte AvaliabilityRating { get; set; }
-
-        public byte ComunicationRating { get; set; }
     }
 }

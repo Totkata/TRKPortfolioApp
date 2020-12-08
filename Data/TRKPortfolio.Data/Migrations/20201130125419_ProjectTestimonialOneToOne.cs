@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace TRKPortfolio.Data.Migrations
+﻿namespace TRKPortfolio.Data.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class ProjectTestimonialOneToOne : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -63,8 +63,6 @@
 
         public DbSet<Testimonial> Testimonials { get; set; }
 
-        public DbSet<Rating> Ratings { get; set; }
-
         public DbSet<Setting> Settings { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
@@ -115,11 +113,6 @@
             }
 
             // Set composite keys
-            builder.Entity<Testimonial>()
-            .HasOne(b => b.Rating)
-            .WithOne(i => i.Testimonial)
-            .HasForeignKey<Rating>(b => b.TestimonialId);
-
             builder.Entity<Project>()
             .HasOne(b => b.Testimonial)
             .WithOne(i => i.Project)
