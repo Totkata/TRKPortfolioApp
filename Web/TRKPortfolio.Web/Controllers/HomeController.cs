@@ -7,6 +7,7 @@
     using TRKPortfolio.Web.ViewModels;
     using TRKPortfolio.Web.ViewModels.Administration.Posts.ViewModel;
     using TRKPortfolio.Web.ViewModels.Administration.Projects.ViewModel;
+    using TRKPortfolio.Web.ViewModels.Attachments.ViewModel;
     using TRKPortfolio.Web.ViewModels.Index.ViewModel;
     using TRKPortfolio.Web.ViewModels.Testimonials.ViewModel;
 
@@ -31,6 +32,29 @@
                 Posts = this.postsService.GetAllPosts<PostViewModel>(),
                 Projects = this.projectsService.GetAll<ProjectViewModel>(),
             };
+
+            foreach (var post in vm.Posts)
+            {
+                var thumbnail = this.postsService.GetThumbnail<PostAttachmentViewModel>(post.Id);
+
+                if (thumbnail != null)
+                {
+                    var path = $"PostAttachments/{thumbnail.Id}.{thumbnail.Extention}";
+                    post.Thumbnail = path;
+                }
+            }
+
+            foreach (var post in vm.Projects)
+            {
+                var thumbnail = this.projectsService.GetThumbnail<ProjectAttachmentViewModel>(post.Id);
+
+                if (thumbnail != null)
+                {
+                    var path = $"ProjectAttachments/{thumbnail.Id}.{thumbnail.Extention}";
+                    post.Thumbnail = path;
+                }
+            }
+
             return this.View(vm);
         }
 
