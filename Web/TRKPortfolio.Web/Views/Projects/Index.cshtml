@@ -15,14 +15,12 @@
         if (i % 2 == 0)
         {
             <div class="row d-flex project">
-                <a class="col-6 align-self-center" asp-action="Detail" asp-route-id="@project.Id">
-                    <h2 class="col-12">
-                        @project.Title
-                    </h2>
-                    <p class="col-12">@project.Description</p>
+                <div class="col-6 align-self-center">
+                    <h2 class="col-12"><a asp-action="Detail" asp-route-id="@project.Id">@project.Title</a></h2>
+                    <p class="col-12"><b>@project.Description</b></p>
                     <p class="col-12">@project.CustomerUsername</p>
-                </a>
-                <div class="col-6">
+                </div>
+                <div class="col-lg-6 align-self-center">
                     <img class="w-75" src="/Images/@Model.Projects.ElementAt(i).Thumbnail" alt="Hi">
                 </div>
             </div>
@@ -30,16 +28,14 @@
         else
         {
             <div class="row d-flex project">
-                <div class="col-6">
+                <div class="col-lg-6 align-self-center">
                     <img class="w-75" src="/Images/@Model.Projects.ElementAt(i).Thumbnail" alt="Hi">
                 </div>
-                <a class="col-6 align-self-center" asp-action="Detail" asp-route-id="@project.Id">
-                    <h2 class="col-12">
-                        @project.Title
-                    </h2>
-                    <p class="col-12">@project.Description</p>
+                <div class="col-6 align-self-center">
+                    <h2 class="col-12"><a asp-action="Detail" asp-route-id="@project.Id">@project.Title</a></h2>
+                    <p class="col-12"><b>@project.Description</b></p>
                     <p class="col-12">@project.CustomerUsername</p>
-                </a>
+                </div>
             </div>
         }
     }

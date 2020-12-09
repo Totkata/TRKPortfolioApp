@@ -45,5 +45,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Images\ProjectAttachments\" />
+    <Folder Include="wwwroot\Images\PostAttachments\" />
   </ItemGroup>
 </Project>

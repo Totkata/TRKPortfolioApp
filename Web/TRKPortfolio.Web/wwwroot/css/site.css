@@ -115,8 +115,12 @@ ul {
     height: 50vh;
 }
 
-.testemonials {
+.testimonials {
     height: 40vh;
+}
+
+#testimonialContent{
+    font-size: 25px;
 }
 
 .inputForm {

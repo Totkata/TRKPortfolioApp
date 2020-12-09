@@ -55,22 +55,6 @@ namespace TRKPortfolio.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Attachments",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
-                    Extention = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Attachments", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
                 {
@@ -274,7 +258,7 @@ namespace TRKPortfolio.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Testimonials",
+                name: "Projects",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -283,15 +267,18 @@ namespace TRKPortfolio.Data.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
                     ApplicationUserId = table.Column<string>(nullable: true),
-                    Text = table.Column<string>(nullable: true),
-                    Rating = table.Column<int>(nullable: false)
+                    Description = table.Column<string>(nullable: true),
+                    ShortDescription = table.Column<string>(nullable: true),
+                    Views = table.Column<int>(nullable: false),
+                    Price = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Testimonials", x => x.Id);
+                    table.PrimaryKey("PK_Projects", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Testimonials_AspNetUsers_ApplicationUserId",
+                        name: "FK_Projects_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -310,7 +297,6 @@ namespace TRKPortfolio.Data.Migrations
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     ApplicationUserId = table.Column<string>(nullable: true),
                     Text = table.Column<string>(nullable: true),
-                    ReplyCommentId = table.Column<int>(nullable: true),
                     PostId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -328,10 +314,27 @@ namespace TRKPortfolio.Data.Migrations
                         principalTable: "Posts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PostAttachments",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    Extention = table.Column<string>(nullable: true),
+                    PostId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostAttachments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Comments_Comments_ReplyCommentId",
-                        column: x => x.ReplyCommentId,
-                        principalTable: "Comments",
+                        name: "FK_PostAttachments_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -443,109 +446,20 @@ namespace TRKPortfolio.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Projects",
+                name: "ProjectAttachments",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    Title = table.Column<string>(nullable: true),
-                    ApplicationUserId = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    ShortDescription = table.Column<string>(nullable: true),
-                    Views = table.Column<int>(nullable: false),
-                    TestimonialId = table.Column<int>(nullable: true),
-                    Price = table.Column<double>(nullable: false)
+                    Extention = table.Column<string>(nullable: true),
+                    ProjectId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Projects", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Projects_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Projects_Testimonials_TestimonialId",
-                        column: x => x.TestimonialId,
-                        principalTable: "Testimonials",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TestimonialAttachments",
-                columns: table => new
-                {
-                    TestimonialId = table.Column<int>(nullable: false),
-                    AttachmentId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TestimonialAttachments", x => new { x.TestimonialId, x.AttachmentId });
-                    table.ForeignKey(
-                        name: "FK_TestimonialAttachments_Attachments_AttachmentId",
-                        column: x => x.AttachmentId,
-                        principalTable: "Attachments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TestimonialAttachments_Testimonials_TestimonialId",
-                        column: x => x.TestimonialId,
-                        principalTable: "Testimonials",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CommentLikes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    CommentId = table.Column<int>(nullable: false),
-                    ApplicationUserId = table.Column<string>(nullable: true),
-                    IsSaved = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CommentLikes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CommentLikes_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CommentLikes_Comments_CommentId",
-                        column: x => x.CommentId,
-                        principalTable: "Comments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProjectAttachments",
-                columns: table => new
-                {
-                    ProjectId = table.Column<int>(nullable: false),
-                    AttachmentId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProjectAttachments", x => new { x.ProjectId, x.AttachmentId });
-                    table.ForeignKey(
-                        name: "FK_ProjectAttachments_Attachments_AttachmentId",
-                        column: x => x.AttachmentId,
-                        principalTable: "Attachments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_ProjectAttachments", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ProjectAttachments_Projects_ProjectId",
                         column: x => x.ProjectId,
@@ -691,6 +605,124 @@ namespace TRKPortfolio.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Testimonials",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    Text = table.Column<string>(nullable: true),
+                    ProjectId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Testimonials", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Testimonials_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CommentLikes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    CommentId = table.Column<int>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true),
+                    IsSaved = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CommentLikes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CommentLikes_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CommentLikes_Comments_CommentId",
+                        column: x => x.CommentId,
+                        principalTable: "Comments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Replies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    ApplicationUserId = table.Column<string>(nullable: true),
+                    Text = table.Column<string>(nullable: true),
+                    PostId = table.Column<int>(nullable: false),
+                    CommentId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Replies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Replies_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Replies_Comments_CommentId",
+                        column: x => x.CommentId,
+                        principalTable: "Comments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Replies_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Ratings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    TestimonialId = table.Column<int>(nullable: false),
+                    WorkRating = table.Column<byte>(nullable: false),
+                    SkillRating = table.Column<byte>(nullable: false),
+                    DeadlineRating = table.Column<byte>(nullable: false),
+                    CooperatingRating = table.Column<byte>(nullable: false),
+                    AvaliabilityRating = table.Column<byte>(nullable: false),
+                    ComunicationRating = table.Column<byte>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ratings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Ratings_Testimonials_TestimonialId",
+                        column: x => x.TestimonialId,
+                        principalTable: "Testimonials",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -741,11 +773,6 @@ namespace TRKPortfolio.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Attachments_IsDeleted",
-                table: "Attachments",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Categories_IsDeleted",
                 table: "Categories",
                 column: "IsDeleted");
@@ -776,14 +803,19 @@ namespace TRKPortfolio.Data.Migrations
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_ReplyCommentId",
-                table: "Comments",
-                column: "ReplyCommentId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Paragraphs_IsDeleted",
                 table: "Paragraphs",
                 column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PostAttachments_IsDeleted",
+                table: "PostAttachments",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PostAttachments_PostId",
+                table: "PostAttachments",
+                column: "PostId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PostCategories_CategoryId",
@@ -826,9 +858,14 @@ namespace TRKPortfolio.Data.Migrations
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProjectAttachments_AttachmentId",
+                name: "IX_ProjectAttachments_IsDeleted",
                 table: "ProjectAttachments",
-                column: "AttachmentId");
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectAttachments_ProjectId",
+                table: "ProjectAttachments",
+                column: "ProjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProjectCategories_CategoryId",
@@ -861,11 +898,6 @@ namespace TRKPortfolio.Data.Migrations
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Projects_TestimonialId",
-                table: "Projects",
-                column: "TestimonialId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ProjectSaves_ApplicationUserId",
                 table: "ProjectSaves",
                 column: "ApplicationUserId");
@@ -886,6 +918,32 @@ namespace TRKPortfolio.Data.Migrations
                 column: "SkillId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Ratings_TestimonialId",
+                table: "Ratings",
+                column: "TestimonialId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Replies_ApplicationUserId",
+                table: "Replies",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Replies_CommentId",
+                table: "Replies",
+                column: "CommentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Replies_IsDeleted",
+                table: "Replies",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Replies_PostId",
+                table: "Replies",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Settings_IsDeleted",
                 table: "Settings",
                 column: "IsDeleted");
@@ -896,19 +954,15 @@ namespace TRKPortfolio.Data.Migrations
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TestimonialAttachments_AttachmentId",
-                table: "TestimonialAttachments",
-                column: "AttachmentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Testimonials_ApplicationUserId",
-                table: "Testimonials",
-                column: "ApplicationUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Testimonials_IsDeleted",
                 table: "Testimonials",
                 column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Testimonials_ProjectId",
+                table: "Testimonials",
+                column: "ProjectId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -930,6 +984,9 @@ namespace TRKPortfolio.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "CommentLikes");
+
+            migrationBuilder.DropTable(
+                name: "PostAttachments");
 
             migrationBuilder.DropTable(
                 name: "PostCategories");
@@ -962,16 +1019,16 @@ namespace TRKPortfolio.Data.Migrations
                 name: "ProjectSkills");
 
             migrationBuilder.DropTable(
+                name: "Ratings");
+
+            migrationBuilder.DropTable(
+                name: "Replies");
+
+            migrationBuilder.DropTable(
                 name: "Settings");
 
             migrationBuilder.DropTable(
-                name: "TestimonialAttachments");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "Comments");
 
             migrationBuilder.DropTable(
                 name: "Categories");
@@ -980,19 +1037,19 @@ namespace TRKPortfolio.Data.Migrations
                 name: "Paragraphs");
 
             migrationBuilder.DropTable(
-                name: "Projects");
-
-            migrationBuilder.DropTable(
                 name: "Skills");
 
             migrationBuilder.DropTable(
-                name: "Attachments");
+                name: "Testimonials");
+
+            migrationBuilder.DropTable(
+                name: "Comments");
+
+            migrationBuilder.DropTable(
+                name: "Projects");
 
             migrationBuilder.DropTable(
                 name: "Posts");
-
-            migrationBuilder.DropTable(
-                name: "Testimonials");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

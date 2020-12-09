@@ -3,22 +3,21 @@
 
 <div class="row d-flex pt-5">
     <div class="col-6 offset-3 mt-5 align-self-center">
-        <h3>@Model.Post.Id</h3>
-        <h3>@Model.Post.Title</h3>
+        <h3 class="mb-5">@Model.Post.Title</h3>
         <p>@Model.Post.Description</p>
     </div>
     @foreach (var path in Model.Attachments)
     {
-        <img src="/Images/@path" alt="Alternate Text" />
+        <img class="col-6 offset-3" src="/Images/@path" alt="Alternate Text" />
     }
     @foreach (var paragraph in Model.Post.Paragraphs)
     {
         <div class="col-6 offset-3 mt-5 align-self-center">
-            <h2>@paragraph.ParagraphTitle</h2>
+            <h2 class="mb-4">@paragraph.ParagraphTitle</h2>
             <p>@paragraph.ParagraphContent</p>
         </div>
     }
-    <form class="col-6 offset-3" enctype="multipart/form-data" asp-area="" asp-controller="Comments" asp-action="Create" method="post">
+    <form class="col-6 offset-3 mt-5" enctype="multipart/form-data" asp-area="" asp-controller="Comments" asp-action="Create" method="post">
         <div class="form-group">
             <label>Comment</label>
             <textarea cols="40" rows="5" id="customeInput" asp-for="@Model.Comment.Text" class="form-control h-50" placeholder="Write your comment"></textarea>
@@ -29,11 +28,20 @@
     </form>
     @foreach (var comment in Model.Comments.Reverse())
     {
-        <div class="col-6 offset-3 mt-5 align-self-center">
-            <p>@comment.Text</p>
+        <div class="col-6 offset-3 mt-3 align-self-center">
+            <p><b>@comment.Text</b></p>
             <p>@comment.CreatedOn.ToString("dd MMMM yyyy HH:mm")</p>
+            <hr />
         </div>
-        <form class="col-6 offset-3 p-5" enctype="multipart/form-data" asp-area="" asp-controller="Comments" asp-action="Reply" method="post">
+        foreach (var reply in comment.Replies)
+        {
+            <div class="col-6 offset-3 pl-5 align-self-center">
+                <p><b>@reply.Text</b></p>
+                <p>@reply.CreatedOn.ToString("dd MMMM yyyy HH:mm")</p>
+                <hr />
+            </div>
+        }
+        <form class="col-6 offset-3 pl-5" enctype="multipart/form-data" asp-area="" asp-controller="Comments" asp-action="Reply" method="post">
             <div class="form-group">
                 <textarea cols="40" rows="2" id="customeInput" asp-for="@Model.Comment.Text" class="form-control h-25" placeholder="Reply"></textarea>
                 <input type="hidden" asp-for="@Model.Comment.CommentId" value="@comment.Id">
@@ -42,11 +50,5 @@
             </div>
             <a onclick="this.closest('form').submit();return false;"> <img class="btn col-1 offset-11" src="/Images/iconfinder-icon.svg" alt="Alternate Text" /> </a>
         </form>
-        foreach (var reply in comment.Replies.Reverse())
-        {
-            <div class="col-6 offset-3 mt-5 align-self-center">
-                <p>@reply.Text</p>
-            </div>
-        }
     }
 </div>
