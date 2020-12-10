@@ -94,6 +94,15 @@
             await this.postRepo.SaveChangesAsync();
         }
 
+        public async Task RemoveAsync(int id)
+        {
+            var post = await this.postRepo.GetByIdWithDeletedAsync(id);
+
+            this.postRepo.Delete(post);
+
+            await this.postRepo.SaveChangesAsync();
+        }
+
         public IEnumerable<T> GetAllAttachments<T>(int id)
         {
             var attachments = this.attachmentRepo.AllAsNoTracking()

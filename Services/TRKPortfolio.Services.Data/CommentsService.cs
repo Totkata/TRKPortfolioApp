@@ -55,6 +55,19 @@
             return comments;
         }
 
+        public async Task<int> RemoveAsync(int id)
+        {
+            var comment = await this.commentRepo.GetByIdWithDeletedAsync(id);
+
+            var postId = comment.PostId;
+
+            this.commentRepo.Delete(comment);
+
+            await this.commentRepo.SaveChangesAsync();
+
+            return postId;
+        }
+
         public async Task ReplyAsync(CreateCommentInputModel inputModel, int commentId)
         {
             var comment = this.postRepo.AllAsNoTracking()
@@ -74,6 +87,19 @@
 
             await this.replyRepo.AddAsync(reply);
             await this.replyRepo.SaveChangesAsync();
+        }
+
+        public async Task<int> RemoveReplyAsync(int id)
+        {
+            var reply = await this.replyRepo.GetByIdWithDeletedAsync(id);
+
+            var postId = reply.PostId;
+
+            this.replyRepo.Delete(reply);
+
+            await this.replyRepo.SaveChangesAsync();
+
+            return postId;
         }
     }
 }

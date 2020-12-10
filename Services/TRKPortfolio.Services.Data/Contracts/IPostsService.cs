@@ -13,6 +13,8 @@
 
         Task EditAsync(EditPostInputModel inputModel);
 
+        Task RemoveAsync(int id);
+
         IEnumerable<T> GetAllPosts<T>();
 
         T GetById<T>(int id);

@@ -14,5 +14,9 @@
         Task ReplyAsync(CreateCommentInputModel inputModel, int commentId);
 
         IEnumerable<T> GetAllPostComments<T>(int id);
+
+        Task<int> RemoveAsync(int id);
+
+        Task<int> RemoveReplyAsync(int id);
     }
 }

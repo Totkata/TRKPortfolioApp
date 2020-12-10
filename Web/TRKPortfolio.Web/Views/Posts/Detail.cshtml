@@ -8,6 +8,7 @@
         @if (User.IsInRole("Admin"))
         {
             <a class="btn col-6 offset-3 mt-3 mb-4" asp-area="Administration" asp-controller="Posts" asp-action="Edit" asp-route-id="@Model.Post.Id">Edit Post</a>
+            <a class="btn col-6 offset-3 mt-3 mb-4" asp-area="Administration" asp-controller="Posts" asp-action="Delete" asp-route-id="@Model.Post.Id">Delete Post</a>
         }
     </div>
     @foreach (var path in Model.Attachments)
@@ -35,6 +36,10 @@
         <div class="col-6 offset-3 mt-3 align-self-center">
             <p><b>@comment.Text</b></p>
             <p>@comment.CreatedOn.ToString("dd MMMM yyyy HH:mm")</p>
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="btn col-6 offset-3 mt-3 mb-4" asp-area="" asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id">Edit Post</a>
+            }
             <hr />
         </div>
         foreach (var reply in comment.Replies)
@@ -42,6 +47,10 @@
             <div class="col-6 offset-3 pl-5 align-self-center">
                 <p><b>@reply.Text</b></p>
                 <p>@reply.CreatedOn.ToString("dd MMMM yyyy HH:mm")</p>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="btn col-6 offset-3 mt-3 mb-4" asp-area="" asp-controller="Comments" asp-action="DeleteReply" asp-route-id="@reply.Id">Edit Post</a>
+                }
                 <hr />
             </div>
         }

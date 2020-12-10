@@ -17,15 +17,18 @@
         private readonly IPostsService postsService;
         private readonly ICategoriesService categoriesService;
         private readonly IWebHostEnvironment environment;
+        private readonly ICommentsService commentsService;
 
         public PostsController(
             IPostsService postsService,
             ICategoriesService categoriesService,
-            IWebHostEnvironment environment)
+            IWebHostEnvironment environment,
+            ICommentsService commentsService)
         {
             this.postsService = postsService;
             this.categoriesService = categoriesService;
             this.environment = environment;
+            this.commentsService = commentsService;
         }
 
         public IActionResult Create()
@@ -85,6 +88,13 @@
             await this.postsService.EditAsync(input);
 
             return this.Redirect("/");
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            await this.postsService.RemoveAsync(id);
+
+            return this.RedirectToAction("Detail", "Posts", new { area = string.Empty });
         }
     }
 }

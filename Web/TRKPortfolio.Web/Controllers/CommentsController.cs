@@ -45,5 +45,21 @@
             await this.commentsService.ReplyAsync(input.Comment, commentId);
             return this.RedirectToAction("Detail", "Posts", new { id = input.Comment.PostId });
         }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            int postId = await this.commentsService.RemoveAsync(id);
+
+            return this.RedirectToAction("Detail", "Posts", new { id = postId});
+        }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteReply(int id)
+        {
+            int postId = await this.commentsService.RemoveReplyAsync(id);
+
+            return this.RedirectToAction("Detail", "Posts", new { id = postId });
+        }
     }
 }
