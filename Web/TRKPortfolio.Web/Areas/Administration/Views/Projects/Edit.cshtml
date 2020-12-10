@@ -6,7 +6,6 @@
     this.ViewData["Title"] = "Edit Project";
     var categoryItems = this.Model.CategoriesItems.Select(x => new SelectListItem(x.Value, x.Key));
     var skills = this.Model.Skills.Select(x => new SelectListItem(x.Value, x.Key));
-    var customers = this.Model.Customers.Select(x => new SelectListItem(x.Value, x.Key));
 }
 
 <div class="row d-flex">

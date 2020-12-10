@@ -50,7 +50,7 @@
             var vm = new PostCommentInputModel
             {
                 Post = this.postsService.GetById<PostViewModel>(id),
-                Comments = this.commentsService.GetAllComments<CommentViewModel>(),
+                Comments = this.commentsService.GetAllPostComments<CommentViewModel>(id),
             };
 
             var attachments = this.postsService.GetAllAttachments<PostAttachmentViewModel>(id);

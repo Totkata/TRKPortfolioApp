@@ -47,10 +47,11 @@
             await this.commentRepo.SaveChangesAsync();
         }
 
-        public IEnumerable<T> GetAllComments<T>()
+        public IEnumerable<T> GetAllPostComments<T>(int id)
         {
             var comments = this.commentRepo.AllAsNoTracking()
-              .To<T>().ToList();
+                .Where(x => x.PostId == id)
+               .To<T>().ToList();
             return comments;
         }
 

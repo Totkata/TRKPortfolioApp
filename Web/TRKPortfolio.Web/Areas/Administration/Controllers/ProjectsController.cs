@@ -52,9 +52,9 @@
                 return this.View(input);
             }
 
-            await this.projectsService.CreateAsync(input, $"{this.environment.WebRootPath}/images");
+            int id = await this.projectsService.CreateAsync(input, $"{this.environment.WebRootPath}/images");
 
-            return this.Redirect("/");
+            return this.RedirectToAction("Detail", "Projects", new { id, area = string.Empty });
         }
 
         public IActionResult Edit(int id)
@@ -81,7 +81,6 @@
             viewModel.Text = text;
             viewModel.CategoriesItems = this.categoriesService.GetAllAsKeyValuePairs();
             viewModel.Skills = this.skillsService.GetAllAsKeyValuePairs();
-            viewModel.Customers = this.usersService.GetAllAsKeyValuePairs();
             return this.View(viewModel);
         }
 
@@ -93,9 +92,16 @@
                 return this.View(input);
             }
 
-            await this.projectsService.EditAsync(input);
+            int id = await this.projectsService.EditAsync(input);
 
-            return this.Redirect("/");
+            return this.RedirectToAction("Detail", "Projects", new { id, area = string.Empty });
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            await this.projectsService.RemoveAsync(id);
+
+            return this.RedirectToAction("Index", "Projects", new { area = string.Empty });
         }
     }
 }

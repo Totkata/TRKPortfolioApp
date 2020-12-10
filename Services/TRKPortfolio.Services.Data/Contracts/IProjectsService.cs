@@ -11,9 +11,9 @@
 
     public interface IProjectsService
     {
-        Task CreateAsync(CreateProjectInputModel inputModel, string filePatch);
+        Task<int> CreateAsync(CreateProjectInputModel inputModel, string filePatch);
 
-        Task EditAsync(EditProjectInputModel inputModel);
+        Task<int> EditAsync(EditProjectInputModel inputModel);
 
         Task AddTestimonialAsyncAsync(CreateTestimonialInputModel inputModel);
 

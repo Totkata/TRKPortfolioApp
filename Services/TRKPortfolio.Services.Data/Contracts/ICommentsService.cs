@@ -13,6 +13,6 @@
 
         Task ReplyAsync(CreateCommentInputModel inputModel, int commentId);
 
-        IEnumerable<T> GetAllComments<T>();
+        IEnumerable<T> GetAllPostComments<T>(int id);
     }
 }

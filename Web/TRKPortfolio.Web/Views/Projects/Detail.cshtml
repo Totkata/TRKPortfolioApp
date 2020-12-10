@@ -4,6 +4,20 @@
 
 
 <div class="row d-flex pt-5">
+    <div class="col-6 offset-3 mt-5">
+        @if (Model.Project.CustomerUsername == User.Identity.Name)
+        {
+            <a class="btn col-6 offset-3 mb-3" asp-area="" asp-controller="Projects" asp-action="Create" asp-route-id="@Model.Project.Id">Add Testimonial</a>
+        }
+        @if (User.IsInRole("Admin"))
+        {
+            <a class="btn col-6 offset-3 mb-3" asp-area="Administration" asp-controller="Projects" asp-action="Edit" asp-route-id="@Model.Project.Id">Edit Project</a>
+        }
+        @if (User.IsInRole("Admin"))
+        {
+            <a class="btn col-6 offset-3 mb-3" asp-area="Administration" asp-controller="Projects" asp-action="Delete" asp-route-id="@Model.Project.Id">Delete Project</a>
+        }
+    </div>
     <div class="col-6 offset-3 mt-5 align-self-center">
         <h3>@Model.Project.Title</h3>
         <p>@Model.Project.Description</p>
@@ -19,14 +33,4 @@
     {
         <img class="col-6 offset-3" src="/Images/@path" alt="Alternate Text" />
     }
-    <div class="col-6 offset-3 mt-5">
-        @if (Model.Project.CustomerUsername == User.Identity.Name)
-        {
-            <a class="btn col-6 offset-3" asp-area="" asp-controller="Projects" asp-action="Create" asp-route-id="@Model.Project.Id">Add Testimonial</a>
-        }
-        @if (User.IsInRole("Admin"))
-        {
-            <a class="btn col-6 offset-3" asp-area="Administration" asp-controller="Projects" asp-action="Edit" asp-route-id="@Model.Project.Id">Edit Project</a>
-        }
-    </div>
 </div>

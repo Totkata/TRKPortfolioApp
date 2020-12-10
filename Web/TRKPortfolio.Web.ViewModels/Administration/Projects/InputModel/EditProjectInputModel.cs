@@ -29,21 +29,13 @@
         public string Text { get; set; }
 
         [Required]
-        public int[] CategoryId { get; set; } // ToDo: Make to select many from dropDown menu!!!
+        public int[] CategoryId { get; set; }
 
-        // View part
         public IEnumerable<KeyValuePair<string, string>> CategoriesItems { get; set; }
 
         [Required]
         public int[] SkillId { get; set; }
 
-        // View part
         public IEnumerable<KeyValuePair<string, string>> Skills { get; set; }
-
-        [Required]
-        public string CustomerId { get; set; }
-
-        // View part
-        public IEnumerable<KeyValuePair<string, string>> Customers { get; set; }
     }
 }

@@ -42,7 +42,7 @@
             this.attachmentRepo = attachmentRepo;
         }
 
-        public async Task CreateAsync(CreateProjectInputModel inputModel, string filePatch)
+        public async Task<int> CreateAsync(CreateProjectInputModel inputModel, string filePatch)
         {
             var project = new Project
             {
@@ -80,9 +80,11 @@
 
             await this.projectRepo.AddAsync(project);
             await this.projectRepo.SaveChangesAsync();
+
+            return project.Id;
         }
 
-        public async Task EditAsync(EditProjectInputModel inputModel)
+        public async Task<int> EditAsync(EditProjectInputModel inputModel)
         {
             var project = this.projectRepo
                 .All()
@@ -110,6 +112,8 @@
             SkillsHandeller(inputModel.CategoryId, project, this.skillRepo);
 
             await this.projectRepo.SaveChangesAsync();
+
+            return project.Id;
         }
 
         public async Task RemoveAsync(int id)
