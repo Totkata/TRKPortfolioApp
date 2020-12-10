@@ -5,6 +5,10 @@
     <div class="col-6 offset-3 mt-5 align-self-center">
         <h3 class="mb-5">@Model.Post.Title</h3>
         <p>@Model.Post.Description</p>
+        @if (User.IsInRole("Admin"))
+        {
+            <a class="btn col-6 offset-3 mt-3 mb-4" asp-area="Administration" asp-controller="Posts" asp-action="Edit" asp-route-id="@Model.Post.Id">Edit Post</a>
+        }
     </div>
     @foreach (var path in Model.Attachments)
     {

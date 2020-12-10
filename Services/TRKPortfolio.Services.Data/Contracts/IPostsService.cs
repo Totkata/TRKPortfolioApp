@@ -11,6 +11,8 @@
     {
         Task CreateAsync(CreatePostInputModel inputModel, string filePatch);
 
+        Task EditAsync(EditPostInputModel inputModel);
+
         IEnumerable<T> GetAllPosts<T>();
 
         T GetById<T>(int id);

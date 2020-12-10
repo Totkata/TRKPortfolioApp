@@ -126,5 +126,71 @@
 
             return post;
         }
+
+        public async Task EditAsync(EditPostInputModel inputModel)
+        {
+            var post = this.postRepo
+               .All()
+               .Include(p => p.Paragraphs)
+               .ThenInclude(p => p.Paragraph)
+               .Include(p => p.PostCategories)
+               .ThenInclude(p => p.Category)
+               .FirstOrDefault(x => x.Id == inputModel.Id);
+
+            post.Title = inputModel.Title;
+            post.Description = inputModel.Description;
+
+            post.Paragraphs.Clear();
+            ParagraphParser(inputModel.Text, post);
+
+            post.Description = inputModel.Description;
+            post.ShortDescription = ShortDescriptionParser(inputModel.Description);
+
+            post.PostCategories.Clear();
+            CategoriesHandeller(inputModel.CategoryId, post, this.categoryRepo);
+
+            await this.postRepo.SaveChangesAsync();
+        }
+
+        private static void ParagraphParser(string input, Post post)
+        {
+            var splitedInput = input.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+
+            for (int i = 0; i < splitedInput.Length; i += 2)
+            {
+                post.Paragraphs.Add(new PostParagraph
+                {
+                    Paragraph = new Paragraph
+                    {
+                        Title = splitedInput[i],
+                        Content = splitedInput[i + 1],
+                    },
+                });
+            }
+        }
+
+        private static string ShortDescriptionParser(string input)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            int maxLenght = input.Length > 75 ? 75 : input.Length;
+            sb.Append(input.Substring(0, maxLenght));
+            sb.Append("...");
+
+            return sb.ToString();
+        }
+
+        private static void CategoriesHandeller(int[] input, Post post, IDeletableEntityRepository<Category> categoryRepo)
+        {
+            foreach (var inputCategory in input)
+            {
+                var category = categoryRepo.All().FirstOrDefault(x => x.Id == inputCategory);
+
+                post.PostCategories.Add(new PostCategory
+                {
+                    Category = category,
+                });
+            }
+        }
     }
 }
