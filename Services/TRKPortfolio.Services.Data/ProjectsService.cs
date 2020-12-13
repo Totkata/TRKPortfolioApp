@@ -57,7 +57,17 @@
 
             CategoriesHandeller(inputModel.CategoryId, project, this.categoryRepo);
 
-            ParagraphParser(inputModel.Text, project);
+            foreach (var paragraph in inputModel.Paragraphs)
+            {
+                project.Paragraphs.Add(new ProjectParagraph
+                {
+                    Paragraph = new Paragraph
+                    {
+                        Title = paragraph.Title,
+                        Content = paragraph.Content,
+                    },
+                });
+            }
 
             foreach (var attatchment in inputModel.Attatchments)
             {
@@ -100,7 +110,18 @@
             project.Description = inputModel.Description;
 
             project.Paragraphs.Clear();
-            ParagraphParser(inputModel.Text, project);
+
+            foreach (var paragraph in inputModel.Paragraphs)
+            {
+                project.Paragraphs.Add(new ProjectParagraph
+                {
+                    Paragraph = new Paragraph
+                    {
+                        Title = paragraph.Title,
+                        Content = paragraph.Content,
+                    },
+                });
+            }
 
             project.Description = inputModel.Description;
             project.ShortDescription = ShortDescriptionParser(inputModel.Description);
@@ -118,9 +139,9 @@
 
         public async Task RemoveAsync(int id)
         {
-            var post = await this.projectRepo.GetByIdWithDeletedAsync(id);
+            var projetc = await this.projectRepo.GetByIdWithDeletedAsync(id);
 
-            this.projectRepo.Delete(post);
+            this.projectRepo.Delete(projetc);
 
             await this.projectRepo.SaveChangesAsync();
         }

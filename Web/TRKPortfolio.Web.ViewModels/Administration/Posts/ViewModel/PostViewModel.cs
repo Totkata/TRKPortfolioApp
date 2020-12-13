@@ -16,7 +16,7 @@
 
         public string Description { get; set; }
 
-        public IEnumerable<ParagraphsViewModel> Paragraphs { get; set; }
+        public IEnumerable<PostParagraphViewModel> Paragraphs { get; set; }
 
         public string Thumbnail { get; set; }
     }

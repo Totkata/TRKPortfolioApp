@@ -9,7 +9,7 @@
     using TRKPortfolio.Data.Models;
     using TRKPortfolio.Services.Mapping;
 
-    public class ParagraphsViewModel : IMapFrom<PostParagraph>
+    public class PostParagraphViewModel : IMapFrom<PostParagraph>
     {
         public string ParagraphTitle { get; set; }
 

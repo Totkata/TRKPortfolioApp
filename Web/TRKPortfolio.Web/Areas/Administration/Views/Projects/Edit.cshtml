@@ -22,11 +22,15 @@
                 <input id="customeInput" asp-for="@Model.Description" class="form-control" placeholder="Description">
                 <span asp-validation-for="@Model.Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label>Project Content</label>
-                <textarea cols="40" rows="5" id="customeInput" asp-for="@Model.Text" class="form-control h-100" placeholder="Write content here"></textarea>
-                <span asp-validation-for="@Model.Text" class="text-danger"></span>
-            </div>
+            @for (int i = 0; i < Model.ParagraphsVm.Count(); i++)
+            {
+                <div>
+                    <label asp-for="Paragraphs"></label>
+                    <input id="customeInput" type='text' name="Paragraphs[@i].Title" class="form-control"value="@Model.ParagraphsVm.ElementAt(i).ParagraphTitle">
+                    <textarea cols="40" rows="5" id="customeInput" type="text" name="Paragraphs[@i].Content" class="form-control h-100 mt-2 mb-4">@Model.ParagraphsVm.ElementAt(i).ParagraphContent"</textarea>
+                    <span asp-validation-for="@Model.Paragraphs" class="text-danger"></span>
+                </div>
+            }
             <div id="select_many">
                 <div class="form-group">
                     <label>Select categories</label>

@@ -31,7 +31,7 @@
             this.attachmentRepo = attachmentRepo;
         }
 
-        public async Task CreateAsync(CreatePostInputModel inputModel, string filePatch)
+        public async Task CreateAsync(CreatePostInputModel inputModel, string filePath)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -56,17 +56,14 @@
                 });
             }
 
-            // ToDo Make better paragraph splitting
-            var splitedInput = inputModel.Text.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
-
-            for (int i = 0; i < splitedInput.Length; i += 2)
+            foreach (var paragraph in inputModel.Paragraphs)
             {
                 post.Paragraphs.Add(new PostParagraph
                 {
                     Paragraph = new Paragraph
                     {
-                        Title = splitedInput[i],
-                        Content = splitedInput[i + 1],
+                        Title = paragraph.Title,
+                        Content = paragraph.Content,
                     },
                 });
             }
@@ -85,8 +82,8 @@
                 };
                 post.Attachments.Add(dbFile);
 
-                var physicalPath = $"{filePatch}/PostAttachments/{dbFile.Id}.{extension}";
-                using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
+                var physicalPath = $"{filePath}/PostAttachments/{dbFile.Id}.{extension}";
+                using Stream fileStream = new FileStream(physicalPath, FileMode.CreateNew);
                 await attatchment.CopyToAsync(fileStream);
             }
 
@@ -149,7 +146,17 @@
             post.Description = inputModel.Description;
 
             post.Paragraphs.Clear();
-            ParagraphParser(inputModel.Text, post);
+            foreach (var paragraph in inputModel.Paragraphs)
+            {
+                post.Paragraphs.Add(new PostParagraph
+                {
+                    Paragraph = new Paragraph
+                    {
+                        Title = paragraph.Title,
+                        Content = paragraph.Content,
+                    },
+                });
+            }
 
             post.Description = inputModel.Description;
             post.ShortDescription = ShortDescriptionParser(inputModel.Description);

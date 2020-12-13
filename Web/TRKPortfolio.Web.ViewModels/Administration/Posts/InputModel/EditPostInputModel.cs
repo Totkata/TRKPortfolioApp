@@ -5,6 +5,9 @@
     using System.ComponentModel.DataAnnotations;
     using System.Text;
 
+    using TRKPortfolio.Web.ViewModels.Administration.Paragraphs.InputModel;
+    using TRKPortfolio.Web.Views.Paragraphs.ViewModel;
+
     public class EditPostInputModel
     {
         private const string TitleErrorMessage = "Title must be between 5 and 30 (including) symbols!";
@@ -23,10 +26,9 @@
         [StringLength(500, MinimumLength = 50, ErrorMessage = DescriptionErrorMessage)]
         public string Description { get; set; }
 
-        [Required]
-        [DataType(DataType.MultilineText)]
-        [StringLength(int.MaxValue, MinimumLength = 100, ErrorMessage = ContentInputErrorMessage)]
-        public string Text { get; set; }
+        public IEnumerable<ParagraphsInputModel> Paragraphs { get; set; }
+
+        public IEnumerable<PostParagraphViewModel> ParagraphsVm { get; set; }
 
         [Required]
         public int[] CategoryId { get; set; } // ToDo: Make to select many from dropDown menu!!!

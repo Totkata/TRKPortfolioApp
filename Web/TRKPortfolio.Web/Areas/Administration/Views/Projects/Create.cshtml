@@ -23,10 +23,14 @@
                 <input id="customeInput" asp-for="@Model.Description" class="form-control" placeholder="Description">
                 <span asp-validation-for="@Model.Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label>Project Content</label>
-                <textarea cols="40" rows="5" id="customeInput" asp-for="@Model.Text" class="form-control h-100" placeholder="Write content here"></textarea>
-                <span asp-validation-for="@Model.Text" class="text-danger"></span>
+            <div id="ParagraphsContainer">
+                <label asp-for="Paragraphs"></label>
+                <input id="customeInput" type='text' name="Paragraphs[0].Title" class="form-control" placeholder="Title">
+                <textarea cols="40" rows="5" id="customeInput" type="text" name="Paragraphs[0].Content" class="form-control h-100 mt-2 mb-4" placeholder="Content"></textarea>
+                <span asp-validation-for="@Model.Paragraphs" class="text-danger"></span>
+            </div>
+            <div>
+                <a class="btn col-12 mb-4" onclick="AddParagraph()">Add new Paragraph</a>
             </div>
             <div id="select_many">
                 <label>Select categories</label>
@@ -52,3 +56,17 @@
         </form>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        var paragraphIndex = 1;
+        function AddParagraph() {
+            $("#ParagraphsContainer").
+                append("<div>",
+                    "<input id='customeInput' type='text' name='Paragraphs[" + paragraphIndex + "].Title' class='form-control' placeholder='Title'>",
+                    "<textarea cols='40' rows='5' id='customeInput' type='text' name='Paragraphs[" + paragraphIndex + "].Content' class='form-control h-100 mt-2 mb-4' placeholder='Content'></textarea>",
+                    "</div>");
+            paragraphIndex++;
+        }
+    </script>
+}

@@ -5,6 +5,9 @@
     using System.ComponentModel.DataAnnotations;
     using System.Text;
 
+    using TRKPortfolio.Web.ViewModels.Administration.Paragraphs.InputModel;
+    using TRKPortfolio.Web.ViewModels.Paragraphs.ViewModel;
+
     public class EditProjectInputModel
     {
         private const string TitleErrorMessage = "Title must be between 5 and 30 (including) symbols!";
@@ -23,10 +26,9 @@
         [StringLength(250, MinimumLength = 50, ErrorMessage = DescriptionErrorMessage)]
         public string Description { get; set; }
 
-        [Required]
-        [DataType(DataType.MultilineText)]
-        [StringLength(int.MaxValue, MinimumLength = 100, ErrorMessage = ContentInputErrorMessage)]
-        public string Text { get; set; }
+        public IEnumerable<ParagraphsInputModel> Paragraphs { get; set; }
+
+        public IEnumerable<ProjectParagraphViewModel> ParagraphsVm { get; set; }
 
         [Required]
         public int[] CategoryId { get; set; }

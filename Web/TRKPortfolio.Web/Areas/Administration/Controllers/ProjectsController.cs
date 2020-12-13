@@ -63,22 +63,12 @@
 
             var title = project.Title;
             var description = project.Description;
-
-            var sb = new StringBuilder();
-
-            foreach (var paragraph in project.Paragraphs)
-            {
-                sb.AppendLine(paragraph.ParagraphTitle);
-                sb.AppendLine(paragraph.ParagraphContent);
-                sb.AppendLine();
-            }
-
-            var text = sb.ToString();
+            var paragraphs = project.Paragraphs;
 
             var viewModel = new EditProjectInputModel();
             viewModel.Title = title;
             viewModel.Description = description;
-            viewModel.Text = text;
+            viewModel.ParagraphsVm = paragraphs;
             viewModel.CategoriesItems = this.categoriesService.GetAllAsKeyValuePairs();
             viewModel.Skills = this.skillsService.GetAllAsKeyValuePairs();
             return this.View(viewModel);
