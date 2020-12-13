@@ -3,6 +3,10 @@
     background-color: #EDF1F8;
 }
 
+#blur {
+    filter: blur(1rem);
+}
+
 #select_many {
     background-color: #C7D6EF;
     padding-top: 25px;
@@ -10,11 +14,13 @@
     border-radius: 10px;
     border-color: #A8A8A8;
 }
+
 select.form-control[multiple], select.form-control[size] {
     background-color: #C7D6EF;
     border-color: #A8A8A8;
     border-radius: 10px;
 }
+
 nav {
     position: absolute !important;
 }
@@ -100,7 +106,16 @@ ul {
         color: #ffffff !important;
     }
 
+#danger {
+    background-color: transparent;
+    border-color: #FB3758;
+    color: #030B53;
+}
 
+    #danger:hover {
+        background-color: #FB3758;
+        color: #ffffff !important;
+    }
 
 .looking-for ul li {
     width: 7rem;
@@ -119,7 +134,7 @@ ul {
     height: 40vh;
 }
 
-#testimonialContent{
+#testimonialContent {
     font-size: 25px;
 }
 
@@ -136,8 +151,8 @@ ul {
     width: 100%;
 }
 
-#manage{
-    margin-top:5rem !important;
+#manage {
+    margin-top: 5rem !important;
 }
 
 body > div > main > div.row.d-flex.project {

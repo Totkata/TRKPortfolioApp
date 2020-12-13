@@ -119,7 +119,6 @@
             return thumbnail;
         }
 
-        // TODO DA MU EBA MAMATA OPRAVI GO TOVA
         public IEnumerable<T> GetAllPosts<T>()
         {
             var posts = this.postRepo.AllAsNoTracking()

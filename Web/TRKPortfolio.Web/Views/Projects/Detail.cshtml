@@ -12,10 +12,7 @@
         @if (User.IsInRole("Admin"))
         {
             <a class="btn col-6 offset-3 mb-3" asp-area="Administration" asp-controller="Projects" asp-action="Edit" asp-route-id="@Model.Project.Id">Edit Project</a>
-        }
-        @if (User.IsInRole("Admin"))
-        {
-            <a class="btn col-6 offset-3 mb-3" asp-area="Administration" asp-controller="Projects" asp-action="Delete" asp-route-id="@Model.Project.Id">Delete Project</a>
+            <a id="danger" class="btn col-6 offset-3 mb-3" asp-area="Administration" asp-controller="Projects" asp-action="Delete" asp-route-id="@Model.Project.Id">Delete Project</a>
         }
     </div>
     <div class="col-6 offset-3 mt-5 align-self-center">

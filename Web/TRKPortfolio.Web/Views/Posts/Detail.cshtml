@@ -4,12 +4,12 @@
 <div class="row d-flex pt-5">
     <div class="col-6 offset-3 mt-5 align-self-center">
         <h3 class="mb-5">@Model.Post.Title</h3>
-        <p>@Model.Post.Description</p>
         @if (User.IsInRole("Admin"))
         {
-            <a class="btn col-6 offset-3 mt-3 mb-4" asp-area="Administration" asp-controller="Posts" asp-action="Edit" asp-route-id="@Model.Post.Id">Edit Post</a>
-            <a class="btn col-6 offset-3 mt-3 mb-4" asp-area="Administration" asp-controller="Posts" asp-action="Delete" asp-route-id="@Model.Post.Id">Delete Post</a>
+            <a class="btn col-6 offset-3 mb-4" asp-area="Administration" asp-controller="Posts" asp-action="Edit" asp-route-id="@Model.Post.Id">Edit Post</a>
+            <a id="danger" class="btn col-6 offset-3 mt-3 mb-4" asp-area="Administration" asp-controller="Posts" asp-action="Delete" asp-route-id="@Model.Post.Id">Delete Post</a>
         }
+        <p>@Model.Post.Description</p>
     </div>
     @foreach (var path in Model.Attachments)
     {
@@ -33,24 +33,32 @@
     </form>
     @foreach (var comment in Model.Comments.Reverse())
     {
-        <div class="col-6 offset-3 mt-3 align-self-center">
+        <div class="col-6 offset-3 mt-4 align-self-center">
             <p><b>@comment.Text</b></p>
-            <p>@comment.CreatedOn.ToString("dd MMMM yyyy HH:mm")</p>
-            @if (User.IsInRole("Admin"))
-            {
-                <a class="btn col-6 offset-3 mt-3 mb-4" asp-area="" asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id">Edit Post</a>
-            }
+            <div class="row">
+                <p class="col-8 align-self-center">@comment.CreatedOn.ToString("dd MMMM yyyy HH:mm")</p>
+                @if (User.IsInRole("Admin"))
+                {
+                    <div class="col-2 offset-2">
+                        <a asp-area="" asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id"><img id="danger" class="btn col-8" src="/Images/delete.svg" alt="Alternate Text" /> </a>
+                    </div>
+                }
+            </div>
             <hr />
         </div>
         foreach (var reply in comment.Replies)
         {
             <div class="col-6 offset-3 pl-5 align-self-center">
                 <p><b>@reply.Text</b></p>
-                <p>@reply.CreatedOn.ToString("dd MMMM yyyy HH:mm")</p>
-                @if (User.IsInRole("Admin"))
-                {
-                    <a class="btn col-6 offset-3 mt-3 mb-4" asp-area="" asp-controller="Comments" asp-action="DeleteReply" asp-route-id="@reply.Id">Edit Post</a>
-                }
+                <div class="row">
+                    <p class="col-8 align-self-center">@reply.CreatedOn.ToString("dd MMMM yyyy HH:mm")</p>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <div class="col-2 offset-2">
+                            <a asp-area="" asp-controller="Comments" asp-action="DeleteReply" asp-route-id="@reply.Id"><img id="danger" class="btn col-8" src="/Images/delete.svg" alt="Alternate Text" /> </a>
+                        </div>
+                    }
+                </div>
                 <hr />
             </div>
         }

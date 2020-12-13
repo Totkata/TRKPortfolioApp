@@ -97,6 +97,14 @@
 
             var entityTypes = builder.Model.GetEntityTypes().ToList();
 
+            builder.Entity<ApplicationUser>()
+                .HasIndex(a => a.Email)
+                .IsUnique();
+
+            builder.Entity<ApplicationUser>()
+                .HasIndex(a => a.UserName)
+                .IsUnique();
+
             // Set global query filter for not deleted entities only
             var deletableEntityTypes = entityTypes
                 .Where(et => et.ClrType != null && typeof(IDeletableEntity).IsAssignableFrom(et.ClrType));

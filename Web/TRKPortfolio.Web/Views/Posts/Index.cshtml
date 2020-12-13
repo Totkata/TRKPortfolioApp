@@ -26,9 +26,9 @@ else
 
         if (i == Model.Posts.Count() - 1)
         {
-            <div class="row d-flex project">
+            <div class="row d-flex project mb-5">
                 <div class="col-lg-6 align-self-center">
-                    <img class="w-75" src="/Images/@post.Thumbnail" alt="Hi">
+                    <img class="w-100" src="/Images/@post.Thumbnail" alt="Hi">
                 </div>
                 <a class="col-lg-6 col-md-12 align-self-center" asp-action="Detail" asp-route-id="@post.Id">
                     <h2>
@@ -44,9 +44,6 @@ else
             <div class="row d-flex project">
                 <div class="col-6">
                     <div class="col-12">
-                        <img class="w-50" src="/Images/@post.Thumbnail" alt="Hi">
-                    </div>
-                    <div class="col-12">
                         <a class="col-12" asp-action="Detail" asp-route-id="@post.Id">
                             <h2 class="col-12">
                                 @post.Title
@@ -54,12 +51,12 @@ else
                             <p class="col-12">@post.Description</p>
                         </a>
                     </div>
+                    <div class="col-12">
+                        <img class="w-100" src="/Images/@post.Thumbnail" alt="Hi">
+                    </div>
                 </div>
 
                 <div class="col-6">
-                    <div class="col-12">
-                        <img class="w-50" src="/Images/@secondPost.Thumbnail" alt="Hi">
-                    </div>
                     <div class="col-12">
                         <a class="col-12" asp-action="Detail" asp-route-id="@secondPost.Id">
                             <h2 class="col-12">
@@ -67,6 +64,9 @@ else
                             </h2>
                             <p class="col-12">@secondPost.Description</p>
                         </a>
+                    </div>
+                    <div class="col-12">
+                        <img class="w-100" src="/Images/@secondPost.Thumbnail" alt="Hi">
                     </div>
                 </div>
             </div>
@@ -76,15 +76,15 @@ else
         {
             <div class="col-6 row d-flex">
                 <div class="col-12">
-                    <img class="w-50" src="/Images/@post.Thumbnail" alt="Hi">
-                </div>
-                <div class="col-12">
                     <a class="col-12" asp-action="Detail" asp-route-id="@post.Id">
                         <h2 class="col-12">
                             @post.Title
                         </h2>
                         <p class="col-12">@post.Description</p>
                     </a>
+                </div>
+                <div class="col-12">
+                    <img class="w-100" src="/Images/@post.Thumbnail" alt="Hi">
                 </div>
             </div>
         }
