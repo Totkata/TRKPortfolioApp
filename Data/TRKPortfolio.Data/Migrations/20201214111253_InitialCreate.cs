@@ -82,7 +82,8 @@ namespace TRKPortfolio.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     Title = table.Column<string>(nullable: true),
-                    Content = table.Column<string>(nullable: true)
+                    Content = table.Column<string>(nullable: true),
+                    Path = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -281,6 +282,29 @@ namespace TRKPortfolio.Data.Migrations
                         name: "FK_Projects_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ParagraphAttachments",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    Extention = table.Column<string>(nullable: true),
+                    ParagraphId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ParagraphAttachments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ParagraphAttachments_Paragraphs_ParagraphId",
+                        column: x => x.ParagraphId,
+                        principalTable: "Paragraphs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -817,6 +841,17 @@ namespace TRKPortfolio.Data.Migrations
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ParagraphAttachments_IsDeleted",
+                table: "ParagraphAttachments",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ParagraphAttachments_ParagraphId",
+                table: "ParagraphAttachments",
+                column: "ParagraphId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Paragraphs_IsDeleted",
                 table: "Paragraphs",
                 column: "IsDeleted");
@@ -879,7 +914,8 @@ namespace TRKPortfolio.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ProjectAttachments_ProjectId",
                 table: "ProjectAttachments",
-                column: "ProjectId");
+                column: "ProjectId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProjectCategories_CategoryId",
@@ -998,6 +1034,9 @@ namespace TRKPortfolio.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "CommentLikes");
+
+            migrationBuilder.DropTable(
+                name: "ParagraphAttachments");
 
             migrationBuilder.DropTable(
                 name: "PostAttachments");

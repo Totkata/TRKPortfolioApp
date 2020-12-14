@@ -9,7 +9,5 @@
     public class ProjectAttatchmentListViewModel
     {
         public ProjectViewModel Project { get; set; }
-
-        public ICollection<string> Attachments { get; set; }
     }
 }

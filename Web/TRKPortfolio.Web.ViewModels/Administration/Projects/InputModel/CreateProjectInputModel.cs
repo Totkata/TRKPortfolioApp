@@ -38,6 +38,6 @@
         // View part
         public IEnumerable<KeyValuePair<string, string>> Customers { get; set; }
 
-        public IEnumerable<IFormFile> Attatchments { get; set; }
+        public IFormFile Thumbnail { get; set; }
     }
 }

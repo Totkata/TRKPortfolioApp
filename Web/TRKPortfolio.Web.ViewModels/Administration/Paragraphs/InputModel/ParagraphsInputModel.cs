@@ -5,6 +5,8 @@
     using System.ComponentModel.DataAnnotations;
     using System.Text;
 
+    using Microsoft.AspNetCore.Http;
+
     public class ParagraphsInputModel
     {
         [Required]
@@ -16,5 +18,7 @@
         [DataType(DataType.MultilineText)]
         [StringLength(int.MaxValue, MinimumLength = 100, ErrorMessage = "Error")]
         public string Content { get; set; }
+
+        public IFormFile Attachment { get; set; }
     }
 }

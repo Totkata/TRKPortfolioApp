@@ -25,6 +25,8 @@
 
         public DbSet<Paragraph> Paragraphs { get; set; }
 
+        public DbSet<ParagraphAttachment> ParagraphAttachments { get; set; }
+
         public DbSet<PostAttachment> PostAttachments { get; set; }
 
         public DbSet<ProjectAttachment> ProjectAttachments { get; set; }

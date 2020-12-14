@@ -30,14 +30,14 @@
                 Projects = this.projectsService.GetAll<ProjectViewModel>(),
             };
 
-            foreach (var post in viewModel.Projects)
+            foreach (var project in viewModel.Projects)
             {
-                var thumbnail = this.projectsService.GetThumbnail<ProjectAttachmentViewModel>(post.Id);
+                var thumbnail = this.projectsService.GetThumbnail<ProjectAttachmentViewModel>(project.Id);
 
                 if (thumbnail != null)
                 {
                     var path = $"ProjectAttachments/{thumbnail.Id}.{thumbnail.Extention}";
-                    post.Thumbnail = path;
+                    project.Thumbnail = path;
                 }
             }
 
@@ -55,16 +55,11 @@
                 return this.RedirectToAction("Index");
             }
 
-            var attachments = this.projectsService.GetAllAttachments<ProjectAttachmentViewModel>(id);
+            var attachment = this.projectsService.GetThumbnail<ProjectAttachmentViewModel>(id);
 
-            var paths = new List<string>();
+            var path = $"ProjectAttachments/{attachment.Id}.{attachment.Extention}";
 
-            foreach (var attachment in attachments)
-            {
-                paths.Add($"ProjectAttachments/{attachment.Id}.{attachment.Extention}");
-            }
-
-            vm.Attachments = paths;
+            vm.Project.Thumbnail = path;
 
             return this.View(vm);
         }

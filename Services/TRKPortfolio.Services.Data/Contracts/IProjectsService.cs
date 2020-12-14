@@ -25,8 +25,6 @@
 
         IEnumerable<T> GetAllTestimonials<T>();
 
-        IEnumerable<T> GetAllAttachments<T>(int id);
-
         T GetThumbnail<T>(int id);
     }
 }

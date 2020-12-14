@@ -10,7 +10,7 @@ using TRKPortfolio.Data;
 namespace TRKPortfolio.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201212125149_InitialCreate")]
+    [Migration("20201214111253_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -374,6 +374,9 @@ namespace TRKPortfolio.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Path")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -382,6 +385,39 @@ namespace TRKPortfolio.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Paragraphs");
+                });
+
+            modelBuilder.Entity("TRKPortfolio.Data.Models.ParagraphAttachment", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Extention")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ParagraphId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("ParagraphId")
+                        .IsUnique();
+
+                    b.ToTable("ParagraphAttachments");
                 });
 
             modelBuilder.Entity("TRKPortfolio.Data.Models.Post", b =>
@@ -624,7 +660,8 @@ namespace TRKPortfolio.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.HasIndex("ProjectId");
+                    b.HasIndex("ProjectId")
+                        .IsUnique();
 
                     b.ToTable("ProjectAttachments");
                 });
@@ -1000,6 +1037,15 @@ namespace TRKPortfolio.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TRKPortfolio.Data.Models.ParagraphAttachment", b =>
+                {
+                    b.HasOne("TRKPortfolio.Data.Models.Paragraph", "Paragraph")
+                        .WithOne("Attachment")
+                        .HasForeignKey("TRKPortfolio.Data.Models.ParagraphAttachment", "ParagraphId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("TRKPortfolio.Data.Models.Post", b =>
                 {
                     b.HasOne("TRKPortfolio.Data.Models.ApplicationUser", "ApplicationUser")
@@ -1082,8 +1128,8 @@ namespace TRKPortfolio.Data.Migrations
             modelBuilder.Entity("TRKPortfolio.Data.Models.ProjectAttachment", b =>
                 {
                     b.HasOne("TRKPortfolio.Data.Models.Project", "Project")
-                        .WithMany("Attachments")
-                        .HasForeignKey("ProjectId")
+                        .WithOne("Attachment")
+                        .HasForeignKey("TRKPortfolio.Data.Models.ProjectAttachment", "ProjectId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

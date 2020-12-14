@@ -42,7 +42,7 @@
             this.attachmentRepo = attachmentRepo;
         }
 
-        public async Task<int> CreateAsync(CreateProjectInputModel inputModel, string filePatch)
+        public async Task<int> CreateAsync(CreateProjectInputModel inputModel, string filePath)
         {
             var project = new Project
             {
@@ -59,34 +59,49 @@
 
             foreach (var paragraph in inputModel.Paragraphs)
             {
+                var paragraphFileExtension = Path.GetExtension(inputModel.Thumbnail.FileName).TrimStart('.').ToLower();
+                if (!this.allowedExtensions.Any(x => paragraphFileExtension.EndsWith(x)))
+                {
+                    throw new Exception($"Invalid image extension {paragraphFileExtension}");
+                }
+
+                var dbParagraphFile = new ParagraphAttachment
+                {
+                    Extention = paragraphFileExtension,
+                };
+
+                var paragraphPhysicalPath = $"{filePath}/ProjectAttachments/ParagraphsAttachments/{dbParagraphFile.Id}.{paragraphFileExtension}";
+
                 project.Paragraphs.Add(new ProjectParagraph
                 {
                     Paragraph = new Paragraph
                     {
                         Title = paragraph.Title,
                         Content = paragraph.Content,
+                        Attachment = dbParagraphFile,
+                        Path = $"/ProjectAttachments/ParagraphsAttachments/{dbParagraphFile.Id}.{paragraphFileExtension}",
                     },
                 });
+
+                using Stream paragraphFileStream = new FileStream(paragraphPhysicalPath, FileMode.Create);
+                await paragraph.Attachment.CopyToAsync(paragraphFileStream);
             }
 
-            foreach (var attatchment in inputModel.Attatchments)
+            var extension = Path.GetExtension(inputModel.Thumbnail.FileName).TrimStart('.').ToLower();
+            if (!this.allowedExtensions.Any(x => extension.EndsWith(x)))
             {
-                var extension = Path.GetExtension(attatchment.FileName).TrimStart('.').ToLower();
-                if (!this.allowedExtensions.Any(x => extension.EndsWith(x)))
-                {
-                    throw new Exception($"Invalid image extension {extension}");
-                }
-
-                var dbFile = new ProjectAttachment
-                {
-                    Extention = extension,
-                };
-                project.Attachments.Add(dbFile);
-
-                var physicalPath = $"{filePatch}/ProjectAttachments/{dbFile.Id}.{extension}";
-                using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
-                await attatchment.CopyToAsync(fileStream);
+                throw new Exception($"Invalid image extension {extension}");
             }
+
+            var dbFile = new ProjectAttachment
+            {
+                Extention = extension,
+            };
+            project.Attachment = dbFile;
+
+            var physicalPath = $"{filePath}/ProjectAttachments/{dbFile.Id}.{extension}";
+            using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
+            await inputModel.Thumbnail.CopyToAsync(fileStream);
 
             await this.projectRepo.AddAsync(project);
             await this.projectRepo.SaveChangesAsync();
@@ -192,37 +207,12 @@
             return project;
         }
 
-        public IEnumerable<T> GetAllAttachments<T>(int id)
-        {
-            var attachments = this.attachmentRepo.AllAsNoTracking()
-                .Where(x => x.ProjectId == id)
-               .To<T>().ToList();
-            return attachments;
-        }
-
         public T GetThumbnail<T>(int id)
         {
             var thumbnail = this.attachmentRepo.AllAsNoTracking()
                 .Where(x => x.ProjectId == id)
                .To<T>().FirstOrDefault();
             return thumbnail;
-        }
-
-        private static void ParagraphParser(string input, Project project)
-        {
-            var splitedInput = input.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
-
-            for (int i = 0; i < splitedInput.Length; i += 2)
-            {
-                project.Paragraphs.Add(new ProjectParagraph
-                {
-                    Paragraph = new Paragraph
-                    {
-                        Title = splitedInput[i],
-                        Content = splitedInput[i + 1],
-                    },
-                });
-            }
         }
 
         private static string ShortDescriptionParser(string input)

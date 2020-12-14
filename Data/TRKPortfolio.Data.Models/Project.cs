@@ -15,7 +15,6 @@
             this.ProjectLikes = new HashSet<ProjectLike>();
             this.ProjectSaves = new HashSet<ProjectSave>();
             this.Paragraphs = new HashSet<ProjectParagraph>();
-            this.Attachments = new HashSet<ProjectAttachment>();
         }
 
         public string Title { get; set; }
@@ -33,7 +32,7 @@
 
         public virtual ICollection<ProjectParagraph> Paragraphs { get; set; }
 
-        public virtual ICollection<ProjectAttachment> Attachments { get; set; }
+        public virtual ProjectAttachment Attachment { get; set; }
 
         public Testimonial Testimonial { get; set; }
 

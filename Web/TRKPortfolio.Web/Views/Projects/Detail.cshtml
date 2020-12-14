@@ -19,15 +19,13 @@
         <h3>@Model.Project.Title</h3>
         <p>@Model.Project.Description</p>
     </div>
+    <img class="col-6 offset-3" src="/Images/@Model.Project.Thumbnail" alt="Alternate Text" />
     @foreach (var paragraph in Model.Project.Paragraphs)
     {
         <div class="col-6 offset-3 mt-5 align-self-center">
             <h2>@paragraph.ParagraphTitle</h2>
             <p>@paragraph.ParagraphContent</p>
+            <img class="col-12 p-0" src="/Images/@paragraph.ParagraphPath" alt="Alternate Text" />
         </div>
-    }
-    @foreach (var path in Model.Attachments)
-    {
-        <img class="col-6 offset-3" src="/Images/@path" alt="Alternate Text" />
     }
 </div>

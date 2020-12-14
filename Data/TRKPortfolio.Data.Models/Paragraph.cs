@@ -18,6 +18,10 @@
 
         public string Content { get; set; }
 
+        public string Path { get; set; }
+
+        public ParagraphAttachment Attachment { get; set; }
+
         public virtual ICollection<ProjectParagraph> ProjectParagraphs { get; set; }
 
         public virtual ICollection<PostParagraph> PostParagraphs { get; set; }
