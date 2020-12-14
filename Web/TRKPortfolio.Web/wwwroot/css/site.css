@@ -3,6 +3,10 @@
     background-color: #EDF1F8;
 }
 
+#arrow {
+    height: 35px;
+}
+
 #blur {
     filter: blur(1rem);
 }
