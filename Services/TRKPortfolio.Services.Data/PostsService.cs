@@ -58,34 +58,49 @@
 
             foreach (var paragraph in inputModel.Paragraphs)
             {
+                var paragraphFileExtension = Path.GetExtension(inputModel.Thumbnail.FileName).TrimStart('.').ToLower();
+                if (!this.allowedExtensions.Any(x => paragraphFileExtension.EndsWith(x)))
+                {
+                    throw new Exception($"Invalid image extension {paragraphFileExtension}");
+                }
+
+                var dbParagraphFile = new ParagraphAttachment
+                {
+                    Extention = paragraphFileExtension,
+                };
+
+                var paragraphPhysicalPath = $"{filePath}/PostAttachments/ParagraphsAttachments/{dbParagraphFile.Id}.{paragraphFileExtension}";
+
                 post.Paragraphs.Add(new PostParagraph
                 {
                     Paragraph = new Paragraph
                     {
                         Title = paragraph.Title,
                         Content = paragraph.Content,
+                        Attachment = dbParagraphFile,
+                        Path = $"/PostAttachments/ParagraphsAttachments/{dbParagraphFile.Id}.{paragraphFileExtension}",
                     },
                 });
+
+                using Stream paragraphFileStream = new FileStream(paragraphPhysicalPath, FileMode.Create);
+                await paragraph.Attachment.CopyToAsync(paragraphFileStream);
             }
 
-            foreach (var attatchment in inputModel.Attatchments)
+            var extension = Path.GetExtension(inputModel.Thumbnail.FileName).TrimStart('.').ToLower();
+            if (!this.allowedExtensions.Any(x => extension.EndsWith(x)))
             {
-                var extension = Path.GetExtension(attatchment.FileName).TrimStart('.').ToLower();
-                if (!this.allowedExtensions.Any(x => extension.EndsWith(x)))
-                {
-                    throw new Exception($"Invalid image extension {extension}");
-                }
-
-                var dbFile = new PostAttachment
-                {
-                    Extention = extension,
-                };
-                post.Attachments.Add(dbFile);
-
-                var physicalPath = $"{filePath}/PostAttachments/{dbFile.Id}.{extension}";
-                using Stream fileStream = new FileStream(physicalPath, FileMode.CreateNew);
-                await attatchment.CopyToAsync(fileStream);
+                throw new Exception($"Invalid image extension {extension}");
             }
+
+            var dbFile = new PostAttachment
+            {
+                Extention = extension,
+            };
+            post.Attachments.Add(dbFile);
+
+            var physicalPath = $"{filePath}/PostAttachments/{dbFile.Id}.{extension}";
+            using Stream fileStream = new FileStream(physicalPath, FileMode.CreateNew);
+            await inputModel.Thumbnail.CopyToAsync(fileStream);
 
             await this.postRepo.AddAsync(post);
             await this.postRepo.SaveChangesAsync();
@@ -98,14 +113,6 @@
             this.postRepo.Delete(post);
 
             await this.postRepo.SaveChangesAsync();
-        }
-
-        public IEnumerable<T> GetAllAttachments<T>(int id)
-        {
-            var attachments = this.attachmentRepo.AllAsNoTracking()
-                .Where(x => x.PostId == id)
-               .To<T>().ToList();
-            return attachments;
         }
 
         public T GetThumbnail<T>(int id)

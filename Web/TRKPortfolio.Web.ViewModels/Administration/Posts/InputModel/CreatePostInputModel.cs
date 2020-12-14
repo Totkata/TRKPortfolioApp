@@ -31,6 +31,6 @@
 
         public IEnumerable<KeyValuePair<string, string>> CategoriesItems { get; set; }
 
-        public IEnumerable<IFormFile> Attatchments { get; set; }
+        public IFormFile Thumbnail { get; set; }
     }
 }

@@ -14,5 +14,7 @@
         public string ParagraphTitle { get; set; }
 
         public string ParagraphContent { get; set; }
+
+        public string ParagraphPath { get; set; }
     }
 }

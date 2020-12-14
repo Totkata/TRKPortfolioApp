@@ -53,21 +53,16 @@
                 Comments = this.commentsService.GetAllPostComments<CommentViewModel>(id),
             };
 
-            var attachments = this.postsService.GetAllAttachments<PostAttachmentViewModel>(id);
-
-            var paths = new List<string>();
-
-            foreach (var attachment in attachments)
-            {
-                paths.Add($"PostAttachments/{attachment.Id}.{attachment.Extention}");
-            }
-
-            vm.Attachments = paths;
-
             if (vm.Post == null)
             {
                 return this.RedirectToAction("Index");
             }
+
+            var attachment = this.postsService.GetThumbnail<PostAttachmentViewModel>(id);
+
+            var path = $"PostAttachments/{attachment.Id}.{attachment.Extention}";
+
+            vm.Post.Thumbnail = path;
 
             return this.View(vm);
         }

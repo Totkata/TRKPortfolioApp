@@ -55,9 +55,9 @@
                 return this.RedirectToAction("Index");
             }
 
-            var attachment = this.projectsService.GetThumbnail<ProjectAttachmentViewModel>(id);
+            var thumbnail = this.projectsService.GetThumbnail<ProjectAttachmentViewModel>(id);
 
-            var path = $"ProjectAttachments/{attachment.Id}.{attachment.Extention}";
+            var path = $"ProjectAttachments/{thumbnail.Id}.{thumbnail.Extention}";
 
             vm.Project.Thumbnail = path;
 

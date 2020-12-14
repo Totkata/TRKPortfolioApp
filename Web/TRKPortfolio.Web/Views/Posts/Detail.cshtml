@@ -11,16 +11,14 @@
         }
         <p>@Model.Post.Description</p>
     </div>
-    @foreach (var path in Model.Attachments)
-    {
-        <img class="col-6 offset-3" src="/Images/@path" alt="Alternate Text" />
-    }
+        <img class="col-6 offset-3" src="/Images/@Model.Post.Thumbnail" alt="Alternate Text" />
     @foreach (var paragraph in Model.Post.Paragraphs)
     {
-        <div class="col-6 offset-3 mt-5 align-self-center">
-            <h2 class="mb-4">@paragraph.ParagraphTitle</h2>
-            <p>@paragraph.ParagraphContent</p>
-        </div>
+<div class="col-6 offset-3 mt-5 align-self-center">
+    <h2 class="mb-4">@paragraph.ParagraphTitle</h2>
+    <p>@paragraph.ParagraphContent</p>
+    <img class="col-12 p-0" src="/Images/@paragraph.ParagraphPath" alt="Alternate Text" />
+</div>
     }
     <form class="col-6 offset-3 mt-5" enctype="multipart/form-data" asp-area="" asp-controller="Comments" asp-action="Create" method="post">
         <div class="form-group">
