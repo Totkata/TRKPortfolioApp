@@ -10,10 +10,10 @@
 
 <div class="row d-flex vh-100">
     <div class="col-md-4 offset-4 mt-5 align-self-center">
-        <form enctype="multipart/form-data" asp-area="" asp-controller="Projects" asp-action="Create" method="post">
+        <form enctype="multipart/form-data" asp-area="" asp-controller="Projects" asp-action="Edit"  method="post">
             <div class="form-group">
                 <h3 class="mb-3 text-center">Testimonial</h3>
-                <textarea cols="40" rows="5" id="customeInput" asp-for="@Model.Text" class="form-control h-100" placeholder="Testimonial"></textarea>
+                <textarea cols="40" rows="5" id="customeInput" type="text" name="Text" class="form-control h-100 mt-2 mb-4">@Model.CurrentTestimonial</textarea>
                 <span asp-validation-for="@Model.Text" class="text-danger"></span>
             </div>
             <a class="btn col-12" onclick="this.closest('form').submit();return false;">Create Testimonial</a>

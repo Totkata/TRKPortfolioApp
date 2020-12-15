@@ -21,6 +21,8 @@
 
         public string CustomerUsername { get; set; }
 
+        public string TestimonialText { get; set; }
+
         public IEnumerable<ProjectParagraphViewModel> Paragraphs { get; set; }
 
         public string Thumbnail { get; set; }

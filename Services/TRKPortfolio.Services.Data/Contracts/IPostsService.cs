@@ -9,9 +9,9 @@
 
     public interface IPostsService
     {
-        Task CreateAsync(CreatePostInputModel inputModel, string filePatch);
+        Task<int> CreateAsync(CreatePostInputModel inputModel, string filePatch);
 
-        Task EditAsync(EditPostInputModel inputModel);
+        Task<int> EditAsync(EditPostInputModel inputModel);
 
         Task RemoveAsync(int id);
 

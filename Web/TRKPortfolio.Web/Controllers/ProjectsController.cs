@@ -13,6 +13,7 @@
     using TRKPortfolio.Web.ViewModels.Attachments.ViewModel;
     using TRKPortfolio.Web.ViewModels.Projects.ViewModel;
     using TRKPortfolio.Web.ViewModels.Testimonials.InputModel;
+    using TRKPortfolio.Web.ViewModels.Testimonials.ViewModel;
 
     public class ProjectsController : BaseController
     {
@@ -80,7 +81,36 @@
 
             await this.projectsService.AddTestimonialAsyncAsync(input);
 
-            return this.Redirect("/");
+            return this.RedirectToAction("Detail", "Projects", new { input.Id, area = string.Empty });
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var viewModel = new CreateTestimonialInputModel();
+
+            viewModel.CurrentTestimonial = this.projectsService.GetTestimonialByProjectId(id);
+
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(CreateTestimonialInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+            await this.projectsService.EditTestimonial(input);
+
+            return this.RedirectToAction("Detail", "Projects", new { input.Id, area = string.Empty });
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var projectId = await this.projectsService.RemoveTestimonialAsync(id);
+
+            return this.RedirectToAction("Detail", "Projects", new { projectId, area = string.Empty });
         }
     }
 }

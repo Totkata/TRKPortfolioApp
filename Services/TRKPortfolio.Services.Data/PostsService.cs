@@ -31,7 +31,7 @@
             this.attachmentRepo = attachmentRepo;
         }
 
-        public async Task CreateAsync(CreatePostInputModel inputModel, string filePath)
+        public async Task<int> CreateAsync(CreatePostInputModel inputModel, string filePath)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -104,6 +104,8 @@
 
             await this.postRepo.AddAsync(post);
             await this.postRepo.SaveChangesAsync();
+
+            return post.Id;
         }
 
         public async Task RemoveAsync(int id)
@@ -139,7 +141,7 @@
             return post;
         }
 
-        public async Task EditAsync(EditPostInputModel inputModel)
+        public async Task<int> EditAsync(EditPostInputModel inputModel)
         {
             var post = this.postRepo
                .All()
@@ -172,23 +174,8 @@
             CategoriesHandeller(inputModel.CategoryId, post, this.categoryRepo);
 
             await this.postRepo.SaveChangesAsync();
-        }
 
-        private static void ParagraphParser(string input, Post post)
-        {
-            var splitedInput = input.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
-
-            for (int i = 0; i < splitedInput.Length; i += 2)
-            {
-                post.Paragraphs.Add(new PostParagraph
-                {
-                    Paragraph = new Paragraph
-                    {
-                        Title = splitedInput[i],
-                        Content = splitedInput[i + 1],
-                    },
-                });
-            }
+            return post.Id;
         }
 
         private static string ShortDescriptionParser(string input)

@@ -6,6 +6,7 @@
 
     using TRKPortfolio.Data.Models;
     using TRKPortfolio.Services.Mapping;
+    using TRKPortfolio.Web.ViewModels.Testimonials.ViewModel;
 
     public class CreateTestimonialInputModel
     {
@@ -13,16 +14,6 @@
 
         public string Text { get; set; }
 
-        public byte WorkQualityRating { get; set; }
-
-        public byte SkillRating { get; set; }
-
-        public byte DeadlineRating { get; set; }
-
-        public byte CooperatingRating { get; set; }
-
-        public byte AvaliabilityRating { get; set; }
-
-        public byte ComunicationRating { get; set; }
+        public string CurrentTestimonial { get; set; }
     }
 }

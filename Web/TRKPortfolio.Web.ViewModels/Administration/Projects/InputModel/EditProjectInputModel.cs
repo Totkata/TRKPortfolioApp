@@ -12,7 +12,6 @@
     {
         private const string TitleErrorMessage = "Title must be between 5 and 30 (including) symbols!";
         private const string DescriptionErrorMessage = "Description must be between 50 and 250 symbols!";
-        private const string ContentInputErrorMessage = "Content text must be at least 100 symbols!";
 
         public int Id { get; set; }
 

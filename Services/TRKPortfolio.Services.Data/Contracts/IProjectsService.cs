@@ -15,11 +15,17 @@
 
         Task<int> EditAsync(EditProjectInputModel inputModel);
 
-        Task AddTestimonialAsyncAsync(CreateTestimonialInputModel inputModel);
-
         Task RemoveAsync(int id);
 
+        Task AddTestimonialAsyncAsync(CreateTestimonialInputModel inputModel);
+
+        Task EditTestimonial(CreateTestimonialInputModel inputModel);
+
+        Task<int> RemoveTestimonialAsync(int id);
+
         T GetById<T>(int id);
+
+        string GetTestimonialByProjectId(int id);
 
         IEnumerable<T> GetAll<T>();
 

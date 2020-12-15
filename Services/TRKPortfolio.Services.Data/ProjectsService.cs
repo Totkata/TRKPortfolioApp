@@ -113,29 +113,27 @@
         {
             var project = this.projectRepo
                 .All()
+                .Where(x => x.Id == inputModel.Id)
                 .Include(p => p.Paragraphs)
                 .ThenInclude(p => p.Paragraph)
+
+                // .ThenInclude(p => p.Paragraph.Attachment) If attatchments will be edited.
                 .Include(p => p.ProjectSkills)
                 .ThenInclude(p => p.Skill)
                 .Include(p => p.ProjectCategories)
                 .ThenInclude(p => p.Category)
-                .FirstOrDefault(x => x.Id == inputModel.Id);
+                .FirstOrDefault();
 
             project.Title = inputModel.Title;
             project.Description = inputModel.Description;
 
-            project.Paragraphs.Clear();
+            int index = 0;
 
             foreach (var paragraph in inputModel.Paragraphs)
             {
-                project.Paragraphs.Add(new ProjectParagraph
-                {
-                    Paragraph = new Paragraph
-                    {
-                        Title = paragraph.Title,
-                        Content = paragraph.Content,
-                    },
-                });
+                project.Paragraphs.ElementAt(index).Paragraph.Title = paragraph.Title;
+                project.Paragraphs.ElementAt(index).Paragraph.Content = paragraph.Content;
+                index++;
             }
 
             project.Description = inputModel.Description;
@@ -161,26 +159,50 @@
             await this.projectRepo.SaveChangesAsync();
         }
 
+        public async Task<int> RemoveTestimonialAsync(int id)
+        {
+            var testimonial = await this.testimonialRepo.GetByIdWithDeletedAsync(id);
+
+            this.testimonialRepo.Delete(testimonial);
+
+            await this.testimonialRepo.SaveChangesAsync();
+
+            return testimonial.ProjectId;
+        }
+
         public async Task AddTestimonialAsyncAsync(CreateTestimonialInputModel input)
         {
-            var project = this.projectRepo.AllAsNoTracking().Where(x => x.Id == input.Id).FirstOrDefault();
+            var project = this.projectRepo.AllAsNoTrackingWithDeleted().Where(x => x.Id == input.Id).FirstOrDefault();
 
-            var testimonial = new Testimonial
+            var currTestimonial = this.testimonialRepo.AllAsNoTrackingWithDeleted().Where(x => x.ProjectId == project.Id).FirstOrDefault();
+
+            if (currTestimonial == null)
             {
-                Text = input.Text,
-                Rating = new Rating
+                var testimonial = new Testimonial
                 {
-                    WorkRating = input.WorkQualityRating,
-                    SkillRating = input.SkillRating,
-                    DeadlineRating = input.DeadlineRating,
-                    CooperatingRating = input.CooperatingRating,
-                    AvaliabilityRating = input.AvaliabilityRating,
-                    ComunicationRating = input.ComunicationRating,
-                },
-                ProjectId = project.Id,
-            };
+                    Text = input.Text,
+                    ProjectId = project.Id,
+                };
+                await this.testimonialRepo.AddAsync(testimonial);
+            }
+            else
+            {
+                currTestimonial.DeletedOn = null;
+                currTestimonial.CreatedOn = DateTime.UtcNow;
+                currTestimonial.IsDeleted = false;
+                currTestimonial.Text = input.Text;
+                this.testimonialRepo.Update(currTestimonial);
+            }
 
-            await this.testimonialRepo.AddAsync(testimonial);
+            await this.testimonialRepo.SaveChangesAsync();
+        }
+
+        public async Task EditTestimonial(CreateTestimonialInputModel inputModel)
+        {
+            var testimonial = this.testimonialRepo.All().Where(x => x.ProjectId == inputModel.Id).FirstOrDefault();
+
+            testimonial.Text = inputModel.Text;
+
             await this.testimonialRepo.SaveChangesAsync();
         }
 
@@ -205,6 +227,15 @@
                 .To<T>().FirstOrDefault();
 
             return project;
+        }
+
+        public string GetTestimonialByProjectId(int id)
+        {
+            var testimonials = this.testimonialRepo.AllAsNoTracking()
+                .Where(x => x.ProjectId == id)
+                .Select(x => x.Text)
+                .FirstOrDefault().ToString();
+            return testimonials;
         }
 
         public T GetThumbnail<T>(int id)

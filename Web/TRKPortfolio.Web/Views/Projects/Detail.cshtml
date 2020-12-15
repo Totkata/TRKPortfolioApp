@@ -7,7 +7,17 @@
     <div class="col-6 offset-3 mt-5">
         @if (Model.Project.CustomerUsername == User.Identity.Name)
         {
-            <a class="btn col-6 offset-3 mb-3" asp-area="" asp-controller="Projects" asp-action="Create" asp-route-id="@Model.Project.Id">Add Testimonial</a>
+            if (Model.Project.TestimonialText == null)
+            {
+                <a class="btn col-6 offset-3 mb-3" asp-area="" asp-controller="Projects" asp-action="Create" asp-route-id="@Model.Project.Id">Add Testimonial</a>
+            }
+            else
+            {
+                <h2 class="text-center mb-4">Your testimonial:</h2>
+                <p class="text-center"><b>"@Model.Project.TestimonialText"</b></p>
+                <a class="btn col-6 offset-3 mb-3" asp-area="" asp-controller="Projects" asp-action="Edit" asp-route-id="@Model.Project.Id">Edit Testimonial</a>
+                <a id="danger" class="btn col-6 offset-3 mb-3" asp-area="" asp-controller="Projects" asp-action="Delete" asp-route-id="@Model.Project.Id">Edit Testimonial</a>
+            }
         }
         @if (User.IsInRole("Admin"))
         {

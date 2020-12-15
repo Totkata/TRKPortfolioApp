@@ -46,9 +46,9 @@
                 return this.View(input);
             }
 
-            await this.postsService.CreateAsync(input, $"{this.environment.WebRootPath}/images");
+            var id = await this.postsService.CreateAsync(input, $"{this.environment.WebRootPath}/images");
 
-            return this.Redirect("/");
+            return this.RedirectToAction("Detail", "Posts", new { id, area = string.Empty });
         }
 
         public IActionResult Edit(int id)
@@ -64,6 +64,7 @@
             viewModel.Description = description;
             viewModel.ParagraphsVm = paragraphs;
             viewModel.CategoriesItems = this.categoriesService.GetAllAsKeyValuePairs();
+
             return this.View(viewModel);
         }
 
@@ -75,9 +76,9 @@
                 return this.View(input);
             }
 
-            await this.postsService.EditAsync(input);
+            var id = await this.postsService.EditAsync(input);
 
-            return this.Redirect("/");
+            return this.RedirectToAction("Detail", "Posts", new { id, area = string.Empty });
         }
 
         public async Task<IActionResult> Delete(int id)
