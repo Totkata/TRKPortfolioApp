@@ -59,32 +59,46 @@
 
             foreach (var paragraph in inputModel.Paragraphs)
             {
-                var paragraphFileExtension = Path.GetExtension(inputModel.Thumbnail.FileName).TrimStart('.').ToLower();
-                if (!this.allowedExtensions.Any(x => paragraphFileExtension.EndsWith(x)))
+                if (paragraph.Attachment != null)
                 {
-                    throw new Exception($"Invalid image extension {paragraphFileExtension}");
-                }
-
-                var dbParagraphFile = new ParagraphAttachment
-                {
-                    Extention = paragraphFileExtension,
-                };
-
-                var paragraphPhysicalPath = $"{filePath}/ProjectAttachments/ParagraphsAttachments/{dbParagraphFile.Id}.{paragraphFileExtension}";
-
-                project.Paragraphs.Add(new ProjectParagraph
-                {
-                    Paragraph = new Paragraph
+                    var paragraphFileExtension = Path.GetExtension(paragraph.Attachment.FileName).TrimStart('.').ToLower();
+                    if (!this.allowedExtensions.Any(x => paragraphFileExtension.EndsWith(x)))
                     {
-                        Title = paragraph.Title,
-                        Content = paragraph.Content,
-                        Attachment = dbParagraphFile,
-                        Path = $"/ProjectAttachments/ParagraphsAttachments/{dbParagraphFile.Id}.{paragraphFileExtension}",
-                    },
-                });
+                        throw new Exception($"Invalid image extension {paragraphFileExtension}");
+                    }
 
-                using Stream paragraphFileStream = new FileStream(paragraphPhysicalPath, FileMode.Create);
-                await paragraph.Attachment.CopyToAsync(paragraphFileStream);
+                    var dbParagraphFile = new ParagraphAttachment
+                    {
+                        Extention = paragraphFileExtension,
+                    };
+
+                    var paragraphPhysicalPath = $"{filePath}/ProjectAttachments/ParagraphsAttachments/{dbParagraphFile.Id}.{paragraphFileExtension}";
+
+                    project.Paragraphs.Add(new ProjectParagraph
+                    {
+                        Paragraph = new Paragraph
+                        {
+                            Title = paragraph.Title,
+                            Content = paragraph.Content,
+                            Attachment = dbParagraphFile,
+                            Path = $"/ProjectAttachments/ParagraphsAttachments/{dbParagraphFile.Id}.{paragraphFileExtension}",
+                        },
+                    });
+
+                    using Stream paragraphFileStream = new FileStream(paragraphPhysicalPath, FileMode.Create);
+                    await paragraph.Attachment.CopyToAsync(paragraphFileStream);
+                }
+                else
+                {
+                    project.Paragraphs.Add(new ProjectParagraph
+                    {
+                        Paragraph = new Paragraph
+                        {
+                            Title = paragraph.Title,
+                            Content = paragraph.Content,
+                        },
+                    });
+                }
             }
 
             var extension = Path.GetExtension(inputModel.Thumbnail.FileName).TrimStart('.').ToLower();
@@ -152,9 +166,11 @@
 
         public async Task RemoveAsync(int id)
         {
-            var projetc = await this.projectRepo.GetByIdWithDeletedAsync(id);
+            var project = await this.projectRepo.GetByIdWithDeletedAsync(id);
+            var testimonial = this.testimonialRepo.All().Where(x => x.ProjectId == project.Id).FirstOrDefault();
 
-            this.projectRepo.Delete(projetc);
+            this.testimonialRepo.Delete(testimonial);
+            this.projectRepo.Delete(project);
 
             await this.projectRepo.SaveChangesAsync();
         }

@@ -1,8 +1,7 @@
 ﻿namespace TRKPortfolio.Data.Models
 {
-    using System;
     using System.Collections.Generic;
-    using System.Text;
+    using System.ComponentModel.DataAnnotations;
 
     using TRKPortfolio.Data.Common.Models;
 
@@ -14,8 +13,14 @@
             this.PostParagraphs = new HashSet<PostParagraph>();
         }
 
+        [Required]
+        [DataType(DataType.Text)]
+        [StringLength(60, MinimumLength = 5, ErrorMessage = "Title must be between 5 and 60 (including) symbols!")]
         public string Title { get; set; }
 
+        [Required]
+        [DataType(DataType.Text)]
+        [StringLength(int.MaxValue, MinimumLength = 100, ErrorMessage = "Content must be at least 100 symbols!")]
         public string Content { get; set; }
 
         public string Path { get; set; }

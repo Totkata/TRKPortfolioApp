@@ -82,8 +82,7 @@
                         <div class="col-6">
                             <h4 class="col-12">@project.Title</h4>
                             <hr />
-                            <h4 class="col-12">@project.Paragraphs.FirstOrDefault().ParagraphTitle</h4>
-                            <p class="col-12">@project.Paragraphs.FirstOrDefault().ParagraphContent</p>
+                            <p class="col-12">@project.Description</p>
                             <div class="col-12 row">
                                 <a class="btn col-5 m-auto d-block" asp-controller="Projects" asp-action="Detail" asp-route-id="@project.Id">View case study</a>
                                 <a class="btn col-5 m-auto d-block" asp-controller="Projects" asp-action="Index">See all projects</a>

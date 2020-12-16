@@ -12,6 +12,18 @@
         <div class="col-lg-6 col-md-12 align-self-center">
             <h2><a asp-action="Detail" asp-route-id="@post.Id">@post.Title</a></h2>
             <p>@post.Description</p>
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="row">
+                    <a class="btn col-3 mt-5 ml-3" asp-area="" asp-controller="Posts" asp-action="Detail" asp-route-id="@post.Id">Read Post</a>
+                    <a id="secondary" class="btn col-3 mt-5 ml-3" asp-area="Administration" asp-controller="Posts" asp-action="Edit" asp-route-id="@post.Id">Edit Post</a>
+                    <a id="danger" class="btn col-3 mt-5 ml-3" asp-area="Administration" asp-controller="Posts" asp-action="Delete" asp-route-id="@post.Id">Delete Post</a>
+                </div>
+            }
+            else
+            {
+                <a class="btn col-6 mt-5" asp-area="" asp-controller="Projects" asp-action="Detail" asp-route-id="@post.Id">Read Post</a>
+            }
         </div>
         <div class="col-lg-6 align-self-center">
             <img class="w-100" src="/Images/@Model.Posts.ElementAt(0).Thumbnail" alt="Hi">

@@ -1,28 +1,23 @@
 ﻿namespace TRKPortfolio.Web.ViewModels.Administration.Projects.InputModel
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Text;
 
     using TRKPortfolio.Web.ViewModels.Administration.Paragraphs.InputModel;
     using TRKPortfolio.Web.ViewModels.Paragraphs.ViewModel;
 
     public class EditProjectInputModel
     {
-        private const string TitleErrorMessage = "Title must be between 5 and 30 (including) symbols!";
-        private const string DescriptionErrorMessage = "Description must be between 50 and 250 symbols!";
-
         public int Id { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
-        [StringLength(30, MinimumLength = 5, ErrorMessage = TitleErrorMessage)]
+        [StringLength(60, MinimumLength = 5, ErrorMessage = "Title must be between 5 and 60 (including) symbols!")]
         public string Title { get; set; }
 
         [Required]
         [DataType(DataType.MultilineText)]
-        [StringLength(250, MinimumLength = 50, ErrorMessage = DescriptionErrorMessage)]
+        [StringLength(500, MinimumLength = 25, ErrorMessage = "Description must be between 25 and 500 symbols!")]
         public string Description { get; set; }
 
         public IEnumerable<ParagraphsInputModel> Paragraphs { get; set; }

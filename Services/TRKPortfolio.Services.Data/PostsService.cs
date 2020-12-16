@@ -56,36 +56,6 @@
                 });
             }
 
-            foreach (var paragraph in inputModel.Paragraphs)
-            {
-                var paragraphFileExtension = Path.GetExtension(inputModel.Thumbnail.FileName).TrimStart('.').ToLower();
-                if (!this.allowedExtensions.Any(x => paragraphFileExtension.EndsWith(x)))
-                {
-                    throw new Exception($"Invalid image extension {paragraphFileExtension}");
-                }
-
-                var dbParagraphFile = new ParagraphAttachment
-                {
-                    Extention = paragraphFileExtension,
-                };
-
-                var paragraphPhysicalPath = $"{filePath}/PostAttachments/ParagraphsAttachments/{dbParagraphFile.Id}.{paragraphFileExtension}";
-
-                post.Paragraphs.Add(new PostParagraph
-                {
-                    Paragraph = new Paragraph
-                    {
-                        Title = paragraph.Title,
-                        Content = paragraph.Content,
-                        Attachment = dbParagraphFile,
-                        Path = $"/PostAttachments/ParagraphsAttachments/{dbParagraphFile.Id}.{paragraphFileExtension}",
-                    },
-                });
-
-                using Stream paragraphFileStream = new FileStream(paragraphPhysicalPath, FileMode.Create);
-                await paragraph.Attachment.CopyToAsync(paragraphFileStream);
-            }
-
             var extension = Path.GetExtension(inputModel.Thumbnail.FileName).TrimStart('.').ToLower();
             if (!this.allowedExtensions.Any(x => extension.EndsWith(x)))
             {
@@ -101,6 +71,50 @@
             var physicalPath = $"{filePath}/PostAttachments/{dbFile.Id}.{extension}";
             using Stream fileStream = new FileStream(physicalPath, FileMode.CreateNew);
             await inputModel.Thumbnail.CopyToAsync(fileStream);
+
+            foreach (var paragraph in inputModel.Paragraphs)
+            {
+                var paragraphFileExtension = Path.GetExtension(paragraph.Attachment.FileName).TrimStart('.').ToLower();
+                if (!this.allowedExtensions.Any(x => paragraphFileExtension.EndsWith(x)))
+                {
+                    throw new Exception($"Invalid image extension {paragraphFileExtension}");
+                }
+
+                if (paragraph.Attachment != null)
+                {
+                    var dbParagraphFile = new ParagraphAttachment
+                    {
+                        Extention = paragraphFileExtension,
+                    };
+
+                    var paragraphPhysicalPath = $"{filePath}/PostAttachments/ParagraphsAttachments/{dbParagraphFile.Id}.{paragraphFileExtension}";
+
+                    post.Paragraphs.Add(new PostParagraph
+                    {
+                        Paragraph = new Paragraph
+                        {
+                            Title = paragraph.Title,
+                            Content = paragraph.Content,
+                            Attachment = dbParagraphFile,
+                            Path = $"/PostAttachments/ParagraphsAttachments/{dbParagraphFile.Id}.{paragraphFileExtension}",
+                        },
+                    });
+
+                    using Stream paragraphFileStream = new FileStream(paragraphPhysicalPath, FileMode.Create);
+                    await paragraph.Attachment.CopyToAsync(paragraphFileStream);
+                }
+                else
+                {
+                    post.Paragraphs.Add(new PostParagraph
+                    {
+                        Paragraph = new Paragraph
+                        {
+                            Title = paragraph.Title,
+                            Content = paragraph.Content,
+                        },
+                    });
+                }
+            }
 
             await this.postRepo.AddAsync(post);
             await this.postRepo.SaveChangesAsync();
