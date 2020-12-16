@@ -26,14 +26,14 @@
 
         public IActionResult Index()
         {
-            var vm = new IndexViewModel
+            var viewModel = new IndexViewModel
             {
                 Testimonials = this.projectsService.GetAllTestimonials<TestimonialViewModel>(),
                 Posts = this.postsService.GetAllPosts<PostViewModel>(),
                 Projects = this.projectsService.GetAll<ProjectViewModel>(),
             };
 
-            foreach (var post in vm.Posts)
+            foreach (var post in viewModel.Posts)
             {
                 var thumbnail = this.postsService.GetThumbnail<PostAttachmentViewModel>(post.Id);
 
@@ -44,7 +44,7 @@
                 }
             }
 
-            foreach (var post in vm.Projects)
+            foreach (var post in viewModel.Projects)
             {
                 var thumbnail = this.projectsService.GetThumbnail<ProjectAttachmentViewModel>(post.Id);
 
@@ -55,7 +55,7 @@
                 }
             }
 
-            return this.View(vm);
+            return this.View(viewModel);
         }
 
         public IActionResult Privacy()

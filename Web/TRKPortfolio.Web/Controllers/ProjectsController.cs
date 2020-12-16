@@ -1,19 +1,13 @@
 ﻿namespace TRKPortfolio.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using TRKPortfolio.Data.Models;
     using TRKPortfolio.Services.Data.Contracts;
     using TRKPortfolio.Web.ViewModels.Administration.Projects.ViewModel;
     using TRKPortfolio.Web.ViewModels.Attachments.ViewModel;
     using TRKPortfolio.Web.ViewModels.Projects.ViewModel;
     using TRKPortfolio.Web.ViewModels.Testimonials.InputModel;
-    using TRKPortfolio.Web.ViewModels.Testimonials.ViewModel;
 
     public class ProjectsController : BaseController
     {
@@ -47,11 +41,9 @@
 
         public IActionResult Detail(int id)
         {
-            var vm = new ProjectAttatchmentListViewModel { };
+            var viewModel = this.projectsService.GetById<ProjectViewModel>(id);
 
-            vm.Project = this.projectsService.GetById<ProjectViewModel>(id);
-
-            if (vm.Project == null)
+            if (viewModel == null)
             {
                 return this.RedirectToAction("Index");
             }
@@ -60,9 +52,9 @@
 
             var path = $"ProjectAttachments/{thumbnail.Id}.{thumbnail.Extention}";
 
-            vm.Project.Thumbnail = path;
+            viewModel.Thumbnail = path;
 
-            return this.View(vm);
+            return this.View(viewModel);
         }
 
         public IActionResult Create()
@@ -86,7 +78,7 @@
 
         public IActionResult Edit(int id)
         {
-            var viewModel = new CreateTestimonialInputModel();
+            var viewModel = new CreateTestimonialInputModel { };
 
             viewModel.CurrentTestimonial = this.projectsService.GetTestimonialByProjectId(id);
 

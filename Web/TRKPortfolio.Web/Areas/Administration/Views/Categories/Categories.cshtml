@@ -3,13 +3,18 @@
 @model AllCategoriesViewModel
 
 <div class="row d-flex">
+
     <div class="col-md-6 offset-3 mt-5 align-self-center">
+
         <h1 class="text-center">Categories</h1>
+
         <table class="col-8 offset-2 mt-5 table">
+
             <tr>
                 <th>ID</th>
                 <th>Category Name</th>
             </tr>
+
             @foreach (var category in Model.Categories)
             {
                 <tr>
@@ -18,6 +23,11 @@
                 </tr>
             }
         </table>
-        <a class="btn mt-3 col-8 offset-2" asp-area="Administration" asp-controller="Categories" asp-action="Create">Create new Category</a>
+
+        <a class="btn mt-3 col-8 offset-2" 
+           asp-area="Administration" 
+           asp-controller="Categories" 
+           asp-action="Create">Create new Category
+        </a>
     </div>
 </div>

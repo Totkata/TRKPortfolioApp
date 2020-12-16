@@ -1,36 +1,68 @@
 ﻿@using System.Globalization
-@using TRKPortfolio.Web.ViewModels.Projects.ViewModel
-@model ProjectAttatchmentListViewModel
+@using TRKPortfolio.Web.ViewModels.Administration.Projects.ViewModel;
+@model ProjectViewModel
 
 
 <div class="row d-flex pt-5">
     <div class="col-6 offset-3 mt-5">
-        @if (Model.Project.CustomerUsername == User.Identity.Name)
+        @if (Model.CustomerUsername == User.Identity.Name)
         {
-            if (Model.Project.TestimonialText == null)
+            if (Model.TestimonialText == null)
             {
-                <a class="btn col-6 offset-3 mb-3" asp-area="" asp-controller="Projects" asp-action="Create" asp-route-id="@Model.Project.Id">Add Testimonial</a>
+                <a class="btn col-6 offset-3 mb-3"
+                   asp-controller="Projects"
+                   asp-action="Create"
+                   asp-route-id="@Model.Id">
+                    Add Testimonial
+                </a>
             }
             else
             {
                 <h2 class="text-center mb-4">Your testimonial:</h2>
-                <p class="text-center"><b>"@Model.Project.TestimonialText"</b></p>
-                <a class="btn col-6 offset-3 mb-3" asp-area="" asp-controller="Projects" asp-action="Edit" asp-route-id="@Model.Project.Id">Edit Testimonial</a>
-                <a id="danger" class="btn col-6 offset-3 mb-3" asp-area="" asp-controller="Projects" asp-action="Delete" asp-route-id="@Model.Project.Id">Delete Testimonial</a>
+                <p class="text-center"><b>"@Model.TestimonialText"</b></p>
+                <a class="btn col-6 offset-3 mb-3"
+                   asp-controller="Projects"
+                   asp-action="Edit"
+                   asp-route-id="@Model.Id">
+                    Edit Testimonial
+                </a>
+
+                <a id="danger" class="btn col-6 offset-3 mb-3"
+                   asp-controller="Projects"
+                   asp-action="Delete"
+                   asp-route-id="@Model.Id">
+                    Delete Testimonial
+                </a>
             }
         }
         @if (User.IsInRole("Admin"))
         {
-            <a class="btn col-6 offset-3 mb-3" asp-area="Administration" asp-controller="Projects" asp-action="Edit" asp-route-id="@Model.Project.Id">Edit Project</a>
-            <a id="danger" class="btn col-6 offset-3 mb-3" asp-area="Administration" asp-controller="Projects" asp-action="Delete" asp-route-id="@Model.Project.Id">Delete Project</a>
+            <a class="btn col-6 offset-3 mb-3"
+               asp-area="Administration"
+               asp-controller="Projects"
+               asp-action="Edit"
+               asp-route-id="@Model.Id">
+                Edit Project
+            </a>
+
+            <a id="danger" class="btn col-6 offset-3 mb-3"
+               asp-area="Administration"
+               asp-controller="Projects"
+               asp-action="Delete"
+               asp-route-id="@Model.Id">
+                Delete Project
+            </a>
         }
     </div>
+
     <div class="col-6 offset-3 mt-5 align-self-center">
-        <h3>@Model.Project.Title</h3>
-        <p>@Model.Project.Description</p>
+        <h3>@Model.Title</h3>
+        <p>@Model.Description</p>
     </div>
-    <img class="col-6 offset-3" src="/Images/@Model.Project.Thumbnail" alt="Alternate Text" />
-    @foreach (var paragraph in Model.Project.Paragraphs)
+
+    <img class="col-6 offset-3" src="/Images/@Model.Thumbnail" alt="Alternate Text" />
+
+    @foreach (var paragraph in Model.Paragraphs)
     {
         <div class="col-6 offset-3 mt-5 align-self-center">
             <h2 class="mt-5">@paragraph.ParagraphTitle</h2>

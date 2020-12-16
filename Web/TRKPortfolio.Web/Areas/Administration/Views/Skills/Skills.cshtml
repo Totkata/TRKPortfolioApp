@@ -2,13 +2,18 @@
 @model AllSkillsViewModel
 
 <div class="row d-flex">
+
     <div class="col-md-6 offset-3 mt-5 align-self-center">
+
         <h1 class="text-center">Skills</h1>
+
         <table class="col-8 offset-2 mt-5 table">
+
             <tr>
                 <th>ID</th>
                 <th>Skill Title</th>
             </tr>
+
             @foreach (var category in Model.Skills)
             {
                 <tr>
@@ -17,6 +22,12 @@
                 </tr>
             }
         </table>
-        <a class="btn mt-3 col-8 offset-2" asp-area="Administration" asp-controller="Skills" asp-action="Create">Create new Skill</a>
+
+        <a class="btn mt-3 col-8 offset-2" 
+           asp-area="Administration" 
+           asp-controller="Skills" 
+           asp-action="Create">Create new Skill
+        </a>
+
     </div>
 </div>

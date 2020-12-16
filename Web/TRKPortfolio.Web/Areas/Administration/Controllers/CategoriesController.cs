@@ -1,15 +1,11 @@
 ﻿namespace TRKPortfolio.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using TRKPortfolio.Services.Data.Contracts;
     using TRKPortfolio.Web.Areas.Administration.Controllers;
-    using TRKPortfolio.Web.ViewModels.Administration.Categories;
     using TRKPortfolio.Web.ViewModels.Administration.Categories.InputModel;
     using TRKPortfolio.Web.ViewModels.Administration.Categories.ViewModel;
 
@@ -24,11 +20,11 @@
 
         public IActionResult Categories()
         {
-            var vm = new AllCategoriesViewModel
+            var viewModel = new AllCategoriesViewModel
             {
                 Categories = this.categoriesService.GetAll().ToList(),
             };
-            return this.View(vm);
+            return this.View(viewModel);
         }
 
         public IActionResult Create()

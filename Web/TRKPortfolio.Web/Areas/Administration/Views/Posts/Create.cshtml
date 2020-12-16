@@ -8,19 +8,28 @@
 }
 
 <div class="row d-flex">
+
     <div class="col-md-6 offset-3 mt-5 align-self-center">
-        <form enctype="multipart/form-data" asp-area="Administration" asp-controller="Posts" asp-action="Create" method="post">
+
+        <form enctype="multipart/form-data" 
+              asp-area="Administration" 
+              asp-controller="Posts" 
+              asp-action="Create" method="post">
+
             <h3 class="mb-3 text-center">Input your new Post</h3>
+
             <div class="form-group">
                 <label>Post Title</label>
                 <input id="customeInput" asp-for="@Model.Title" class="form-control" placeholder="Post Title">
                 <span asp-validation-for="@Model.Title" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label>Describtion</label>
                 <input id="customeInput" asp-for="@Model.Description" class="form-control" placeholder="Description">
                 <span asp-validation-for="@Model.Description" class="text-danger"></span>
             </div>
+
             <div id="ParagraphsContainer">
                 <label asp-for="Paragraphs"></label>
                 <input id="customeInput" type='text' name="Paragraphs[0].Title" class="form-control" placeholder="Title">
@@ -28,18 +37,22 @@
                 <input id="customeInput" type="file" name="Paragraphs[0].Attachment" class="form-control mt-2 mb-4" placeholder="Content" />
                 <span asp-validation-for="@Model.Paragraphs" class="text-danger"></span>
             </div>
+
             <div>
                 <a class="btn col-12 mb-4" onclick="AddParagraph()">Add new Paragraph</a>
             </div>
+
             <div class="form-group">
                 <h5>Hold Ctrl to select multiple categories</h5>
                 <select asp-for="CategoryId" class="form-control" asp-items="categoryItems" multiple></select>
             </div>
+
             <div class="form-group">
                 <label asp-for="Thumbnail"></label>
                 <input id="customeInput" asp-for="Thumbnail" class="form-control" multiple />
                 <span asp-validation-for="Thumbnail" class="text-danger"></span>
             </div>
+
             <a class="btn col-12" onclick="this.closest('form').submit();return false;">Create Post</a>
         </form>
     </div>

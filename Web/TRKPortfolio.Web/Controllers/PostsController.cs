@@ -47,13 +47,13 @@
 
         public IActionResult Detail(int id)
         {
-            var vm = new PostCommentInputModel
+            var viewModel = new PostCommentInputModel
             {
                 Post = this.postsService.GetById<PostViewModel>(id),
                 Comments = this.commentsService.GetAllPostComments<CommentViewModel>(id),
             };
 
-            if (vm.Post == null)
+            if (viewModel.Post == null)
             {
                 return this.RedirectToAction("Index");
             }
@@ -62,9 +62,9 @@
 
             var path = $"PostAttachments/{attachment.Id}.{attachment.Extention}";
 
-            vm.Post.Thumbnail = path;
+            viewModel.Post.Thumbnail = path;
 
-            return this.View(vm);
+            return this.View(viewModel);
         }
     }
 }

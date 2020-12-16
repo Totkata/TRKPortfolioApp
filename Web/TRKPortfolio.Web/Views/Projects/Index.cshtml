@@ -1,13 +1,12 @@
 ﻿@using TRKPortfolio.Web.ViewModels.Projects.ViewModel
 @model ProjectListViewModel
 
-
-@*Implement BLUR*@
 @if (Model.Projects != null)
 {
     <div class="row justify-content-center">
         <h1>Projects</h1>
     </div>
+
     for (int i = Model.Projects.Count() - 1; i >= 0; i--)
     {
         var project = Model.Projects.ElementAt(i);
@@ -15,49 +14,109 @@
         if (i % 2 == 0)
         {
             <div class="row d-flex project">
+
                 <div class="col-6 align-self-center">
+
                     <h2 class="col-12">@project.Title</h2>
                     <p class="col-12"><b>@project.Description</b></p>
                     <p class="col-12">@project.CustomerUsername</p>
+
                     @if (User.IsInRole("Admin"))
                     {
                         <div class="row">
-                            <a class="btn col-3 mt-5 ml-3" asp-area="" asp-controller="Projects" asp-action="Detail" asp-route-id="@project.Id">Case study</a>
-                            <a id="secondary" class="btn col-3 mt-5 ml-3" asp-area="Administration" asp-controller="Projects" asp-action="Edit" asp-route-id="@project.Id">Edit Project</a>
-                            <a id="danger" class="btn col-3 mt-5 ml-3" asp-area="Administration" asp-controller="Projects" asp-action="Delete" asp-route-id="@project.Id">Delete Project</a>
+                            <a class="btn col-3 mt-5 ml-3"
+                               asp-controller="Projects"
+                               asp-action="Detail"
+                               asp-route-id="@project.Id">
+                                Case study
+                            </a>
+
+                            <a id="secondary" class="btn col-3 mt-5 ml-3"
+                               asp-area="Administration"
+                               asp-controller="Projects"
+                               asp-action="Edit"
+                               asp-route-id="@project.Id">
+                                Edit Project
+                            </a>
+
+                            <a id="danger" class="btn col-3 mt-5 ml-3"
+                               asp-area="Administration"
+                               asp-controller="Projects"
+                               asp-action="Delete"
+                               asp-route-id="@project.Id">
+                                Delete Project
+                            </a>
                         </div>
                     }
                     else
                     {
-                        <a class="btn col-6 mt-5" asp-area="" asp-controller="Projects" asp-action="Detail" asp-route-id="@project.Id">Read case study</a>
+                        <a class="btn col-6 mt-5"
+                           asp-controller="Projects"
+                           asp-action="Detail"
+                           asp-route-id="@project.Id">
+                            Read case study
+                        </a>
                     }
                 </div>
+
                 <div class="col-lg-6 align-self-center">
+
                     <img class="w-100" src="/Images/@Model.Projects.ElementAt(i).Thumbnail" alt="Hi">
+
                 </div>
             </div>
         }
         else
         {
             <div class="row d-flex project">
+
                 <div class="col-lg-6 align-self-center">
                     <img class="w-100" src="/Images/@Model.Projects.ElementAt(i).Thumbnail" alt="Hi">
                 </div>
+
                 <div class="col-6 align-self-center">
+
                     <h2 class="col-12">@project.Title</h2>
                     <p class="col-12"><b>@project.Description</b></p>
                     <p class="col-12">@project.CustomerUsername</p>
+
                     @if (User.IsInRole("Admin"))
                     {
                         <div class="row">
-                            <a class="btn col-3 mt-5 ml-3" asp-area="" asp-controller="Projects" asp-action="Detail" asp-route-id="@project.Id">Case study</a>
-                            <a id="secondary" class="btn col-3 mt-5 ml-3" asp-area="Administration" asp-controller="Projects" asp-action="Edit" asp-route-id="@project.Id">Edit Project</a>
-                            <a id="danger" class="btn col-3 mt-5 ml-3" asp-area="Administration" asp-controller="Projects" asp-action="Delete" asp-route-id="@project.Id">Delete Project</a>
+
+                            <a class="btn col-3 mt-5 ml-3"
+                               asp-controller="Projects"
+                               asp-action="Detail"
+                               asp-route-id="@project.Id">
+                                Case study
+                            </a>
+
+                            <a id="secondary" class="btn col-3 mt-5 ml-3"
+                               asp-area="Administration"
+                               asp-controller="Projects"
+                               asp-action="Edit"
+                               asp-route-id="@project.Id">
+                                Edit Project
+                            </a>
+
+                            <a id="danger" class="btn col-3 mt-5 ml-3"
+                               asp-area="Administration"
+                               asp-controller="Projects"
+                               asp-action="Delete"
+                               asp-route-id="@project.Id">
+                                Delete Project
+                            </a>
+
                         </div>
                     }
                     else
                     {
-                        <a class="btn col-6 offset-6 mt-5" asp-area="" asp-controller="Projects" asp-action="Detail" asp-route-id="@project.Id">Read case study</a>
+                        <a class="btn col-6 offset-6 mt-5"
+                           asp-controller="Projects"
+                           asp-action="Detail"
+                           asp-route-id="@project.Id">
+                            Read case study
+                        </a>
                     }
                 </div>
             </div>
@@ -66,5 +125,5 @@
 }
 else
 {
-    <h1>EnterSomeProjects</h1>
+    <h1>There are no projects</h1>
 }

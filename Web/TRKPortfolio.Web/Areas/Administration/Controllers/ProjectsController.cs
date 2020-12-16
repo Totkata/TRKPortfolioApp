@@ -1,14 +1,10 @@
 ﻿namespace TRKPortfolio.Web.Areas.Administration.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using TRKPortfolio.Data.Models;
+
     using TRKPortfolio.Services.Data.Contracts;
     using TRKPortfolio.Web.ViewModels.Administration.Projects.InputModel;
     using TRKPortfolio.Web.ViewModels.Administration.Projects.ViewModel;

@@ -10,50 +10,70 @@
 }
 
 <div class="row d-flex">
+
     <div class="col-md-6 offset-3 mt-5 align-self-center">
+
         <form enctype="multipart/form-data" asp-area="Administration" asp-controller="Projects" asp-action="Create" method="post">
+
             <h3 class="mb-3 text-center">Input your new Project</h3>
+
             <div class="form-group">
                 <label>Projetc Title</label>
                 <input id="customeInput" asp-for="@Model.Title" class="form-control" placeholder="Project Title">
                 <span asp-validation-for="@Model.Title" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label>Describtion</label>
                 <input id="customeInput" asp-for="@Model.Description" class="form-control" placeholder="Description">
                 <span asp-validation-for="@Model.Description" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Thumbnail">Chose your thumbnail</label>
                 <input id="customeInput" asp-for="Thumbnail" class="form-control" />
                 <span asp-validation-for="Thumbnail" class="text-danger"></span>
             </div>
+
             <div id="ParagraphsContainer">
                 <label asp-for="Paragraphs"></label>
                 <input id="customeInput" type='text' name="Paragraphs[0].Title" class="form-control" placeholder="Title">
-                <textarea cols="40" rows="5" id="customeInput" type="text" name="Paragraphs[0].Content" class="form-control h-100 mt-2" placeholder="Content"></textarea>
+                <textarea cols="40" rows="5" id="customeInput" type="text" name="Paragraphs[0].Content"
+                          class="form-control h-100 mt-2" placeholder="Content"></textarea>
                 <input id="customeInput" type="file" name="Paragraphs[0].Attachment" class="form-control mt-2 mb-4" placeholder="Content" />
                 <span asp-validation-for="@Model.Paragraphs" class="text-danger"></span>
             </div>
+
             <div>
                 <a class="btn col-12 mb-4" onclick="AddParagraph()">Add new Paragraph</a>
             </div>
+
             <div id="select_many">
-                <p><b>Hold Ctrl to select more than one</b></p>
+                <p>
+                    <b>Hold Ctrl to select more than one</b>
+                </p>
+
                 <label>Select categories</label>
+
                 <div class="form-group">
+
                     <select multiple asp-for="CategoryId" class="form-control" asp-items="categoryItems"></select>
                 </div>
+
                 <label>Select skills</label>
+
                 <div class="form-group">
                     <select multiple asp-for="SkillId" class="form-control" asp-items="skills"></select>
                 </div>
             </div>
+
             <div class="form-group">
                 <h5>Select customer here</h5>
                 <select asp-for="CustomerId" class="form-control" asp-items="customers"></select>
             </div>
+
             <a class="btn col-12" onclick="this.closest('form').submit();return false;">Create Project</a>
+
         </form>
     </div>
 </div>

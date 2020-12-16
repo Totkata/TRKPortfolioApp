@@ -8,15 +8,29 @@
 <vc:header></vc:header>
 
 <div class="row d-flex vh-100">
+
     <div class="col-md-4 offset-4 mt-5 align-self-center">
-        <form enctype="multipart/form-data" asp-area="Administration" asp-controller="Skills" asp-action="Create" method="post">
+
+        <form enctype="multipart/form-data" 
+              asp-area="Administration" 
+              asp-controller="Skills" 
+              asp-action="Create" method="post">
+
             <div class="form-group">
+
                 <h3 class="mb-3 text-center">Input your new Skill</h3>
                 <input id="customeInput" asp-for="@Model.Name" class="form-control" placeholder="Skill Title">
                 <span asp-validation-for="@Model.Name" class="text-danger"></span>
             </div>
+
             <a class="btn col-12" onclick="this.closest('form').submit();return false;">Create new Skill</a>
-            <a id="secondary" class="btn col-12 mt-3" asp-area="Administration" asp-controller="Skills" asp-action="Skills">View all skills</a>
+
+            <a id="secondary" class="btn col-12 mt-3" 
+               asp-area="Administration" 
+               asp-controller="Skills" 
+               asp-action="Skills">View all skills
+            </a>
+
         </form>
     </div>
 </div>
