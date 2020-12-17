@@ -38,37 +38,67 @@
 
             <h2 class="mb-4">@paragraph.ParagraphTitle</h2>
             <p>@paragraph.ParagraphContent</p>
-            <img class="col-12 p-0" src="/Images/@paragraph.ParagraphPath" alt="Alternate Text" />
+
+            @if (paragraph.ParagraphPath != null)
+            {
+                <img class="col-12 p-0" src="/Images/@paragraph.ParagraphPath" alt="Alternate Text" />
+            }
 
         </div>
     }
 
-    <form class="col-6 offset-3 mt-5"
-          enctype="multipart/form-data"
-          asp-controller="Comments"
-          asp-action="Create"
-          method="post">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form class="col-6 offset-3 mt-5"
+              enctype="multipart/form-data"
+              asp-controller="Comments"
+              asp-action="Create"
+              method="post">
 
-        <div class="form-group">
-            <label>Comment</label>
-            <textarea cols="40" rows="5" id="customeInput"
-                      asp-for="@Model.Comment.Text"
-                      class="form-control h-50"
-                      placeholder="Write your comment"></textarea>
-            <input type="hidden"
-                   asp-for="@Model.Comment.PostId"
-                   value="@Model.Post.Id">
-            <span asp-validation-for="@Model.Comment"
-                  class="text-danger">
-            </span>
+            <div class="form-group">
+                <label>Comment</label>
+                <textarea cols="40" rows="5" id="customeInput"
+                          asp-for="@Model.Comment.Text"
+                          class="form-control h-50"
+                          placeholder="Write your comment"></textarea>
+                <input type="hidden"
+                       asp-for="@Model.Comment.PostId"
+                       value="@Model.Post.Id">
+                <span asp-validation-for="@Model.Comment"
+                      class="text-danger">
+                </span>
 
+            </div>
+
+            <a onclick="this.closest('form').submit();return false;">
+                <img class="btn col-1 offset-11" src="/Images/iconfinder-icon.svg" alt="Alternate Text" />
+            </a>
+
+        </form>
+    }
+    else
+    {
+        <h2 class="text-center col-6 offset-3 mt-5">If you want to write a comment Login into your account</h2>
+
+        <div class="row col-8 offset-3 mb-5">
+
+            <a id="secondary" class="btn col-8 mt-5"
+               asp-area="Identity"
+               asp-controller="Account"
+               asp-action="Login">
+                I already have an account
+            </a>
+
+            <a class="btn col-8 mt-2"
+               asp-area="Identity"
+               asp-controller="Account"
+               asp-action="Register">
+                I don't have an account
+            </a>
         </div>
+    }
 
-        <a onclick="this.closest('form').submit();return false;">
-            <img class="btn col-1 offset-11" src="/Images/iconfinder-icon.svg" alt="Alternate Text" />
-        </a>
-
-    </form>
+    <h3 class="col-6 offset-3 mb-4">Comments:</h3>
 
     @foreach (var comment in Model.Comments.Reverse())
     {
@@ -123,30 +153,33 @@
             </div>
         }
 
-        <form class="col-6 offset-3 pl-5"
-              enctype="multipart/form-data"
-              asp-controller="Comments"
-              asp-action="Reply"
-              method="post">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <form class="col-6 offset-3 pl-5"
+                  enctype="multipart/form-data"
+                  asp-controller="Comments"
+                  asp-action="Reply"
+                  method="post">
 
-            <div class="form-group">
+                <div class="form-group">
 
-                <textarea cols="40" rows="2" id="customeInput"
-                          asp-for="@Model.Comment.Text"
-                          class="form-control h-25" placeholder="Reply"></textarea>
-                <input type="hidden"
-                       asp-for="@Model.Comment.CommentId"
-                       value="@comment.Id">
-                <input type="hidden"
-                       asp-for="@Model.Comment.PostId"
-                       value="@Model.Post.Id">
-                <span asp-validation-for="@Model.Comment"
-                      class="text-danger"></span>
-            </div>
-            <a onclick="this.closest('form').submit();return false;">
-                <img class="btn col-1 offset-11" src="/Images/iconfinder-icon.svg" alt="Alternate Text" />
-            </a>
+                    <textarea cols="40" rows="2" id="customeInput"
+                              asp-for="@Model.Comment.Text"
+                              class="form-control h-25" placeholder="Reply"></textarea>
+                    <input type="hidden"
+                           asp-for="@Model.Comment.CommentId"
+                           value="@comment.Id">
+                    <input type="hidden"
+                           asp-for="@Model.Comment.PostId"
+                           value="@Model.Post.Id">
+                    <span asp-validation-for="@Model.Comment"
+                          class="text-danger"></span>
+                </div>
+                <a onclick="this.closest('form').submit();return false;">
+                    <img class="btn col-1 offset-11" src="/Images/iconfinder-icon.svg" alt="Alternate Text" />
+                </a>
 
-        </form>
+            </form>
+        }
     }
 </div>

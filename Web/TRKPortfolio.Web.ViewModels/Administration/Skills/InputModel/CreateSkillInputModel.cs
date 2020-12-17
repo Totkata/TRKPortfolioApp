@@ -1,11 +1,10 @@
 ﻿namespace TRKPortfolio.Web.ViewModels.Administration.Skills.InputModel
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    using System.ComponentModel.DataAnnotations;
 
     public class CreateSkillInputModel
     {
+        [Required]
         public string Name { get; set; }
     }
 }

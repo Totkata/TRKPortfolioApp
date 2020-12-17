@@ -74,14 +74,14 @@
 
             foreach (var paragraph in inputModel.Paragraphs)
             {
-                var paragraphFileExtension = Path.GetExtension(paragraph.Attachment.FileName).TrimStart('.').ToLower();
-                if (!this.allowedExtensions.Any(x => paragraphFileExtension.EndsWith(x)))
-                {
-                    throw new Exception($"Invalid image extension {paragraphFileExtension}");
-                }
-
                 if (paragraph.Attachment != null)
                 {
+                    var paragraphFileExtension = Path.GetExtension(paragraph.Attachment.FileName).TrimStart('.').ToLower();
+                    if (!this.allowedExtensions.Any(x => paragraphFileExtension.EndsWith(x)))
+                    {
+                        throw new Exception($"Invalid image extension {paragraphFileExtension}");
+                    }
+
                     var dbParagraphFile = new ParagraphAttachment
                     {
                         Extention = paragraphFileExtension,
